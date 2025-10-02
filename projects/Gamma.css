@@ -1,0 +1,51 @@
+body {
+    background-color: #2E0014;
+}
+
+header {
+    color: #809848;
+    text-align: center;
+}
+
+h1 {
+    color: #B0CA87;
+}
+
+h2 {
+    color: #809848;
+}
+
+p {
+    color: #B0CA87;
+}
+
+dl {
+    color: #B0CA87;
+}
+
+hr {
+    border: 1px solid #442220
+    ;
+}
+
+.minus {
+    font-weight: 500;
+}
+
+{
+    
+    color: #442220;
+}
+
+#footer {
+    color: #442220;
+    ;
+}
+
+.Olive {
+    color: #809848;
+}
+
+.log {
+    color: #B0CA87;
+}
