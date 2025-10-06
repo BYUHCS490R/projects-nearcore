@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url('forestBG.jpg') rgb(29,29,148);
+    color: white;
+
+header {
+    background: url('flowers.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+.mylist  {
+    list-style-image: url('beetle.png');
+}
+
+.other{
+    background-image: url('forestBG.jpg');
+    background-repeat: repeat;
+    background-color: rgb(29,29,148);
+}
+}
