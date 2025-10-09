@@ -1,6 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: url('forestBG.jpg') rgb(29,29,148);
+    background-repeat: no-repeat;
     color: white;
 
 header {
