@@ -14,14 +14,6 @@ nav a {
     text-align: center;
 }
 
-<<<<<<< HEAD
-=======
-h2 {
-    text-align: left;
-    margin-left: 1%;
-}
-
->>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
 .list {
     list-style-image: url('phsign.png');
 }
@@ -38,6 +30,7 @@ hr {
 p {
     font-size: 14px;
     color: #473010;
+    text-align: left;
     margin-left:3%;
     margin-right:2%;
     text-indent: 20px;
@@ -50,7 +43,7 @@ footer {
     font-size: 12px;
     padding: 5px;
     border-top: 2px solid #473010;
-    position: fixed;
+    position:absolute;
     bottom: 0;
 }
 
@@ -73,9 +66,5 @@ ul {
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: url('bg.jpg');
-<<<<<<< HEAD
     background-repeat: repeat;
-=======
-    background-repeat: no-repeat;
->>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
 }
