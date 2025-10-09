@@ -14,6 +14,14 @@ nav a {
     text-align: center;
 }
 
+<<<<<<< HEAD
+=======
+h2 {
+    text-align: left;
+    margin-left: 1%;
+}
+
+>>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
 .list {
     list-style-image: url('phsign.png');
 }
@@ -65,5 +73,9 @@ ul {
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: url('bg.jpg');
+<<<<<<< HEAD
     background-repeat: repeat;
+=======
+    background-repeat: no-repeat;
+>>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
 }
