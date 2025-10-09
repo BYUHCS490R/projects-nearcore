@@ -1,0 +1,72 @@
+nav a {
+    color: rgb(174, 167, 238);
+}
+
+.current {
+    font-weight: bold;
+    text-decoration: none;
+    color: khaki;
+}
+
+.homestyle {
+    background-color: #876434;
+    color: khaki;
+    text-align: center;
+}
+
+h2 {
+    text-align: left;
+    margin-left: 1%;
+}
+
+.list {
+    list-style-image: url('phsign.png');
+}
+
+.main {
+    color: #473010;
+    text-align: center;
+}
+
+hr {
+    border: 2px solid #473010;
+}
+
+p {
+    font-size: 14px;
+    color: #473010;
+    margin-left:3%;
+    margin-right:2%;
+    text-indent: 20px;
+}
+
+footer {
+    background-color: #ad895b;
+    color: #876434;
+    text-align: center;
+    font-size: 12px;
+    padding: 5px;
+    border-top: 2px solid #473010;
+}
+
+header {
+    background-image: url('phFlag.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+    
+}
+
+.edit {
+    image-orientation: center;
+}
+
+ul {
+    text-align: left;
+    margin-left: 1%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url('bg.jpg');
+    background-repeat: no-repeat;
+}
