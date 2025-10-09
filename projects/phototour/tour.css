@@ -14,17 +14,15 @@ nav a {
     text-align: center;
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+h1 {
+    text-align: center;
+}
+
 h2 {
     text-align: left;
     margin-left: 1%;
 }
 
->>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
->>>>>>> d2a7331bfedee1ce2366729ae843308bd8018e2a
 .list {
     list-style-image: url('phsign.png');
 }
@@ -54,7 +52,6 @@ footer {
     font-size: 12px;
     padding: 5px;
     border-top: 2px solid #473010;
-    position:absolute;
     bottom: 0;
 }
 
@@ -62,7 +59,6 @@ header {
     background-image: url('phFlag.png');
     background-repeat: no-repeat;
     background-position: top right;
-    
 }
 
 .edit {
@@ -77,13 +73,5 @@ ul {
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: url('bg.jpg');
-<<<<<<< HEAD
     background-repeat: repeat;
-=======
-<<<<<<< HEAD
-    background-repeat: repeat;
-=======
-    background-repeat: no-repeat;
->>>>>>> 080dcf15b9320e18a370449ef85a32790be00449
->>>>>>> d2a7331bfedee1ce2366729ae843308bd8018e2a
 }
