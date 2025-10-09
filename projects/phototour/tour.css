@@ -47,6 +47,8 @@ footer {
     font-size: 12px;
     padding: 5px;
     border-top: 2px solid #473010;
+    position: fixed;
+    bottom: 0;
 }
 
 header {
