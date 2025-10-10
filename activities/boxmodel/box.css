@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: #4CAF50;
+    text-align: center;
+    padding: 50px;
+    margin: 25px;
+}
+
+header h1 {
+    background-color: burlywood;
+    border-style: groove;
+    border-color: aquamarine;
+    border-width: 5px;
+}
+
+nav {
+    background-color: khaki;
+    border: 5px solid darkorange;  
+    padding: 15px 20px; 
+}
+
+main h1 {
+    border: 3px dotted blue;
+    width: 50%;
+    height: 35px;
+    overflow: hidden;
+    padding-left: 100px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 100px;
+}
+
+main p {
+    border: 3px dashed red;
+    padding: 10px 20px 10px 20px;
+}
