@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 300px;
+}
+
+.temple {
+    border: thin solid black;
+    width: 100px;
+}
+
+.temple img {
+    width: 100%;
+    height: auto;
+}
+
+.stop {
+    clear: both;
+}
+
+.floater {
+    float: right;
+}
+
+.hammer {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    margin: 0;
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px;
+    background-color: aqua;
+    border-bottom: thin solid white;
+    text-decoration: none
+}
+
+nav a:hover {
+    background-color: lightblue;
+}
