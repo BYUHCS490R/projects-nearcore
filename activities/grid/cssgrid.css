@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: url(pure-white-canvas-stockcake.jpg);
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.child {
+    background-color: lightblue;
+    padding: 5px;
+    text-align: center;
+}
+
+.friend {
+    background-color: lightgreen;
+    padding: 5px;
+    text-align: center;
+}
+
+#wrapper {
+    width: 90%;
+    margin: auto;
+}
+
