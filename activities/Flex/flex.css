@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+    border: 2px solid black;
+    border-radius: 3px;
+    margin: 5px;
+    box-shadow: 5px 5px 3px rgb(128, 111, 111);
+    padding: 4px;
+    text-align: center;
+    width: 150px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#lower {
+    height: 100px;
+    width : 100%;
+    
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: rgb(94, 81, 81);
+}
+
+body {
+    background-color: #65b9ab;
+}
+
+hr {
+    border: 1px solid black;
+}
