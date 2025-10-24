@@ -1,0 +1,112 @@
+/* Minimal CSS implementing only what the assignment requires */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* Header and nav */
+header {
+  padding: 12px;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.navbar a {
+  display: block; /* required so flex spacing and clickable area behave as assignment expects */
+  text-decoration: none;
+  color: khaki;
+  padding: 6px 12px;
+  background: #333;
+  border-radius: 6px;
+}
+
+/* Layout: sidebar left, main content to the right */
+.sidedivider {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  flex-wrap: wrap;
+}
+
+.sidebar {
+  width: 200px;
+  background: #fff;
+  color: #000;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+/* Cards area to the right of sidebar */
+/* At least two columns are required; use CSS Grid for cards */
+.cards {
+  flex: 1 1 400px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* minimal two columns */
+  gap: 12px;
+}
+
+.card {
+  background: #222;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* Footer: grid of 20 links in 5 columns x 4 rows */
+footer {
+  padding: 16px;
+  text-align: center;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  gap: 8px;
+  max-width: 1000px;
+  margin: 12px auto 0;
+}
+
+/* Make footer links block-level so grid lays them out correctly */
+.footer-grid a {
+  display: block;
+  text-decoration: none;
+  padding: 8px;
+  background: #222;
+  color: #fff;
+  border-radius: 4px;
+}
+
+/* Small-screen adjustments (keeps layout usable) */
+@media (max-width: 700px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .sidedivider { flex-direction: column; }
+  .sidebar { width: 100%; }
+  .cards { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}

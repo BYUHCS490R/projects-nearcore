@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notion-like Prototype + AI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="brand">mini-notion</div>
+      <div class="controls">
+        <input id="search" placeholder="Search pages & DBs..." />
+        <button id="new-page">+ New Page</button>
+        <button id="new-db">+ New Database</button>
+      </div>
+      <div class="list" id="list"></div>
+      <div class="footer">
+        <small>Local demo · data stored in browser</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="top">
+        <div id="page-title">Select or create a page</div>
+        <div class="ai-controls">
+          <input id="ai-prompt" placeholder="Ask AI about this page or database..." />
+          <button id="ai-ask">Ask AI</button>
+        </div>
+      </header>
+
+      <section id="canvas" class="canvas">
+        <div class="empty">Open a page or a database from the left, or create a new one.</div>
+      </section>
+    </main>
+  </div>
+
+  <template id="page-template">
+    <div class="page">
+      <div class="page-meta">
+        <input class="page-title-input" />
+        <button class="save-page">Save</button>
+        <button class="delete-page">Delete</button>
+      </div>
+      <div class="blocks" contenteditable="false"></div>
+      <div class="block-controls">
+        <button class="add-text">+ Text Block</button>
+        <button class="add-h1">+ H1</button>
+        <button class="add-check">+ To-do</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="db-template">
+    <div class="db">
+      <div class="db-meta">
+        <input class="db-name-input" />
+        <button class="save-db">Save</button>
+        <button class="delete-db">Delete</button>
+      </div>
+      <div class="db-controls">
+        <button class="add-row">+ Add Row</button>
+        <button class="export-db">Export JSON</button>
+      </div>
+      <table class="db-table">
+        <thead>
+          <tr class="db-headers"></tr>
+        </thead>
+        <tbody class="db-rows"></tbody>
+      </table>
+    </div>
+  </template>
+
+  <div id="ai-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>AI response</h3>
+      <pre id="ai-response"></pre>
+      <button id="ai-close">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
