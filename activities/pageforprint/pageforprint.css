@@ -33,27 +33,31 @@ nav a:hover {
 }
 
 .sidebar {
-    margin: 5% auto;
+    margin: 0px;
     padding: 5px;
     background-color: #757171;
 }
 
 .card {
     width: 100% auto;
+    border-radius: 5px;
     border: thin solid #000;
+    padding: 16px;
+    text-align: center;
     box-shadow: 3px 3px 3px #888888;
     margin: 15px;
 }
 
 .card img {
-    width: 100% auto;
-    height: 200px;
-    display: block;
+    width: 300px;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 8px;
 }
 
 .sidebar {
-    width:200px;
-    padding: auto;
+    flex-basis: 295px; 
+    padding: 16px;
 }
 
 header, footer {
