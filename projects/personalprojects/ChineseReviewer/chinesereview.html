@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Vocabulary Study App</title>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 載入 Phosphor Icons for UI clarity -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* Card Flip CSS */
+        .card-container {
+            perspective: 1000px;
+            height: 350px;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Fix: The back face is pre-rotated 180 degrees to face away */
+        .card-face-back { 
+            transform: rotateY(180deg); 
+        }
+
+        .flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Quiz Button Hover Effect and Feedback */
+        .quiz-option-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .quiz-option-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+        .correct-answer {
+            background-color: #34D399; /* Green-400 */
+            color: white;
+            animation: pulse-correct 0.5s 3;
+            border-color: #059669 !important; /* Green-600 */
+        }
+        .incorrect-answer {
+            background-color: #F87171; /* Red-400 */
+            color: white;
+            animation: shake 0.5s;
+            border-color: #DC2626 !important; /* Red-600 */
+        }
+
+        @keyframes pulse-correct {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        /* CSS for the collapsible example sentences */
+        .reviewer-item {
+            cursor: pointer;
+            user-select: none;
+        }
+        .reviewer-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+        .reviewer-item.open .reviewer-details {
+            max-height: 400px; /* Increased to accommodate generated content */
+            padding-top: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        /* Underline effect */
+        .underline-word {
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 4px;
+        }
+        /* Style for the blank input in the fill-in-the-blanks mode */
+        .blank-input {
+            width: 120px;
+            padding: 4px 8px;
+            border: 2px solid #6366f1; /* Indigo-500 */
+            border-radius: 8px;
+            font-size: 1.125rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 0 4px;
+        }
+        .blank-hint {
+            display: block;
+            font-size: 0.75rem; /* text-xs */
+            color: #4b5563; /* gray-600 */
+            margin-top: 2px;
+            font-style: italic;
+        }
+        .fill-in-sentence {
+            font-size: 1.75rem; /* text-3xl */
+            line-height: 2.5rem; /* leading-10 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-['Inter']">
+
+    <!-- Main Application Container -->
+    <div id="main-app" class="flex flex-col items-center p-4 sm:p-8">
+        <!-- Content will be rendered by JavaScript -->
+        <div class="text-gray-600">Loading application...</div>
+    </div>
+
+    <script>
+        // --- API CONFIGURATION ---
+        const apiKey = ""; 
+        const API_MODEL = 'gemini-2.5-flash-preview-09-2025';
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${apiKey}`;
+
+        // --- DATA DEFINITION ---
+        const vocabularyGroups = [
+            {
+                name: "Group 1: Chinese Vocabulary Set A",
+                items: [
+                    { hanzi: "練習", pinyin: "liànxí", english: "to practice" },
+                    { hanzi: "要是", pinyin: "yàoshì", english: "if" },
+                    { hanzi: "考試", pinyin: "kǎoshì", english: "to take a test" },
+                    { hanzi: "準備", pinyin: "zhǔnbèi", english: "to prepare" },
+                    { hanzi: "見面", pinyin: "jiànmiàn", english: "to meet" },
+                    { hanzi: "喂", pinyin: "wéi", english: "Hello (on phone)" },
+                    { hanzi: "年級", pinyin: "niánjí", english: "Grade in School" },
+                    { hanzi: "辦公室", pinyin: "bàngōngshì", english: "Office" },
+                    { hanzi: "以後", pinyin: "yǐhòu", english: "After; from now on" },
+                    { hanzi: "幫", pinyin: "bāng", english: "To help" },
+                    { hanzi: "回來", pinyin: "huílái", english: "To come back" },
+                    { hanzi: "得", pinyin: "děi", english: "Must; have to" },
+                    { hanzi: "電話", pinyin: "diànhuà", english: "telephone" },
+                    { hanzi: "問題", pinyin: "wèntí", english: "problem" },
+                    { hanzi: "方便", pinyin: "fāngbiàn", english: "convenient" },
+                    { hanzi: "開會", pinyin: "kāihuì", english: "to have a meeting" },
+                    { hanzi: "時間", pinyin: "shíjiān", english: "Time" },
+                    { hanzi: "就", pinyin: "jiù", english: "Precisely; exactly" },
+                    { hanzi: "才", pinyin: "cái", english: "Lateness (not until)" },
+                    { hanzi: "別", pinyin: "bié", english: "Don’t" },
+                    { hanzi: "說話", pinyin: "shuōhuà", english: "To talk" },
+                    { hanzi: "寫", pinyin: "xiě", english: "To write" },
+                    { hanzi: "不錯", pinyin: "bú cuò", english: "Not bad" },
+                    { hanzi: "要", pinyin: "yào", english: "Have to; want to" },
+                    { hanzi: "給", pinyin: "gěi", english: "To; for" },
+                    { hanzi: "跟", pinyin: "gēn", english: "with" },
+                ]
+            },
+            { 
+                name: "Group 2: Basic Grammar & Particles", 
+                items: [
+                    { hanzi: "只", pinyin: "zhǐ", english: "only, merely" },
+                    { hanzi: "在", pinyin: "zài", english: "at, in, on; currently (doing)" },
+                    { hanzi: "給", pinyin: "gěi", english: "to give; to; for" },
+                    { hanzi: "還是", pinyin: "háishi", english: "or (in a question); still" },
+                    { hanzi: "還", pinyin: "hái", english: "still, yet; also, too" },
+                    { hanzi: "都", pinyin: "dōu", english: "all, both; entirely" },
+                    { hanzi: "有", pinyin: "yǒu", english: "to have, there is/are" },
+                    { hanzi: "沒有", pinyin: "méiyǒu", english: "don't have, there isn't/aren't" },
+                    { hanzi: "一點", pinyin: "yìdiǎn", english: "a bit, a little" },
+                    { hanzi: "一下", pinyin: "yíxià", english: "once, a bit (used after a verb)" },
+                    { hanzi: "一起", pinyin: "yìqǐ", english: "together" },
+                    { hanzi: "了", pinyin: "le", english: "particle (completion/change of state)" },
+                    { hanzi: "才", pinyin: "cái", english: "not until, only then" },
+                    { hanzi: "要", pinyin: "yào", english: "to want; to be going to" },
+                    { hanzi: "要是", pinyin: "yàoshì", english: "if" },
+                    { hanzi: "是", pinyin: "shì", english: "to be (is, am, are)" },
+                    { hanzi: "不是", pinyin: "búshì", english: "is not" },
+                    { hanzi: "也是", pinyin: "yěshì", english: "also is" },
+                    { hanzi: "都是", pinyin: "dōushì", english: "all are" },
+                    { hanzi: "不覺得", pinyin: "bù juéde", english: "don't feel, don't think that" },
+                    { hanzi: "不想", pinyin: "bù xiǎng", english: "don't want to" },
+                    { hanzi: "對", pinyin: "duì", english: "right, correct; toward" },
+                    { hanzi: "不對", pinyin: "búduì", english: "incorrect, wrong" },
+                    { hanzi: "嗎", pinyin: "ma", english: "question particle" },
+                    { hanzi: "吧", pinyin: "ba", english: "modal particle (suggestion/assumption)" },
+                    { hanzi: "什麽", pinyin: "shénme", english: "what" },
+                    { hanzi: "幾點", pinyin: "jǐ diǎn", english: "what time" },
+                    { hanzi: "哪兒", pinyin: "nǎ'er", english: "where" },
+                    { hanzi: "和", pinyin: "hé", english: "and" },
+                ] 
+            },
+            { 
+                name: "Group 3: Common Nouns & Adjectives", 
+                items: [
+                    { hanzi: "好", pinyin: "hǎo", english: "good, well" },
+                    { hanzi: "姓", pinyin: "xìng", english: "surname" },
+                    { hanzi: "很", pinyin: "hěn", english: "very" },
+                    { hanzi: "是", pinyin: "shì", english: "to be (am, is, are)" },
+                    { hanzi: "學生", pinyin: "xuéshēng", english: "student" },
+                    { hanzi: "醫生", pinyin: "yīshēng", english: "doctor" },
+                    { hanzi: "家", pinyin: "jiā", english: "home, family" },
+                    { hanzi: "也", pinyin: "yě", english: "also, too" },
+                    { hanzi: "人", pinyin: "rén", english: "person, people" },
+                    { hanzi: "有", pinyin: "yǒu", english: "to have" },
+                ] 
+            },
+            { 
+                name: "Group 4: Family Members", 
+                items: [
+                    { hanzi: "爸爸", pinyin: "bàba", english: "father" },
+                    { hanzi: "媽媽", pinyin: "māma", english: "mother" },
+                    { hanzi: "哥哥", pinyin: "gēge", english: "older brother" },
+                    { hanzi: "姐姐", pinyin: "jiějie", english: "older sister" },
+                    { hanzi: "妹妹", pinyin: "mèimei", english: "younger sister" },
+                    { hanzi: "弟弟", pinyin: "dìdi", english: "younger brother" },
+                    { hanzi: "兒子", pinyin: "érzi", english: "son" },
+                    { hanzi: "女兒", pinyin: "nǚ'ér", english: "daughter" },
+                ] 
+            },
+            { name: "Group 5: Placeholder (Empty)", items: [] },
+        ];
+
+        // Combine all items for the Fill in the Blanks mode
+        const allVocabularyItems = vocabularyGroups.flatMap(group => group.items);
+
+        // --- GLOBAL STATE ---
+        const state = {
+            currentPage: 'menu', // 'menu', 'reviewer', 'flashcard', 'quizSelect', 'quiz', 'fillInBlanks'
+            currentGroupIndex: 0,
+            flashcardIndex: 0,
+            shuffledItems: [], 
+            quiz: {
+                currentQuestion: 0,
+                score: 0,
+                questions: [],
+                isAnswered: false,
+                isQuizFinished: false,
+                type: null, 
+            },
+            fillInBlanks: {
+                isLoading: false,
+                currentSentence: null, // { hanziSentence: "...", blanks: [{hanzi: "...", english: "...", inputId: "..."}] }
+                feedback: null, // { type: 'correct'|'incorrect', message: '...' }
+                isAnswered: false,
+            }
+        };
+
+        const app = document.getElementById('main-app');
+        
+        // This object will cache generated examples to prevent re-calling the API repeatedly.
+        const exampleCache = {}; 
+
+        // --- UTILITY FUNCTIONS ---
+        
+        /** Handles API calls with exponential backoff. */
+        async function fetchWithRetry(url, options, maxRetries = 3) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response;
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    // Exponential backoff delay
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    console.warn(`Request failed, retrying in ${delay / 1000}s...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        /** Sets the new state and re-renders the application. */
+        function setState(updates) {
+            // Check if navigating away from flashcard mode to reset the flip state
+            if (state.currentPage === 'flashcard' && updates.currentPage !== 'flashcard') {
+                const card = document.querySelector('.card-container');
+                if (card && card.classList.contains('flipped')) {
+                    card.classList.remove('flipped');
+                }
+            }
+            Object.assign(state, updates);
+            renderApp();
+        }
+        
+        /** Creates the header/back button for non-menu pages. */
+        function createHeader(title, showBackButton = true) {
+            let backButtonTarget = 'menu';
+            let subtitle = vocabularyGroups[state.currentGroupIndex]?.name || '';
+
+            // Logic to determine back button target from sub-pages
+            if (state.currentPage === 'quizSelect') {
+                backButtonTarget = 'menu';
+            } else if (state.currentPage === 'quiz' || state.currentPage === 'reviewer' || state.currentPage === 'flashcard' || state.currentPage === 'fillInBlanks') {
+                // For quizzes, go back to quiz select; for others, go to menu
+                backButtonTarget = (state.currentPage === 'quiz') ? 'quizSelect' : 'menu';
+                // Quiz and FillInBlanks don't display a group subtitle by default
+                if (state.currentPage === 'fillInBlanks') subtitle = "Using all vocabulary groups (1-4)";
+            }
+
+            return `
+                <header class="w-full max-w-4xl mb-8">
+                    ${showBackButton ? `
+                        <button onclick="setState({ currentPage: '${backButtonTarget}' })"
+                                class="flex items-center text-blue-600 hover:text-blue-800 transition duration-150 p-2 rounded-full hover:bg-blue-100">
+                            <i class="ph-fill ph-arrow-left text-xl mr-2"></i>
+                            <span class="font-medium text-sm">Back to ${backButtonTarget === 'menu' ? 'Menu' : 'Quiz Selection'}</span>
+                        </button>
+                    ` : ''}
+                    <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight mt-4">
+                        ${title}
+                    </h1>
+                    ${subtitle ? `<p class="text-gray-500 text-lg mt-1">${subtitle}</p>` : ''}
+                    <hr class="mt-4 border-t-2 border-blue-500/50">
+                </header>
+            `;
+        }
+
+        /** Fisher-Yates shuffle algorithm for array randomization. */
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+        
+        /** Function to start flashcard mode with shuffling. */
+        function startFlashcardMode() {
+            const group = vocabularyGroups[state.currentGroupIndex];
+            if (group.items.length === 0) {
+                setState({ currentPage: 'flashcard', flashcardIndex: 0, shuffledItems: [] });
+                return;
+            }
+            // Create a randomized copy of the item list for this session
+            const shuffledList = shuffle([...group.items]); 
+            setState({
+                currentPage: 'flashcard',
+                flashcardIndex: 0,
+                shuffledItems: shuffledList
+            });
+        }
+
+
+        // --- GEMINI API INTEGRATION: AI Example Generator (Reviewer) ---
+
+        /** Calls Gemini API to generate simple Chinese example sentences in a structured format. */
+        async function generateExamples(item) {
+            const cacheKey = `${state.currentGroupIndex}-${item.hanzi}`;
+
+            const loadingId = `examples-loading-${item.hanzi}`;
+            const detailsContainer = document.querySelector(`#reviewer-item-${item.hanzi.length * 10 + item.english.length} .reviewer-details-content`);
+            
+            // Immediately show loading state
+            if (detailsContainer) {
+                detailsContainer.innerHTML = `
+                    <div id="${loadingId}" class="flex items-center justify-center p-4 text-blue-600">
+                        <i class="ph-bold ph-spinner-gap text-xl animate-spin mr-2"></i> 
+                        Calling AI Tutor to generate examples...
+                    </div>
+                `;
+            }
+            
+            // Schema for the structured JSON response
+            const responseSchema = {
+                type: "ARRAY",
+                description: "A list of two simple Chinese example sentences.",
+                items: {
+                    type: "OBJECT",
+                    properties: {
+                        "hanzi": { "type": "STRING", "description": "The Chinese sentence using the word." },
+                        "pinyin": { "type": "STRING", "description": "The pinyin transcription of the sentence." },
+                        "english": { "type": "STRING", "description": "A simple English translation." }
+                    },
+                    required: ["hanzi", "pinyin", "english"]
+                }
+            };
+            
+            const systemPrompt = `You are a Chinese language expert specializing in teaching simple HSK level vocabulary. Your task is to generate two extremely simple and common Chinese sentences using the word "${item.hanzi}" (${item.pinyin}). The sentences must be short, grammatically correct, and easy for a beginner to understand.`;
+            const userQuery = `Generate two simple example sentences for the Chinese word "${item.hanzi}" (meaning "${item.english}").`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: responseSchema
+                }
+            };
+
+            try {
+                const response = await fetchWithRetry(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!jsonText) throw new Error("API returned empty JSON content.");
+                
+                let examples = JSON.parse(jsonText);
+                
+                // Add underline markup to the generated examples
+                // Regex to handle the Hanzi (escaping special characters just in case)
+                const hanziRegex = new RegExp(item.hanzi.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g');
+                // Regex to handle the Pinyin (matching only the target word)
+                const pinyinRegex = new RegExp(`\\b${item.pinyin.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")}\\b`, 'g');
+                
+                examples = examples.map(ex => ({
+                    ...ex,
+                    hanzi: ex.hanzi.replace(hanziRegex, `<span class="underline-word">${item.hanzi}</span>`),
+                    pinyin: ex.pinyin.replace(pinyinRegex, `<span class="underline-word">${item.pinyin}</span>`)
+                }));
+                
+                exampleCache[cacheKey] = examples; // Cache the result
+                return examples;
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+                return [{ 
+                    hanzi: `Error generating example: ${item.hanzi}`, 
+                    pinyin: `Error generating example: ${item.pinyin}`, 
+                    english: "Could not connect to generation service." 
+                }];
+            } finally {
+                // Force a re-render to update the UI with either the result or the error message
+                renderApp(); 
+            }
+        }
+
+        /** Utility to load and display examples, called when an item is clicked in Reviewer. */
+        window.loadAndDisplayExamples = async (index, item) => {
+            const itemId = `reviewer-item-${index}`;
+            const itemElement = document.getElementById(itemId);
+            if (!itemElement) return;
+
+            itemElement.classList.add('open');
+            const detailsContainer = itemElement.querySelector('.reviewer-details-content');
+            
+            const newExamples = await generateExamples(item);
+
+            // Re-render handled by finally block in generateExamples, but update the local element
+            // in case the overall app state update is slower.
+            if (detailsContainer && detailsContainer.innerHTML.includes('spin')) {
+                 const examplesHtml = newExamples.map((ex, exIndex) => `
+                    <div class="mt-3">
+                        <p class="text-sm text-gray-800 font-medium">${exIndex + 1}. ${ex.hanzi}</p>
+                        <p class="text-xs text-blue-500 italic">${ex.pinyin}</p>
+                        <p class="text-xs text-gray-500">${ex.english}</p>
+                    </div>
+                `).join('');
+
+                detailsContainer.innerHTML = `
+                    <p class="font-semibold text-sm text-gray-700 border-b pb-1">✨ AI Generated Examples:</p>
+                    ${examplesHtml}
+                `;
+            }
+        };
+
+        /** Toggles the visibility of the example sentences in Reviewer mode. */
+        window.toggleReviewerDetails = (itemId, item) => {
+            const itemElement = document.getElementById(`reviewer-item-${itemId}`);
+            if (!itemElement) return;
+
+            const wasOpen = itemElement.classList.contains('open');
+            const cacheKey = `${state.currentGroupIndex}-${item.hanzi}`;
+            const isLoaded = !!exampleCache[cacheKey];
+
+            // If closing, just toggle the class and return.
+            if (wasOpen) {
+                itemElement.classList.remove('open');
+                return;
+            }
+
+            // If opening and not yet loaded, call the loader.
+            if (!isLoaded) {
+                 window.loadAndDisplayExamples(itemId, item);
+            } else {
+                 // If loaded, open immediately.
+                 itemElement.classList.add('open');
+            }
+        };
+
+        // --- GEMINI API INTEGRATION: Fill in the Blanks ---
+
+        /** Generates a new fill-in-the-blanks sentence. */
+        window.generateBlankSentence = async () => {
+            if (state.fillInBlanks.isLoading) return;
+
+            // 1. Get 3 to 5 random words from ALL groups to guide the AI
+            const shuffledVocab = shuffle([...allVocabularyItems]);
+            const randomVocab = shuffledVocab.slice(0, Math.floor(Math.random() * 3) + 3); // 3 to 5 words
+            const targetWords = randomVocab.map(item => `${item.hanzi} (${item.english})`).join(', ');
+
+            // 2. Set loading state
+            setState({ 
+                fillInBlanks: { ...state.fillInBlanks, isLoading: true, feedback: null, isAnswered: false, currentSentence: null } 
+            });
+
+            // 3. Define the structured response schema
+            const responseSchema = {
+                type: "OBJECT",
+                description: "A single, simple, and grammatically correct Chinese sentence with 1 to 3 words from the target list used.",
+                properties: {
+                    "hanziSentence": { "type": "STRING", "description": "The full Chinese sentence containing the target words." },
+                    "blanks": { 
+                        "type": "ARRAY",
+                        "description": "The 1 to 3 words from the target list used in the sentence.",
+                        "items": {
+                            "type": "OBJECT",
+                            "properties": {
+                                "hanzi": { "type": "STRING", "description": "The exact Chinese word used (e.g., '練習')." },
+                                "english": { "type": "STRING", "description": "The English meaning for the hint (e.g., 'to practice')." },
+                            },
+                            "required": ["hanzi", "english"]
+                        }
+                    }
+                },
+                required: ["hanziSentence", "blanks"]
+            };
+
+            const systemPrompt = `You are a creative Chinese language tutor. Your goal is to generate one simple, grammatically correct Chinese sentence that uses between 1 and 3 of the following key vocabulary words: [${targetWords}]. The output must be a JSON object with the full Hanzi sentence, and a list of the exact words used as blanks. DO NOT include Pinyin in the final sentence or anywhere else in the generated output.`;
+            const userQuery = `Generate a single simple Chinese sentence using 1-3 of these words: [${targetWords}] for a fill-in-the-blanks exercise. The final exercise should only show the Hanzi sentence with blanks and no pinyin or English hints.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: responseSchema
+                }
+            };
+
+            try {
+                const response = await fetchWithRetry(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!jsonText) throw new Error("API returned empty JSON content.");
+                
+                const sentenceData = JSON.parse(jsonText);
+                
+                // 4. Transform data into usable structure for display
+                const blanksData = sentenceData.blanks.map((blank, index) => ({
+                    ...blank,
+                    inputId: `blank-input-${index}`,
+                    isCorrect: false
+                }));
+
+                setState({
+                    fillInBlanks: { 
+                        ...state.fillInBlanks, 
+                        isLoading: false, 
+                        currentSentence: { ...sentenceData, blanks: blanksData } 
+                    }
+                });
+
+            } catch (error) {
+                console.error("Fill-in-the-Blanks API call failed:", error);
+                setState({
+                    fillInBlanks: { 
+                        ...state.fillInBlanks, 
+                        isLoading: false, 
+                        feedback: { type: 'error', message: 'Error generating sentence. Please try again.' } 
+                    }
+                });
+            }
+        };
+
+        /** Checks the user's answers for the current fill-in-the-blanks sentence. */
+        window.checkFillInBlanksAnswer = () => {
+            if (state.fillInBlanks.isAnswered || !state.fillInBlanks.currentSentence) return;
+
+            const currentSentence = state.fillInBlanks.currentSentence;
+            let allCorrect = true;
+
+            const updatedBlanks = currentSentence.blanks.map(blank => {
+                const inputElement = document.getElementById(blank.inputId);
+                const userAnswer = inputElement ? inputElement.value.trim() : '';
+                
+                // Simple case-insensitive, space-insensitive check for Hanzi match
+                const isCorrect = userAnswer === blank.hanzi;
+                
+                if (!isCorrect) {
+                    allCorrect = false;
+                }
+                return { ...blank, userAnswer, isCorrect };
+            });
+
+            // Update state with results
+            const feedback = {
+                type: allCorrect ? 'correct' : 'incorrect',
+                message: allCorrect ? 'Perfect! All blanks are correct.' : 'Oops! One or more answers are incorrect. Check the correct words below.'
+            };
+
+            setState({
+                fillInBlanks: {
+                    ...state.fillInBlanks,
+                    currentSentence: { ...currentSentence, blanks: updatedBlanks },
+                    feedback: feedback,
+                    isAnswered: true
+                }
+            });
+        };
+
+        /** Renders the Fill in the Blanks view. */
+        function renderFillInBlanks() {
+            const fblanks = state.fillInBlanks;
+            const sentence = fblanks.currentSentence;
+
+            // Generate the sentence display with blanks
+            let displaySentenceHtml = fblanks.isLoading ? 
+                '<div class="text-center text-indigo-500 text-lg py-12"><i class="ph-bold ph-spinner-gap text-2xl animate-spin mr-2"></i> Generating sentence...</div>' : 
+                '<div class="text-center text-gray-500 py-12">Click "Generate New Sentence" to start!</div>';
+
+            if (sentence && !fblanks.isLoading) {
+                // Combine all blank Hanzi words into a regex pattern to find and replace in the sentence
+                const hanziWords = sentence.blanks.map(b => b.hanzi);
+                // Create a dynamic regex pattern: word1|word2|word3
+                const regexPattern = new RegExp(hanziWords.map(h => h.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1")).join('|'), 'g');
+                
+                let currentInputIndex = 0;
+                
+                // Replace the target words with the input fields
+                const sentenceWithBlanks = sentence.hanziSentence.replace(regexPattern, (matchedWord) => {
+                    // Find the corresponding blank object
+                    const blank = sentence.blanks.find(b => b.hanzi === matchedWord);
+                    if (!blank) return matchedWord; // Should not happen
+
+                    const inputId = `blank-input-${currentInputIndex}`;
+                    currentInputIndex++;
+
+                    let inputClass = 'blank-input focus:outline-none focus:ring-2 focus:ring-indigo-500';
+                    let disabled = '';
+                    let value = '';
+                    
+                    if (fblanks.isAnswered) {
+                        disabled = 'disabled';
+                        // Add feedback class and show the correct answer if wrong
+                        if (blank.isCorrect) {
+                            inputClass += ' bg-green-100 border-green-500';
+                            value = blank.hanzi;
+                        } else {
+                            inputClass += ' bg-red-100 border-red-500 text-red-700';
+                            value = blank.userAnswer || '';
+                        }
+                    }
+
+                    // *** CRITICAL CHANGE: Removed the .blank-hint span containing the English hint ***
+                    return `
+                        <span class="inline-flex flex-col items-center mx-2">
+                            <input type="text" id="${inputId}" class="${inputClass}" style="width: ${blank.hanzi.length * 28 + 20}px;" ${disabled} value="${value.replace(/"/g, '&quot;')}" placeholder="?">
+                        </span>
+                    `;
+                });
+
+                displaySentenceHtml = `
+                    <div class="fill-in-sentence text-gray-800 font-medium">
+                        ${sentenceWithBlanks}
+                    </div>
+                `;
+            }
+
+            // Feedback display
+            let feedbackHtml = '';
+            if (fblanks.feedback) {
+                const feedbackColor = fblanks.feedback.type === 'correct' ? 'bg-green-100 border-green-400 text-green-700' : 
+                                      fblanks.feedback.type === 'incorrect' ? 'bg-red-100 border-red-400 text-red-700' : 'bg-yellow-100 border-yellow-400 text-yellow-700';
+                
+                let answerDisplay = '';
+                if (fblanks.feedback.type === 'incorrect' && sentence) {
+                    answerDisplay = sentence.blanks.map(b => 
+                        `<span class="mx-1 p-1 font-bold ${b.isCorrect ? 'text-green-600' : 'text-red-600'}">${b.hanzi}</span> <span class="text-sm text-gray-500">(${b.english})</span>`
+                    ).join(' | ');
+                    answerDisplay = `<p class="mt-2 text-sm">Correct Answers: ${answerDisplay}</p>`;
+                }
+
+                feedbackHtml = `
+                    <div class="mt-6 p-4 rounded-lg border ${feedbackColor}">
+                        <p class="font-semibold text-lg">${fblanks.feedback.message}</p>
+                        ${answerDisplay}
+                    </div>
+                `;
+            }
+
+
+            app.innerHTML = `
+                ${createHeader("Fill in the Blanks Practice", true)}
+                <div class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg border border-indigo-200">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">
+                        Complete the Sentence (Hanzi Only)
+                    </h2>
+
+                    <!-- Sentence Display Area -->
+                    <div class="text-center p-8 mb-6 rounded-lg border-dashed border-2 border-indigo-300 bg-indigo-50 min-h-40 flex flex-col justify-center items-center">
+                        ${displaySentenceHtml}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="generateBlankSentence()"
+                                class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 shadow-md flex items-center"
+                                ${fblanks.isLoading ? 'disabled' : ''}>
+                            <i class="ph-bold ph-magic-wand text-xl mr-2"></i>
+                            ${fblanks.isLoading ? 'Generating...' : 'Generate New Sentence'}
+                        </button>
+                        <button onclick="checkFillInBlanksAnswer()"
+                                class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-150 shadow-md"
+                                ${!sentence || fblanks.isAnswered || fblanks.isLoading ? 'disabled' : ''}>
+                            <i class="ph-bold ph-checks text-xl mr-2"></i>
+                            Check Answer
+                        </button>
+                    </div>
+
+                    ${feedbackHtml}
+                </div>
+            `;
+        }
+
+        // --- VIEW RENDERING FUNCTIONS ---
+
+        /** Renders the main menu for selecting a group and an activity type. */
+        function renderMenu() {
+            const currentGroup = vocabularyGroups[state.currentGroupIndex];
+            const groupSelect = vocabularyGroups.map((group, index) => `
+                <option value="${index}" ${index === state.currentGroupIndex ? 'selected' : ''}>
+                    ${group.name} (${group.items.length} words)
+                </option>
+            `).join('');
+
+            const canQuiz = allVocabularyItems.length >= 4;
+
+            app.innerHTML = `
+                <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl border border-blue-100 transition duration-300 transform hover:shadow-blue-300/50">
+                    <header class="text-center mb-8">
+                        <i class="ph-fill ph-book-bookmark text-6xl text-blue-600 mx-auto mb-3"></i>
+                        <h1 class="text-3xl font-bold text-gray-800">Vocabulary Study App</h1>
+                        <p class="text-gray-500 mt-1">Select your study path.</p>
+                    </header>
+                    
+                    <div class="mb-6">
+                        <label for="group-select" class="block text-sm font-medium text-gray-700 mb-2">Select Group</label>
+                        <select id="group-select" onchange="setState({ currentGroupIndex: parseInt(this.value) })"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-lg shadow-sm">
+                            ${groupSelect}
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <button onclick="setState({ currentPage: 'reviewer' })"
+                                class="flex items-center justify-center p-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition duration-150 shadow-md shadow-blue-300/50">
+                            <i class="ph-bold ph-list-numbers text-xl mr-3"></i>
+                            Reviewer (List View)
+                        </button>
+                        <button onclick="startFlashcardMode()"
+                                class="flex items-center justify-center p-4 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition duration-150 shadow-md shadow-teal-300/50">
+                            <i class="ph-bold ph-cards text-xl mr-3"></i>
+                            Flashcard Mode
+                        </button>
+                        <button onclick="setState({ currentPage: 'fillInBlanks' })"
+                                class="flex items-center justify-center p-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition duration-150 shadow-md shadow-indigo-300/50"
+                                ${!canQuiz ? 'disabled' : ''}>
+                            <i class="ph-bold ph-puzzle-piece text-xl mr-3"></i>
+                            Fill in the Blanks Practice (AI)
+                        </button>
+                        <button onclick="setState({ currentPage: 'quizSelect' })"
+                                class="flex items-center justify-center p-4 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition duration-150 shadow-md shadow-purple-300/50"
+                                ${currentGroup.items.length < 4 ? 'disabled' : ''}>
+                            <i class="ph-bold ph-question text-xl mr-3"></i>
+                            Select Quiz Type
+                        </button>
+                    </div>
+
+                    ${currentGroup.items.length < 4 ? `
+                        <div class="mt-6 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm text-center">
+                            Note: Multiple choice quizzes require at least 4 words in the selected group.
+                        </div>
+                    ` : ''}
+                    ${!canQuiz ? `
+                        <div class="mt-2 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm text-center">
+                            Note: Fill in the Blanks requires vocabulary data (Groups 1-4 are populated).
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        /** Renders the Quiz Type Selection page. */
+        function renderQuizSelect() {
+            const group = vocabularyGroups[state.currentGroupIndex];
+            
+            if (group.items.length < 4) {
+                 // Should be prevented by the menu, but a safety check just in case
+                 setState({ currentPage: 'menu' });
+                 return;
+            }
+
+            app.innerHTML = `
+                ${createHeader("Quiz Selection: Choose Mode")}
+                <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl border border-purple-100">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                        Select Question Format
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 gap-4">
+                        <button onclick="initQuiz('hanzi-english')"
+                                class="flex flex-col items-center justify-center p-5 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition duration-150 shadow-md shadow-purple-300/50">
+                            <span class="text-xl">Hanzi &rarr; English</span>
+                            <span class="text-sm mt-1 opacity-80">Tests recognition and meaning.</span>
+                        </button>
+                        <button onclick="initQuiz('pinyin-english')"
+                                class="flex flex-col items-center justify-center p-5 bg-purple-500 text-white font-semibold rounded-xl hover:bg-purple-600 transition duration-150 shadow-md shadow-purple-300/50">
+                            <span class="text-xl">Pinyin &rarr; English</span>
+                            <span class="text-sm mt-1 opacity-80">Tests pronunciation recall and meaning.</span>
+                        </button>
+                        <button onclick="initQuiz('hanzi-pinyin')"
+                                class="flex flex-col items-center justify-center p-5 bg-purple-400 text-gray-800 font-semibold rounded-xl hover:bg-purple-500 hover:text-white transition duration-150 shadow-md shadow-purple-300/50">
+                            <span class="text-xl">Hanzi &rarr; Pinyin</span>
+                            <span class="text-sm mt-1 opacity-80">Tests reading and pronunciation.</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        /** Renders the Reviewer page (simple list of terms with collapsible examples). */
+        function renderReviewer() {
+            const group = vocabularyGroups[state.currentGroupIndex];
+            const itemsHtml = group.items.map((item, index) => {
+                const cacheKey = `${state.currentGroupIndex}-${item.hanzi}`;
+                const cachedExamples = exampleCache[cacheKey];
+                
+                // Content to display when the item is expanded (Loading, Generated, or Prompt to Generate)
+                let detailsContent = '';
+                if (cachedExamples) {
+                    // Show cached/generated examples
+                    const examplesHtml = cachedExamples.map((ex, exIndex) => `
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-800 font-medium">${exIndex + 1}. ${ex.hanzi}</p>
+                            <p class="text-xs text-blue-500 italic">${ex.pinyin}</p>
+                            <p class="text-xs text-gray-500">${ex.english}</p>
+                        </div>
+                    `).join('');
+                    
+                    detailsContent = `
+                        <p class="font-semibold text-sm text-gray-700 border-b pb-1">✨ AI Generated Examples:</p>
+                        ${examplesHtml}
+                    `;
+                } else {
+                    // Show button to trigger example generation
+                    detailsContent = `
+                        <button onclick="loadAndDisplayExamples(${index}, ${JSON.stringify(item).replace(/'/g, "\\'")})"
+                                class="w-full text-center py-2 px-4 bg-pink-100 text-pink-600 font-semibold rounded-lg hover:bg-pink-200 transition duration-150">
+                            ✨ Click to Generate Example Sentences
+                        </button>
+                    `;
+                }
+
+                return `
+                    <div id="reviewer-item-${index}" class="reviewer-item border-b last:border-b-0 transition duration-200">
+                        <div class="flex justify-between items-center p-4 hover:bg-blue-50" 
+                             onclick="toggleReviewerDetails(${index}, ${JSON.stringify(item).replace(/'/g, "\\'")})">
+                            <div class="flex-grow">
+                                <p class="text-2xl font-bold text-blue-800">${item.hanzi}</p>
+                                <p class="text-sm font-medium text-blue-500">${item.pinyin}</p>
+                            </div>
+                            <div class="text-right mr-4">
+                                <p class="text-lg text-gray-700">${item.english}</p>
+                            </div>
+                            <i class="ph-bold ph-caret-down text-xl text-gray-500 transition-transform duration-300 reviewer-arrow"></i>
+                        </div>
+                        
+                        <!-- Collapsible Details Container -->
+                        <div class="reviewer-details bg-gray-50 px-4">
+                            <div class="reviewer-details-content">
+                                ${detailsContent}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            app.innerHTML = `
+                ${createHeader("Reviewer: Vocabulary List & AI Examples")}
+                <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                    ${group.items.length > 0 ? itemsHtml : '<p class="p-6 text-center text-gray-500">No vocabulary items to study in this group.</p>'}
+                </div>
+            `;
+        }
+
+        /** Renders the Flashcard view (one flippable card at a time). */
+        function renderFlashcard() {
+            // UPDATED: Use the randomized list stored in state
+            const items = state.shuffledItems;
+            const total = items.length;
+            const currentItem = items[state.flashcardIndex];
+
+            if (total === 0) {
+                 app.innerHTML = `${createHeader("Flashcard Mode")} <p class="text-lg text-gray-600">No vocabulary items to study in this group!</p>`;
+                return;
+            }
+
+            // Function to handle card navigation
+            window.navigateCard = (direction) => {
+                let newIndex = state.flashcardIndex + direction;
+                if (newIndex >= total) newIndex = 0;
+                if (newIndex < 0) newIndex = total - 1;
+                // Reset flip state when navigating
+                const card = document.querySelector('.card-container');
+                if (card && card.classList.contains('flipped')) {
+                    card.classList.remove('flipped');
+                }
+                setState({ flashcardIndex: newIndex });
+            };
+
+            // Toggle the flip state
+            window.toggleFlip = (element) => {
+                element.classList.toggle('flipped');
+            }
+
+            const cardHtml = `
+                <div class="card-container" onclick="toggleFlip(this)">
+                    <div class="card-inner">
+                        <!-- Card Front (Question: Hanzi Only) -->
+                        <div class="card-face card-face-front bg-red-500 text-white">
+                            <div class="text-center">
+                                <p class="text-6xl font-black mb-4">${currentItem.hanzi}</p>
+                                <p class="text-sm mt-8 opacity-70">Hanzi / Click to Flip</p>
+                            </div>
+                        </div>
+
+                        <!-- Card Back (Answer: English Only) -->
+                        <div class="card-face card-face-back bg-white border-4 border-red-500 text-gray-800">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-gray-600 mb-2">English Meaning:</p>
+                                <p class="text-4xl font-extrabold">${currentItem.english}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            app.innerHTML = `
+                ${createHeader("Flashcard Mode")}
+                <div class="w-full max-w-xl flex flex-col items-center">
+                    <p class="text-md font-medium text-gray-600 mb-4">
+                        Card ${state.flashcardIndex + 1} / ${total} (Shuffled)
+                    </p>
+                    ${cardHtml}
+                    
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between w-full max-w-sm mt-8">
+                        <button onclick="navigateCard(-1)"
+                                class="flex items-center px-4 py-2 bg-gray-300 text-gray-800 font-semibold rounded-full hover:bg-gray-400 transition duration-150">
+                            <i class="ph-bold ph-caret-left text-xl mr-2"></i> Previous
+                        </button>
+                        <button onclick="navigateCard(1)"
+                                class="flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-150">
+                            Next <i class="ph-bold ph-caret-right text-xl ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- QUIZ LOGIC (Multiple Choice) ---
+
+        /** Initializes the quiz state and generates questions based on quizType. */
+        function initQuiz(quizType) {
+            const group = vocabularyGroups[state.currentGroupIndex];
+            
+            // Determine prompt and answer keys based on quiz type
+            let promptKey, answerKey;
+            let promptLabel, answerLabel;
+
+            switch (quizType) {
+                case 'hanzi-english':
+                    promptKey = 'hanzi';
+                    answerKey = 'english';
+                    promptLabel = 'Match the Hanzi to the English Meaning:';
+                    answerLabel = 'English Meaning';
+                    break;
+                case 'hanzi-pinyin':
+                    promptKey = 'hanzi';
+                    answerKey = 'pinyin';
+                    promptLabel = 'Match the Hanzi to the Pinyin:';
+                    answerLabel = 'Pinyin';
+                    break;
+                case 'pinyin-english':
+                    promptKey = 'pinyin';
+                    answerKey = 'english';
+                    promptLabel = 'Match the Pinyin to the English Meaning:';
+                    answerLabel = 'English Meaning';
+                    break;
+                default:
+                    setState({ currentPage: 'menu' });
+                    return;
+            }
+            
+            // Shuffle all items to randomize question order
+            const shuffledItems = shuffle([...group.items]);
+            // Extract all possible answers for distractors
+            const allAnswers = group.items.map(item => item[answerKey]);
+
+            const questions = shuffledItems.map(correctItem => {
+                const correctAnswer = correctItem[answerKey];
+                const promptValue = correctItem[promptKey];
+                
+                // Generate 3 random distractors (incorrect answers)
+                let distractors = [];
+                
+                while (distractors.length < 3) {
+                    const randomAnswer = allAnswers[Math.floor(Math.random() * allAnswers.length)];
+                    // Ensure distractor is not the correct answer and hasn't been picked
+                    if (randomAnswer !== correctAnswer && !distractors.includes(randomAnswer)) {
+                        distractors.push(randomAnswer);
+                    }
+                }
+
+                // Combine correct answer and distractors and shuffle the options
+                let options = shuffle([correctAnswer, ...distractors]);
+
+                return {
+                    fullItem: correctItem, 
+                    promptValue: promptValue,
+                    correctAnswer: correctAnswer,
+                    options: options,
+                    userAnswer: null,
+                    isCorrect: null,
+                    promptLabel: promptLabel,
+                    answerLabel: answerLabel,
+                    quizType: quizType,
+                };
+            });
+
+            setState({
+                currentPage: 'quiz',
+                quiz: {
+                    currentQuestion: 0,
+                    score: 0,
+                    questions: questions,
+                    isAnswered: false,
+                    isQuizFinished: false,
+                    type: quizType, 
+                }
+            });
+        }
+
+        /** Handles a user's answer selection during the quiz. */
+        window.handleAnswer = (selectedAnswer, buttonElement) => {
+            if (state.quiz.isAnswered) return; 
+
+            const currentQ = state.quiz.questions[state.quiz.currentQuestion];
+            currentQ.userAnswer = selectedAnswer;
+            
+            const isCorrect = (selectedAnswer === currentQ.correctAnswer);
+            currentQ.isCorrect = isCorrect;
+            
+            // Visually highlight the user's selected button
+            buttonElement.classList.remove('bg-gray-200', 'hover:bg-gray-300', 'hover:border-blue-500');
+            buttonElement.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+
+            // If the user was wrong, find and highlight the correct button
+            if (!isCorrect) {
+                const correctButton = Array.from(document.querySelectorAll('.quiz-option-btn'))
+                    .find(btn => btn.textContent.trim() === currentQ.correctAnswer);
+                if (correctButton) {
+                    correctButton.classList.add('correct-answer', 'opacity-70');
+                }
+            }
+
+            const newScore = state.quiz.score + (isCorrect ? 1 : 0);
+            
+            // Disable all buttons immediately
+            Array.from(document.querySelectorAll('.quiz-option-btn')).forEach(btn => btn.disabled = true);
+
+            // Update state after a delay to allow animation to play
+            setTimeout(() => {
+                setState({
+                    quiz: {
+                        ...state.quiz,
+                        score: newScore,
+                        isAnswered: true
+                    }
+                });
+            }, 500); 
+        };
+
+        /** Moves to the next question or finishes the quiz. */
+        window.nextQuestion = () => {
+            if (!state.quiz.isAnswered) return;
+
+            const nextIndex = state.quiz.currentQuestion + 1;
+            const isQuizFinished = nextIndex >= state.quiz.questions.length;
+
+            setState({
+                quiz: {
+                    ...state.quiz,
+                    currentQuestion: nextIndex,
+                    isAnswered: false,
+                    isQuizFinished: isQuizFinished
+                }
+            });
+        };
+
+        /** Renders the Multiple Choice Quiz view. (renderQuiz is elsewhere) */
+        function renderQuiz() {
+            const quizState = state.quiz;
+            const totalQuestions = quizState.questions.length;
+
+            if (quizState.isQuizFinished) {
+                // Quiz Results View
+                const resultsHtml = quizState.questions.map((q, index) => {
+                    // Show full context item in results for clarity
+                    const contextText = `${q.fullItem.hanzi} (${q.fullItem.pinyin}) / ${q.fullItem.english}`;
+                    
+                    return `
+                        <div class="p-4 rounded-lg mb-2 ${q.isCorrect ? 'bg-green-50' : 'bg-red-50'} border ${q.isCorrect ? 'border-green-300' : 'border-red-300'}">
+                            <p class="font-bold text-lg mb-1">Q ${index + 1}. Prompt: <span class="text-blue-700">${q.promptValue}</span></p>
+                            <p class="text-xs text-gray-500 mb-2">Full Context: ${contextText}</p>
+                            <p class="text-sm text-gray-700">
+                                Correct ${q.answerLabel}: <span class="font-semibold text-green-600">${q.correctAnswer}</span>
+                            </p>
+                            <p class="text-sm text-gray-700">
+                                Your Answer: <span class="font-semibold ${q.isCorrect ? 'text-green-600' : 'text-red-600'}">${q.userAnswer}</span>
+                            </p>
+                        </div>
+                    `;
+                }).join('');
+
+                app.innerHTML = `
+                    ${createHeader("Quiz Results")}
+                    <div class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg text-center">
+                        <i class="ph-fill ph-trophy text-6xl text-yellow-500 mb-4"></i>
+                        <h2 class="text-3xl font-extrabold text-gray-800">Quiz Complete!</h2>
+                        <p class="text-xl text-gray-700 mt-2">
+                            You scored <span class="text-purple-600 font-black">${quizState.score}</span> out of ${totalQuestions}.
+                            (${(quizState.score / totalQuestions * 100).toFixed(0)}%)
+                        </p>
+                        <button onclick="setState({ currentPage: 'quizSelect' })" class="mt-8 px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition duration-150 shadow-md">
+                            Try Again
+                        </button>
+                        <button onclick="setState({ currentPage: 'menu' })" class="mt-8 ml-4 px-6 py-3 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400 transition duration-150 shadow-md">
+                            Back to Menu
+                        </button>
+                        <hr class="my-8">
+                        <h3 class="text-2xl font-semibold text-gray-700 mb-4">Detailed Breakdown</h3>
+                        <div class="text-left">
+                            ${resultsHtml}
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // In-Progress Quiz View
+            const currentQIndex = quizState.currentQuestion;
+            const currentQuestion = quizState.questions[currentQIndex];
+            const isAnswered = quizState.isAnswered;
+
+            // Determine prompt styling based on quiz type
+            let promptSize = 'text-5xl';
+            if (quizState.type === 'pinyin-english' || quizState.type === 'hanzi-pinyin') {
+                promptSize = 'text-3xl';
+            }
+            if (currentQuestion.promptValue.length > 10) {
+                 promptSize = 'text-3xl'; 
+            }
+
+
+            const optionsHtml = currentQuestion.options.map(option => `
+                <button onclick="handleAnswer('${option.replace(/'/g, "\\'")}', this)"
+                        class="quiz-option-btn w-full text-left p-4 my-2 border-2 border-gray-300 bg-gray-200 text-lg font-medium rounded-xl shadow-md"
+                        ${isAnswered ? 'disabled' : ''}>
+                    ${option}
+                </button>
+            `).join('');
+
+            // Determine the title text for the question box
+            const questionBoxTitle = currentQuestion.promptLabel || "Question:";
+
+            app.innerHTML = `
+                ${createHeader("Multiple Choice Quiz", false)}
+                <div class="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg border border-purple-200">
+                    <div class="flex justify-between items-center mb-6 border-b pb-4">
+                        <p class="text-xl font-bold text-purple-600">Question ${currentQIndex + 1} / ${totalQuestions}</p>
+                        <p class="text-xl font-semibold text-gray-700">Score: ${quizState.score}</p>
+                    </div>
+
+                    <!-- Question Display -->
+                    <div class="p-6 bg-purple-50 rounded-xl mb-8 border-4 border-purple-300">
+                        <p class="text-sm text-purple-700 font-semibold mb-1">${questionBoxTitle}</p>
+                        <p class="${promptSize} font-black text-purple-900">${currentQuestion.promptValue}</p>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="options-container">
+                        ${optionsHtml}
+                    </div>
+
+                    <!-- Navigation/Feedback -->
+                    <div class="mt-8 text-center">
+                        ${isAnswered ? `
+                            <button onclick="nextQuestion()"
+                                    class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 shadow-lg">
+                                ${currentQIndex + 1 < totalQuestions ? 'Next Question' : 'Finish Quiz'}
+                                <i class="ph-bold ph-caret-right text-xl ml-2"></i>
+                            </button>
+                            <p class="mt-4 text-sm font-medium ${currentQuestion.isCorrect ? 'text-green-600' : 'text-red-600'}">
+                                ${currentQuestion.isCorrect ? 'Correct!' : `Incorrect! The correct ${currentQuestion.answerLabel} is: ${currentQuestion.correctAnswer}`}
+                            </p>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- MAIN RENDER FUNCTION ---
+        function renderApp() {
+            app.classList.remove('justify-center', 'items-center');
+            app.classList.add('flex-col');
+            
+            switch (state.currentPage) {
+                case 'reviewer':
+                    renderReviewer();
+                    break;
+                case 'flashcard':
+                    renderFlashcard();
+                    break;
+                case 'fillInBlanks':
+                    renderFillInBlanks();
+                    break;
+                case 'quizSelect':
+                    renderQuizSelect();
+                    break;
+                case 'quiz':
+                    renderQuiz();
+                    break;
+                case 'menu':
+                default:
+                    // Center the menu on the screen
+                    app.classList.add('justify-center', 'items-center', 'min-h-screen');
+                    renderMenu();
+                    break;
+            }
+        }
+
+        // Initialize the application on load
+        window.onload = renderApp;
+
+    </script>
+</body>
+</html>
