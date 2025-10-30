@@ -1,0 +1,172 @@
+/*
+  styles.css
+
+  NOTE: This file contains only the custom styles and animations.
+  The styling relies heavily on the presence of Tailwind CSS utility classes
+  which must be available either through a local build or a CDN link
+  in your HTML file.
+*/
+
+/* FIX: Add 'Inter' font to body/main container as a fallback/global style */
+body, .font-['Inter'] {
+    font-family: 'Inter', sans-serif;
+}
+
+/*
+--- Custom Fonts & Icons ---
+To ensure your "Inter" font and Phosphor icons render, you should re-add 
+the necessary CDN links or local file references to your <head> in index.html.
+
+Example (if using CDNs for the font/icons):
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+*/
+
+
+/*
+--- Flashcard Flip CSS ---
+*/
+.card-container {
+    perspective: 1000px;
+    height: 350px;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Hides the back of the element when facing the viewer */
+    backface-visibility: hidden; 
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+/* Pre-rotate the back face 180 degrees so it's ready to flip in */
+.card-face-back { 
+    transform: rotateY(180deg); 
+}
+
+/* Apply the flip transformation when the 'flipped' class is added by JavaScript */
+.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+/*
+--- Quiz Button Feedback and Animations ---
+*/
+
+/* Custom hover effect for multiple choice buttons */
+.quiz-option-btn {
+    transition: all 0.2s ease-in-out;
+}
+.quiz-option-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    /* Shadow uses Tailwind Indigo color for visual consistency */
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); 
+}
+
+/* Correct Answer Styling */
+.correct-answer {
+    background-color: #34D399; /* Green-400 */
+    color: white;
+    animation: pulse-correct 0.5s 3; /* Play 3 times */
+    border-color: #059669 !important; /* Green-600 */
+}
+
+/* Incorrect Answer Styling */
+.incorrect-answer {
+    background-color: #F87171; /* Red-400 */
+    color: white;
+    animation: shake 0.5s;
+    border-color: #DC2626 !important; /* Red-600 */
+}
+
+/* Keyframes for Correct Answer Pulse */
+@keyframes pulse-correct {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Keyframes for Incorrect Answer Shake */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+
+/*
+--- Reviewer (List View) Styling ---
+*/
+.reviewer-item {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Container for the collapsible details */
+.reviewer-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+/* Open state for the details container */
+.reviewer-item.open .reviewer-details {
+    /* FIX: Increase max-height to better accommodate AI examples (e.g., 2 examples + padding) */
+    max-height: 600px; 
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Rotate the chevron icon when the item is open */
+.reviewer-item.open .reviewer-arrow {
+    transform: rotate(180deg);
+}
+
+/* Underline style for generated examples */
+.underline-word {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+
+/*
+--- Fill-in-the-Blanks Styling ---
+*/
+.blank-input {
+    /* Base styles from the original code */
+    padding: 4px 8px;
+    border: 2px solid #6366f1; /* Indigo-500 */
+    border-radius: 8px;
+    font-size: 1.125rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 4px;
+    /* Ensure no unwanted spacing */
+    vertical-align: middle; 
+}
+
+.fill-in-sentence {
+    /* Base font size for the sentence */
+    font-size: 1.75rem; /* text-3xl */
+    line-height: 2.5rem; /* leading-10 */
+}

@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Vocabulary Study App</title>
-    <!-- 載入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- 載入 Phosphor Icons for UI clarity -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
     <style>
@@ -129,9 +127,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen font-['Inter']">
 
-    <!-- Main Application Container -->
     <div id="main-app" class="flex flex-col items-center p-4 sm:p-8">
-        <!-- Content will be rendered by JavaScript -->
         <div class="text-gray-600">Loading application...</div>
     </div>
 
@@ -236,7 +232,196 @@
                     { hanzi: "女兒", pinyin: "nǚ'ér", english: "daughter" },
                 ] 
             },
-            { name: "Group 5: Placeholder (Empty)", items: [] },
+            {
+                name: "Group 5: Greetings & Names",
+                items: [
+                    { hanzi: "你", pinyin: "nǐ", english: "you" },
+                    { hanzi: "好", pinyin: "hǎo", english: "good" },
+                    { hanzi: "請", pinyin: "qǐng", english: "please; to invite" },
+                    { hanzi: "問", pinyin: "wèn", english: "to ask" },
+                    { hanzi: "貴", pinyin: "guì", english: "expensive; honorable" },
+                    { hanzi: "姓", pinyin: "xìng", english: "surname" },
+                    { hanzi: "我", pinyin: "wǒ", english: "I; me" },
+                    { hanzi: "呢", pinyin: "ne", english: "question particle (referring back)" },
+                    { hanzi: "小姐", pinyin: "xiǎojiě", english: "Miss" },
+                    { hanzi: "叫", pinyin: "jiào", english: "to be called" },
+                    { hanzi: "什麽", pinyin: "shénme", english: "what" },
+                    { hanzi: "名字", pinyin: "míngzi", english: "name" },
+                    { hanzi: "先生", pinyin: "xiānshēng", english: "Mr.; Sir" },
+                ]
+            },
+            {
+                name: "Group 6: Nationality & Identity",
+                items: [
+                    { hanzi: "是", pinyin: "shì", english: "to be (is, am, are)" },
+                    { hanzi: "老師", pinyin: "lǎoshī", english: "teacher" },
+                    { hanzi: "嗎", pinyin: "ma", english: "question particle" },
+                    { hanzi: "不", pinyin: "bù", english: "not; no" },
+                    { hanzi: "學生", pinyin: "xuésheng", english: "student" },
+                    { hanzi: "也", pinyin: "yě", english: "also; too" },
+                    { hanzi: "人", pinyin: "rén", english: "person; people" },
+                    { hanzi: "中國", pinyin: "Zhōngguó", english: "China" },
+                    { hanzi: "北京", pinyin: "Běijīng", english: "Beijing" },
+                    { hanzi: "美國", pinyin: "Měiguó", english: "USA" },
+                    { hanzi: "紐約", pinyin: "Niǔyuē", english: "New York" },
+                ]
+            },
+            {
+                name: "Group 7: Family & Possessives",
+                items: [
+                    { hanzi: "那", pinyin: "nà", english: "that" },
+                    { hanzi: "的", pinyin: "de", english: "possessive/attributive particle" },
+                    { hanzi: "照片", pinyin: "zhàopiàn", english: "photo" },
+                    { hanzi: "這", pinyin: "zhè", english: "this" },
+                    { hanzi: "爸爸", pinyin: "bàba", english: "father" },
+                    { hanzi: "媽媽", pinyin: "māma", english: "mother" },
+                    { hanzi: "個", pinyin: "gè", english: "measure word (general)" },
+                    { hanzi: "女", pinyin: "nǚ", english: "female" },
+                    { hanzi: "孩子", pinyin: "háizi", english: "child" },
+                    { hanzi: "誰", pinyin: "shéi", english: "who" },
+                    { hanzi: "他", pinyin: "tā", english: "he; him" },
+                    { hanzi: "姐姐", pinyin: "jiějie", english: "older sister" },
+                    { hanzi: "男", pinyin: "nán", english: "male" },
+                    { hanzi: "弟弟", pinyin: "dìdi", english: "younger brother" },
+                    { hanzi: "她", pinyin: "tā", english: "she; her" },
+                    { hanzi: "大哥", pinyin: "dàgē", english: "eldest brother" },
+                    { hanzi: "兒子", pinyin: "érzi", english: "son" },
+                    { hanzi: "有", pinyin: "yǒu", english: "to have" },
+                    { hanzi: "女兒", pinyin: "nǚ'ér", english: "daughter" },
+                    { hanzi: "沒", pinyin: "méi", english: "not; did not (past tense); have not" },
+                ]
+            },
+            {
+                name: "Group 8: Family Structure & Work",
+                items: [
+                    { hanzi: "傢", pinyin: "jiā", english: "family; home" },
+                    { hanzi: "幾", pinyin: "jǐ", english: "how many (small number)" },
+                    { hanzi: "口", pinyin: "kǒu", english: "mouth; measure word for family members" },
+                    { hanzi: "哥哥", pinyin: "gēge", english: "older brother" },
+                    { hanzi: "兩", pinyin: "liǎng", english: "two (used before measure words)" },
+                    { hanzi: "妹妹", pinyin: "mèimei", english: "younger sister" },
+                    { hanzi: "和", pinyin: "hé", english: "and" },
+                    { hanzi: "大姐", pinyin: "dàjiě", english: "eldest sister" },
+                    { hanzi: "二姐", pinyin: "èrjiě", english: "second sister" },
+                    { hanzi: "做", pinyin: "zuò", english: "to do; to make" },
+                    { hanzi: "工作", pinyin: "gōngzuò", english: "work; job" },
+                    { hanzi: "律師", pinyin: "lǜshī", english: "lawyer" },
+                    { hanzi: "英文", pinyin: "Yīngwén", english: "English language" },
+                    { hanzi: "都", pinyin: "dōu", english: "all; both" },
+                    { hanzi: "大學生", pinyin: "dàxuéshēng", english: "college student" },
+                    { hanzi: "大學", pinyin: "dàxué", english: "university" },
+                    { hanzi: "醫生", pinyin: "yīshēng", english: "doctor" },
+                ]
+            },
+            {
+                name: "Group 9: Date, Time & Preferences",
+                items: [
+                    { hanzi: "月", pinyin: "yuè", english: "month; moon" },
+                    { hanzi: "號", pinyin: "hào", english: "date; number" },
+                    { hanzi: "星期", pinyin: "xīngqī", english: "week" },
+                    { hanzi: "天", pinyin: "tiān", english: "day; sky" },
+                    { hanzi: "生日", pinyin: "shēngrì", english: "birthday" },
+                    { hanzi: "生", pinyin: "shēng", english: "to be born" },
+                    { hanzi: "日", pinyin: "rì", english: "day; sun" },
+                    { hanzi: "今年", pinyin: "jīnnián", english: "this year" },
+                    { hanzi: "年", pinyin: "nián", english: "year" },
+                    { hanzi: "多", pinyin: "duō", english: "many; much; how (in questions)" },
+                    { hanzi: "大", pinyin: "dà", english: "big; old (age)" },
+                    { hanzi: "嵗", pinyin: "suì", english: "year (of age)" },
+                    { hanzi: "吃", pinyin: "chī", english: "to eat" },
+                    { hanzi: "飯", pinyin: "fàn", english: "meal; cooked rice" },
+                    { hanzi: "怎麽樣", pinyin: "zěnmeyàng", english: "how is it? how about that?" },
+                    { hanzi: "太。。。了", pinyin: "tài... le", english: "too; extremely (with 'le')" },
+                    { hanzi: "謝謝", pinyin: "xièxie", english: "thank you" },
+                    { hanzi: "喜歡", pinyin: "xǐhuān", english: "to like" },
+                    { hanzi: "菜", pinyin: "cài", english: "dish; vegetable" },
+                    { hanzi: "還是", pinyin: "háishi", english: "or (in a question)" },
+                    { hanzi: "可是", pinyin: "kěshì", english: "but; however" },
+                    { hanzi: "我們", pinyin: "wǒmen", english: "we; us" },
+                    { hanzi: "點", pinyin: "diǎn", english: "o'clock; dot" },
+                    { hanzi: "半", pinyin: "bàn", english: "half" },
+                    { hanzi: "晚上", pinyin: "wǎnshang", english: "evening; night" },
+                    { hanzi: "見", pinyin: "jiàn", english: "to see" },
+                    { hanzi: "再見", pinyin: "zàijiàn", english: "goodbye" },
+                    { hanzi: "再", pinyin: "zài", english: "again; once more" },
+                ]
+            },
+            {
+                name: "Group 10: Scheduling & Reason",
+                items: [
+                    { hanzi: "現在", pinyin: "xiànzài", english: "now" },
+                    { hanzi: "刻", pinyin: "kè", english: "quarter (of an hour)" },
+                    { hanzi: "事（兒）", pinyin: "shì(r)", english: "matter; affair; thing" },
+                    { hanzi: "今天", pinyin: "jīntiān", english: "today" },
+                    { hanzi: "很", pinyin: "hěn", english: "very" },
+                    { hanzi: "忙", pinyin: "máng", english: "busy" },
+                    { hanzi: "明天", pinyin: "míngtiān", english: "tomorrow" },
+                    { hanzi: "晚飯", pinyin: "wǎnfàn", english: "dinner" },
+                    { hanzi: "爲什麽", pinyin: "wèishénme", english: "why" },
+                    { hanzi: "為", pinyin: "wèi", english: "for" },
+                    { hanzi: "因爲", pinyin: "yīnwèi", english: "because" },
+                    { hanzi: "還", pinyin: "hái", english: "still; also; too" },
+                    { hanzi: "同學", pinyin: "tóngxué", english: "classmate" },
+                    { hanzi: "認識", pinyin: "rènshi", english: "to know (a person)" },
+                    { hanzi: "朋友", pinyin: "péngyou", english: "friend" },
+                ]
+            },
+            {
+                name: "Group 11: Activities & Location",
+                items: [
+                    { hanzi: "周末", pinyin: "zhōumò", english: "weekend" },
+                    { hanzi: "打球", pinyin: "dǎ qiú", english: "to play ball" },
+                    { hanzi: "打", pinyin: "dǎ", english: "to hit; to play (ball)" },
+                    { hanzi: "秋", pinyin: "qiú", english: "ball" },
+                    { hanzi: "看", pinyin: "kàn", english: "to look; to watch; to read" },
+                    { hanzi: "電視", pinyin: "diànshì", english: "television" },
+                    { hanzi: "電", pinyin: "diàn", english: "electricity" },
+                    { hanzi: "視", pinyin: "shì", english: "vision" },
+                    { hanzi: "唱歌", pinyin: "chàng gē", english: "to sing" },
+                    { hanzi: "唱", pinyin: "chàng", english: "to sing" },
+                    { hanzi: "歌", pinyin: "gē", english: "song" },
+                    { hanzi: "跳舞", pinyin: "tiào wǔ", english: "to dance" },
+                    { hanzi: "跳", pinyin: "tiào", english: "to jump" },
+                    { hanzi: "舞", pinyin: "wǔ", english: "dance" },
+                    { hanzi: "聼", pinyin: "tīng", english: "to listen" },
+                    { hanzi: "音樂", pinyin: "yīnyuè", english: "music" },
+                    { hanzi: "書", pinyin: "shū", english: "book" },
+                    { hanzi: "對", pinyin: "duì", english: "right; correct; to" },
+                    { hanzi: "有的", pinyin: "yǒude", english: "some (people, times)" },
+                    { hanzi: "時候", pinyin: "shíhou", english: "time; moment" },
+                    { hanzi: "電影", pinyin: "diànyǐng", english: "movie" },
+                    { hanzi: "影", pinyin: "yǐng", english: "shadow" },
+                    { hanzi: "常常", pinyin: "chángcháng", english: "often" },
+                    { hanzi: "那", pinyin: "nà", english: "in that case; then" },
+                    { hanzi: "去", pinyin: "qù", english: "to go" },
+                    { hanzi: "外國", pinyin: "wàiguó", english: "foreign country" },
+                    { hanzi: "請客", pinyin: "qǐng kè", english: "to treat (to a meal, etc.); to invite" },
+                    { hanzi: "昨天", pinyin: "zuótiān", english: "yesterday" },
+                    { hanzi: "所以", pinyin: "suǒyǐ", english: "so; therefore" },
+                ]
+            },
+            {
+                name: "Group 12: Actions & Mental States",
+                items: [
+                    { hanzi: "小", pinyin: "xiǎo", english: "small; young" },
+                    { hanzi: "好久", pinyin: "hǎojiǔ", english: "a long time" },
+                    { hanzi: "好", pinyin: "hǎo", english: "good" },
+                    { hanzi: "久", pinyin: "jiǔ", english: "long (time)" },
+                    { hanzi: "不錯", pinyin: "bú cuò", english: "not bad" },
+                    { hanzi: "錯", pinyin: "cuò", english: "wrong" },
+                    { hanzi: "想", pinyin: "xiǎng", english: "to want to; to think; to miss" },
+                    { hanzi: "覺得", pinyin: "juéde", english: "to feel; to think" },
+                    { hanzi: "有意思", pinyin: "yǒu yìsi", english: "interesting" },
+                    { hanzi: "意思", pinyin: "yìsi", english: "meaning; idea" },
+                    { hanzi: "只", pinyin: "zhǐ", english: "only; merely" },
+                    { hanzi: "睡覺", pinyin: "shuì jiào", english: "to sleep" },
+                    { hanzi: "睡", pinyin: "shuì", english: "to sleep" },
+                    { hanzi: "算了", pinyin: "suànle", english: "forget it; let it be" },
+                    { hanzi: "找", pinyin: "zhǎo", english: "to look for" },
+                    { hanzi: "別人", pinyin: "biérén", english: "other people" },
+                    { hanzi: "別（的）", pinyin: "bié(de)", english: "other (of)" },
+                ]
+            },
         ];
 
         // Combine all items for the Fill in the Blanks mode
@@ -313,7 +498,7 @@
                 // For quizzes, go back to quiz select; for others, go to menu
                 backButtonTarget = (state.currentPage === 'quiz') ? 'quizSelect' : 'menu';
                 // Quiz and FillInBlanks don't display a group subtitle by default
-                if (state.currentPage === 'fillInBlanks') subtitle = "Using all vocabulary groups (1-4)";
+                if (state.currentPage === 'fillInBlanks') subtitle = "Using all vocabulary groups (1-12)"; // UPDATED: 1-12
             }
 
             return `
@@ -715,12 +900,10 @@
                         Complete the Sentence (Hanzi Only)
                     </h2>
 
-                    <!-- Sentence Display Area -->
                     <div class="text-center p-8 mb-6 rounded-lg border-dashed border-2 border-indigo-300 bg-indigo-50 min-h-40 flex flex-col justify-center items-center">
                         ${displaySentenceHtml}
                     </div>
 
-                    <!-- Action Buttons -->
                     <div class="flex justify-center space-x-4">
                         <button onclick="generateBlankSentence()"
                                 class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150 shadow-md flex items-center"
@@ -802,7 +985,7 @@
                     ` : ''}
                     ${!canQuiz ? `
                         <div class="mt-2 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm text-center">
-                            Note: Fill in the Blanks requires vocabulary data (Groups 1-4 are populated).
+                            Note: Fill in the Blanks requires vocabulary data (Groups 1-12 are now populated).
                         </div>
                     ` : ''}
                 </div>
@@ -894,7 +1077,6 @@
                             <i class="ph-bold ph-caret-down text-xl text-gray-500 transition-transform duration-300 reviewer-arrow"></i>
                         </div>
                         
-                        <!-- Collapsible Details Container -->
                         <div class="reviewer-details bg-gray-50 px-4">
                             <div class="reviewer-details-content">
                                 ${detailsContent}
@@ -945,7 +1127,6 @@
             const cardHtml = `
                 <div class="card-container" onclick="toggleFlip(this)">
                     <div class="card-inner">
-                        <!-- Card Front (Question: Hanzi Only) -->
                         <div class="card-face card-face-front bg-red-500 text-white">
                             <div class="text-center">
                                 <p class="text-6xl font-black mb-4">${currentItem.hanzi}</p>
@@ -953,7 +1134,6 @@
                             </div>
                         </div>
 
-                        <!-- Card Back (Answer: English Only) -->
                         <div class="card-face card-face-back bg-white border-4 border-red-500 text-gray-800">
                             <div class="text-center">
                                 <p class="text-2xl font-bold text-gray-600 mb-2">English Meaning:</p>
@@ -972,7 +1152,6 @@
                     </p>
                     ${cardHtml}
                     
-                    <!-- Navigation Buttons -->
                     <div class="flex justify-between w-full max-w-sm mt-8">
                         <button onclick="navigateCard(-1)"
                                 class="flex items-center px-4 py-2 bg-gray-300 text-gray-800 font-semibold rounded-full hover:bg-gray-400 transition duration-150">
@@ -1211,18 +1390,15 @@
                         <p class="text-xl font-semibold text-gray-700">Score: ${quizState.score}</p>
                     </div>
 
-                    <!-- Question Display -->
                     <div class="p-6 bg-purple-50 rounded-xl mb-8 border-4 border-purple-300">
                         <p class="text-sm text-purple-700 font-semibold mb-1">${questionBoxTitle}</p>
                         <p class="${promptSize} font-black text-purple-900">${currentQuestion.promptValue}</p>
                     </div>
 
-                    <!-- Options -->
                     <div id="options-container">
                         ${optionsHtml}
                     </div>
 
-                    <!-- Navigation/Feedback -->
                     <div class="mt-8 text-center">
                         ${isAnswered ? `
                             <button onclick="nextQuestion()"

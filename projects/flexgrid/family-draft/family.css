@@ -1,0 +1,142 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background-color: #333;
+    padding: 10px 20px;
+    
+    display: flex;
+    justify-content: space-evenly;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+main {
+    display: flex; 
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.sidebar {
+    width: 25%; 
+    padding: 5px;
+    background-color: #e6f7ff;
+    box-sizing: border-box; 
+}
+
+/* NEW RULE: Ensures the family picture scales correctly within the sidebar */
+.sidebar figure img {
+    max-width: 100%;
+    height: auto;
+    display: block; 
+}
+
+.articles-container {
+    width: 75%; 
+    padding: 15px;
+    box-sizing: border-box;
+    
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.family-card {
+    flex: 1 1 calc(33.333% - 20px); 
+    min-width: 250px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.family-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    background-color: #333;
+    color: rgb(158, 137, 137);
+    text-align: center;
+    padding: 10px 0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: smaller;
+}
+
+@media (max-width: 700px) {
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #555;
+    }
+    
+    main {
+        flex-direction: column; 
+    }
+
+    .sidebar,
+    .articles-container {
+        width: 100%;
+    }
+    
+    .articles-container {
+        display: flex; 
+        flex-direction: column; 
+    }
+    
+    .sidebar {
+        order: 1; 
+    }
+
+    .family-card {
+        flex: 1 1 100%;
+        margin-bottom: 15px;
+    }
+}
+
+@media print {
+    
+    nav,
+    .sidebar { 
+        display: none; 
+    }
+    
+    body {
+        font-size: 12pt;
+        color: black;
+    }
+    
+    main, 
+    .articles-container {
+        display: block;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .family-card {
+        page-break-inside: avoid; 
+        border: none;
+        box-shadow: none;
+    }
+}
