@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tables</title>
+    <link rel="stylesheet" href="table.css">
+</head>
+<body>
+    <header>
+        <h1>Near's Web Design Site</h1>
+    </header>
+    <main>
+        <h2>Tables</h2>
+        <table border="3">
+            <thead>
+            <tr>
+                <th>Department</th>
+                <th>Number</th>
+                <th>Title</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Credits</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="6">Fall 2025</td>
+            </tr>
+            <tr>
+                <td rowspan="3">CS</td>
+                <td>140</td>
+                <td>Web Design</td>
+                <td>11am M,W,F</td>
+                <td>Portable 3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>101</td>
+                <td>Introduction to Programming</td>
+                <td>12pm M,W,F</td>
+                <td>Portable 2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>202</td>
+                <td>Object-Oriented Programming</td>
+                <td>6am M,W,F</td>
+                <td>Portable 8</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>MATH</td>
+                <td>212</td>
+                <td>Calculus I</td>
+                <td>3pm M,T,W,TH,F</td>
+                <td>SB 311</td>
+                <td>5</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" id="total">Total Credits</td>
+                <td headers="total">14</td>
+            </tr>
+            </tfoot>
+        </table>
+        <div>
+            <h2>Q&A</h2>
+            <h3>When do you use a table?</h3>
+            <p>Use a table when you need to organize structured data that has a meaningful relationship, usually in two dimensions (rows and columns).</p>
+            <h3>When do you not use a table?</h3>
+            <p>Don't use a table for simple lists, paragraphs of text, or just for page layout (like trying to put an image next to text).</p>
+            <h3>When do you need to do extra work for table accessibility?</h3>
+            <p> Every time a table is used, it means using special HTML tags (like <th> for headers) so screen readers can properly announce what each number or word in the grid means. For tables with complex, nested headers, you have to do even more work to link the cells correctly.</p>
+        </div>
+    </main>
+    <hr>
+    <footer>
+        <p>&copy; 2025 Mark Nephi Javier</p>
+    </footer>
+</body>
+</html>
