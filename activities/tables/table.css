@@ -5,5 +5,29 @@ body {
 #total {
     text-align: center;
     font-weight: bold;
-
 }
+
+.schedule {
+    border-spacing: 0;
+    caption-side: bottom;
+    border-top: thin solid rgb(61, 142, 168);
+}
+
+.schedule thead, tr {
+    background-color:black;
+    color: whitesmoke;
+}
+
+.schedule tbody tr:nth-child(odd) {
+    background-color: darkslategrey;
+}
+.schedule tfoot tr {
+    background-color: black;
+    color: 1px;
+}
+
+.num {
+    vertical-align: top;
+}
+
+:nth-child

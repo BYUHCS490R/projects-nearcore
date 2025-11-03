@@ -12,7 +12,7 @@
     </header>
     <main>
         <h2>Tables</h2>
-        <table border="3">
+        <table class="schedule">
             <thead>
             <tr>
                 <th>Department</th>
@@ -28,7 +28,7 @@
                 <td colspan="6">Fall 2025</td>
             </tr>
             <tr>
-                <td rowspan="3">CS</td>
+                <td class="num">CS</td>
                 <td>140</td>
                 <td>Web Design</td>
                 <td>11am M,W,F</td>
@@ -36,6 +36,7 @@
                 <td>3</td>
             </tr>
             <tr>
+                <td>CS</td>
                 <td>101</td>
                 <td>Introduction to Programming</td>
                 <td>12pm M,W,F</td>
@@ -43,6 +44,7 @@
                 <td>3</td>
             </tr>
             <tr>
+                <td>CS</td>
                 <td>202</td>
                 <td>Object-Oriented Programming</td>
                 <td>6am M,W,F</td>
@@ -73,6 +75,10 @@
             <p>Don't use a table for simple lists, paragraphs of text, or just for page layout (like trying to put an image next to text).</p>
             <h3>When do you need to do extra work for table accessibility?</h3>
             <p> Every time a table is used, it means using special HTML tags (like <th> for headers) so screen readers can properly announce what each number or word in the grid means. For tables with complex, nested headers, you have to do even more work to link the cells correctly.</p>
+            <h3>Why don't we use the border attribute?</h3>
+            <p>We don't use the border attribute anymore because it's outdated</p>
+            <h3>What is the easiest way to color every other row a different color?</h3>
+            <p>The easiest way to color every other row (called zebra striping) is using the :nth-child() CSS selector on the table rows.</p>
         </div>
     </main>
     <hr>
