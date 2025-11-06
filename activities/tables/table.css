@@ -10,7 +10,7 @@ body {
 .schedule {
     border-spacing: 0;
     caption-side: bottom;
-    border-top: thin solid rgb(61, 142, 168);
+    border-top: thin solid rgb(231, 63, 63);
 }
 
 .schedule thead, tr {
