@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Form Attributes</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <header>
+        <h1>Near's Web Design Site</h1>
+        <form action="formprocess.html" method="post">
+            <div>
+                <div>
+                    <label for="fname">First Name</label>
+                    <input type="text" name="fname" id="fname" placeholder="First Name">
+                </div>
+                <div>
+                    <label for="lname">Last Name</label>
+                    <input type="text" name="lname" id="lname">
+                </div>
+                <div>
+                    <label><input type="radio" name="gender" value="male">Male</label>
+                    <label><input type="radio" name="gender" value="female">Female</label>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div>
+                    <label for="pw">Password</label>
+                    <input type="password" name="pw" id="pw">
+                </div>
+                <div>
+                    <label for="state">State</label>
+                        <select name="state" id="state">
+                            <option value="blank">---</option>
+                            <option value="WR">Whiterun</option>
+                            <option value="SL">Solitude</option>
+                            <option value="MK">Markath</option>
+                            <option value="WH">Winterhold</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="comments">Comments</label>
+                    <textarea name="comments" id="comments"></textarea>
+                </div>
+            </div>
+            <div>
+                <label><input type="checkbox" name="agree"> I agree to the terms.</label>
+            </div>
+            <input type="submit" value="Sign Up">
+    </header>
+    <hr>
+    <main>
+        <h2>The form tag has an "action" attribute. What does it do?</h2>
+        <p>The action attribute specifies the URL where the form's collected data will be sent for processing when the form is submitted.</p>
+        <h2>The form tag has a "method" attribute. What does it do?</h2>
+        <p>The method attribute specifies the HTTP method (most commonly GET or POST) that the browser will use to send the form data to the server.</p>
+        <h2>What is the difference between a "POST" and a "GET"?</h2>
+        <p>GET is used to retrieve data, appending form values to the URL, which makes them visible and limits the data size.</p>
+        <p>POST is used to submit or create/update data, sending form values in the request body, which is more secure for sensitive or large amounts of data.</p>
+    </main>
+    <hr>
+    <footer>
+        <p>&copy; 2025 Mark Nephi Javier</p>
+    </footer>
+</body>
+</html>
