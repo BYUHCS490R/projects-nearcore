@@ -1,0 +1,96 @@
+body {
+    font-family:'Courier New', Courier, monospace;
+    background-color: #f0f8ff;
+}
+
+fieldset {
+    background-color: lightskyblue;
+    width: 80%;
+    margin: auto;
+    position: static; 
+    border: 2px solid rgb(11,11,131);
+    padding: 20px;
+}
+
+.form-row, .check-row {
+    display:flex;
+    gap: 7px;
+    margin: 10px 0;
+}
+
+.form-row label {
+    width: 150px;
+    text-align: right;
+}
+
+.form-row input:not([type="submit"]), .form-row select, .form-row textarea {
+    padding: 5px 10px;
+    background-color: cyan;
+    font-family: 'Courier New', Courier, monospace;
+    flex-grow: 1;
+    transition: background-color 0.3s ease; 
+}
+
+.form-row input:not([type="submit"]):focus, 
+.form-row select:focus, 
+.form-row textarea:focus {
+    background-color: white; 
+    outline: 2px solid rgb(11,11,131); 
+    border: none;
+}
+
+.form-row input[type="submit"] {
+    width: auto;
+    margin: auto;
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.spacer {
+    width: 150px; 
+    margin-left: 0; 
+    text-align: right; 
+}
+
+legend {
+    background-color: rgb(11,11,131);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.5em; 
+    font-weight: bold;
+    position: static; 
+    transform: none;
+    top: auto; 
+    left: auto;
+    width: fit-content; 
+    margin: 20px auto 0;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+
+@media ONLY screen AND (max-width: 600px) {
+    .form-row, .check-row {
+        flex-direction: column;
+    }
+
+    .form-row label, .spacer {
+        width: auto;
+        text-align: left;
+        margin-left: 0;
+    }
+
+    fieldset {
+        width: 95%;
+        padding: 10px;
+    }
+
+    legend {
+        width: 95%;
+        margin: 20px auto 0;
+    }
+}

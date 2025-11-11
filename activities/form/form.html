@@ -9,29 +9,25 @@
 <body>
     <header>
         <h1>Near's Web Design Site</h1>
+        <hr>
+        <h2>Forms</h2>
         <form action="formprocess.html" method="post">
-            <div>
-                <div>
+            <legend>Sign Up</legend>
+            <fieldset>
+                <div class="form-row">
                     <label for="fname">First Name</label>
                     <input type="text" name="fname" id="fname" placeholder="First Name">
                 </div>
-                <div>
+                <div class="form-row">
                     <label for="lname">Last Name</label>
                     <input type="text" name="lname" id="lname">
                 </div>
-                <div>
+                <div class="check-row">
+                <div class="spacer">Gender</div>
                     <label><input type="radio" name="gender" value="male">Male</label>
                     <label><input type="radio" name="gender" value="female">Female</label>
                 </div>
-                <div>
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email">
-                </div>
-                <div>
-                    <label for="pw">Password</label>
-                    <input type="password" name="pw" id="pw">
-                </div>
-                <div>
+                <div class="form-row">
                     <label for="state">State</label>
                         <select name="state" id="state">
                             <option value="blank">---</option>
@@ -41,15 +37,27 @@
                             <option value="WH">Winterhold</option>
                         </select>
                 </div>
-                <div>
+                <div class="form-row">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email">
+                </div>
+                <div class="form-row">
+                    <label for="pw">Password</label>
+                    <input type="password" name="pw" id="pw">
+                </div>
+                <div class="form-row">
                     <label for="comments">Comments</label>
                     <textarea name="comments" id="comments"></textarea>
                 </div>
-            </div>
-            <div>
-                <label><input type="checkbox" name="agree"> I agree to the terms.</label>
-            </div>
-            <input type="submit" value="Sign Up">
+                <div class="check-row">
+                    <label><input type="checkbox" name="agree"> I agree to the terms.</label>
+                </div>
+                <div class="form-row">
+                    <div class="spacer"></div>
+                    <input type="submit" value="Sign Up">
+                </div>
+            </fieldset>
+        </form>
     </header>
     <hr>
     <main>
