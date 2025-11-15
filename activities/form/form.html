@@ -11,9 +11,9 @@
         <h1>Near's Web Design Site</h1>
         <hr>
         <h2>Forms</h2>
-        <form action="formprocess.html" method="post">
-            <legend>Sign Up</legend>
+        <form action="formprocess.html" method="post" id="myform"> 
             <fieldset>
+                <legend>Sign Up</legend> 
                 <div class="form-row">
                     <label for="fname">First Name</label>
                     <input type="text" name="fname" id="fname" placeholder="First Name">
@@ -22,10 +22,14 @@
                     <label for="lname">Last Name</label>
                     <input type="text" name="lname" id="lname">
                 </div>
+                <div class="form-row">
+                    <label for="age">Age</label>
+                    <input type="number" name="age" id="age" min="1" max="150" placeholder="Age"> 
+                </div>
                 <div class="check-row">
                 <div class="spacer">Gender</div>
-                    <label><input type="radio" name="gender" value="male">Male</label>
-                    <label><input type="radio" name="gender" value="female">Female</label>
+                    <label for="gender-male"><input type="radio" name="gender" value="male" id="gender-male">Male</label> 
+                    <label for="gender-female"><input type="radio" name="gender" value="female" id="gender-female">Female</label>
                 </div>
                 <div class="form-row">
                     <label for="state">State</label>
@@ -39,7 +43,7 @@
                 </div>
                 <div class="form-row">
                     <label for="email">Email</label>
-                    <input type="text" name="email" id="email">
+                    <input type="email" name="email" id="email">
                 </div>
                 <div class="form-row">
                     <label for="pw">Password</label>
@@ -50,7 +54,7 @@
                     <textarea name="comments" id="comments"></textarea>
                 </div>
                 <div class="check-row">
-                    <label><input type="checkbox" name="agree"> I agree to the terms.</label>
+                    <label for="agree-terms"><input type="checkbox" name="agree" id="agree-terms"> I agree to the terms.</label> 
                 </div>
                 <div class="form-row">
                     <div class="spacer"></div>
@@ -73,5 +77,46 @@
     <footer>
         <p>&copy; 2025 Mark Nephi Javier</p>
     </footer>
+    <script>
+        document.getElementById('myform').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const firstName = document.getElementById('fname').value.trim();
+            const lastName = document.getElementById('lname').value.trim();
+            const ageInput = document.getElementById('age').value.trim(); 
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('pw').value;
+
+            const fullname = firstName + ' ' + lastName;
+
+            const age = parseInt(ageInput, 10); 
+            
+            if (!firstName || !lastName || !ageInput || !email || !password) {
+                alert('Please fill in all required fields (First Name, Last Name, Age, Email, Password).');
+                return;
+            }
+
+            if (isNaN(age) || age < 18) {
+                alert('You must be at least 18 years old to sign up.');
+                return;
+            }
+
+            alert('Form submitted successfully (Prevented actual submission to server).');
+
+            console.log('Full Name:', fullname);
+            console.log('Age:', age);
+            console.log('Email:', email);
+            console.log('Password:', password); 
+
+            const formData = {
+                fullname: fullname,
+                age: age,
+                email: email,
+                password: password,
+            };
+
+            console.log('Form Data:', formData);
+        });
+    </script>
 </body>
 </html>
