@@ -1,96 +1,224 @@
 body {
-    font-family:'Courier New', Courier, monospace;
-    background-color: #f0f8ff;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    background-color: #021016;
+    color: #e6f7ff;
+}
+
+header {
+    background: linear-gradient(90deg, #022233, #04364d);
+    color: #e6f7ff;
+    padding: 22px 16px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 2em;
+    margin: 0 0 6px;
+    color: #cfeeff;
+}
+
+header h2 {
+    font-style: italic;
+    margin: 0;
+    color: #bfe7ff;
+    font-size: 1rem;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(255,255,255,0.03);
+    margin: 18px 0;
+}
+
+footer {
+    background-color: #03121a;
+    color: #9fbfd6;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.95em;
+    border-top: 1px solid rgba(255,255,255,0.02);
 }
 
 fieldset {
-    background-color: lightskyblue;
+    background-color: #05202a;
     width: 80%;
-    margin: auto;
-    position: static; 
-    border: 2px solid rgb(11,11,131);
-    padding: 20px;
+    margin: 20px auto;
+    border: 1px solid rgba(0,160,220,0.12);
+    padding: 18px;
+    border-radius: 8px;
+}
+
+legend {
+    background-color: #01445a;
+    color: #e6f7ff;
+    padding: 8px 14px;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 auto 10px;
+    border-radius: 6px;
+    width: fit-content;
 }
 
 .form-row, .check-row {
-    display:flex;
-    gap: 7px;
-    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+    align-items: center;
 }
 
 .form-row label {
     width: 150px;
     text-align: right;
+    flex-shrink: 0;
+    color: #bfe7ff;
+    font-weight: 600;
+    padding-right: 8px;
 }
 
-.form-row input:not([type="submit"]), .form-row select, .form-row textarea {
-    padding: 5px 10px;
-    background-color: cyan;
+.spacer {
+    width: 150px;
+    text-align: right;
+}
+
+.form-row input:not([type="submit"]),
+.form-row select,
+.form-row textarea {
+    padding: 8px 10px;
+    background-color: #01343f;
+    color: #e6f7ff;
     font-family: 'Courier New', Courier, monospace;
     flex-grow: 1;
-    transition: background-color 0.3s ease; 
+    border: 1px solid rgba(0,160,220,0.10);
+    border-radius: 6px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.form-row input:not([type="submit"]):focus, 
-.form-row select:focus, 
+.form-row input::placeholder,
+.form-row textarea::placeholder {
+    color: rgba(230,247,255,0.55);
+}
+
+.form-row input:not([type="submit"]):focus,
+.form-row select:focus,
 .form-row textarea:focus {
-    background-color: white; 
-    outline: 2px solid rgb(11,11,131); 
-    border: none;
+    background-color: #023844;
+    outline: none;
+    border: 1px solid rgba(0,200,255,0.8);
+}
+
+.form-row textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.4;
+}
+
+.check-row {
+    align-items: flex-start;
+}
+
+.check-row .spacer {
+    padding-top: 6px;
+}
+
+.check-row label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    color: #cfeeff;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.02);
+    transition: background-color 0.12s ease;
+}
+
+.check-row input[type="checkbox"],
+.check-row input[type="radio"] {
+    width: 1.05em;
+    height: 1.05em;
+    margin: 0;
+}
+
+.check-row label:hover {
+    background-color: rgba(0,160,220,0.04);
 }
 
 .form-row input[type="submit"] {
     width: auto;
     margin: auto;
     padding: 10px 20px;
-    background-color: blue;
-    color: white;
+    background-color: #00a8e8;
+    color: #00121a;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.08s ease, box-shadow 0.12s ease;
 }
 
-.spacer {
-    width: 150px; 
-    margin-left: 0; 
-    text-align: right; 
+.form-row input[type="submit"]:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.03);
 }
 
-legend {
-    background-color: rgb(11,11,131);
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.5em; 
-    font-weight: bold;
-    position: static; 
-    transform: none;
-    top: auto; 
-    left: auto;
-    width: fit-content; 
-    margin: 20px auto 0;
-    text-align: center;
-    border-radius: 5px 5px 0 0;
+.form-row input[type="submit"]:focus {
+    outline: 3px solid rgba(0,200,255,0.12);
 }
 
-@media ONLY screen AND (max-width: 600px) {
+.vertical-question {
+    flex-direction: column; 
+    align-items: flex-start;
+}
+
+.vertical-question label {
+    width: 100%; 
+    text-align: left; 
+    margin-bottom: 5px; 
+    padding-right: 0;
+}
+
+.vertical-question textarea {
+    width: 100%; 
+}
+
+@media only screen and (max-width: 600px) {
     .form-row, .check-row {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .form-row label, .spacer {
         width: auto;
         text-align: left;
         margin-left: 0;
+        padding-right: 0;
+        margin-bottom: 6px;
+    }
+
+    .check-row label {
+        margin-left: 0;
     }
 
     fieldset {
         width: 95%;
-        padding: 10px;
+        padding: 12px;
     }
 
     legend {
         width: 95%;
-        margin: 20px auto 0;
+        margin: 12px auto 8px;
+    }
+
+    .form-row input[type="submit"] {
+        padding: 14px 18px;
+        font-size: 1.05em;
+        width: 100%;
+        margin-top: 10px;
     }
 }
