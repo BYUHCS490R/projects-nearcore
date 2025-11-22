@@ -8,29 +8,25 @@
 </head>
 <body>
     <header>
-        <h1>Near's Web Design Site</h1>
-        <h2>Gamification in Student Life Survey (BYUH)</h2>
+        <h1>Gamification in Student Life Survey (BYUH)</h1>
     </header>
     <hr>
     <main>
         <form action="formprocess.html" method="post" id="myform"> 
             <fieldset>
-                <legend>Student Survey</legend> 
-                
+                <legend>Student Survey</legend>               
                 <div class="form-row">
                     <label for="studentid">Student ID</label>
                     <input type="text" name="studentid" id="studentid" placeholder="BYUH ID (e.g., 01234567)">
-                </div>
-                
+                </div>               
                 <div class="form-row">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" placeholder="name@byuh.edu">
-                </div>
-                
+                </div>               
                 <div class="form-row">
                     <label for="age">Age</label>
                     <input type="number" name="age" id="age" min="16" max="99" placeholder="Your Age">
-                </div>
+                </div>                 
                 <div class="form-row">
                     <label for="classification">Class Standing</label>
                         <select name="classification" id="classification">
@@ -40,32 +36,29 @@
                             <option value="JR">Junior</option>
                             <option value="SR">Senior</option>
                         </select>
-                </div>
-                
+                </div>              
                 <div class="check-row">
                     <div class="spacer">Gender</div>
                     <label for="gender-male"><input type="radio" name="gender" value="male" id="gender-male" required>Male</label> 
                     <label for="gender-female"><input type="radio" name="gender" value="female" id="gender-female">Female</label>
-                </div>
-                
+                </div>               
                 <div class="form-row">
                     <label for="bday">Today's Date</label>
                     <input type="date" name="bday" id="bday">
-                </div>
-                
+                </div>  
             </fieldset>
-            
+
             <fieldset>
                 <legend>Your Experience</legend>
-                <div class="form-row">
+                <div class="form-row vertical-question">
                     <label for="q1">How do points, streaks, or rewards (like in Duolingo) affect your motivation and stress levels as a student at BYUH?</label>
                     <textarea name="q1" id="q1" rows="5" placeholder="Q1: Motivation & Stress"></textarea>
                 </div>
-                <div class="form-row">
+                <div class="form-row vertical-question">
                     <label for="q2">What are the positive and negative effects of treating daily life and schoolwork like a game?</label>
                     <textarea name="q2" id="q2" rows="5" placeholder="Q2: Game-ifying Life"></textarea>
                 </div>
-                <div class="form-row">
+                <div class="form-row vertical-question">
                     <label for="q3">What are healthy ways students can use these systems to get motivated without becoming too focused on "winning" or breaking a streak?</label>
                     <textarea name="q3" id="q3" rows="5" placeholder="Q3: Using Systems Healthily"></textarea>
                 </div>
@@ -79,46 +72,13 @@
                 </div>
             </fieldset>
         </form>
+        <div id="submission-message" style="margin-top: 20px; text-align: center; font-size: 1.2em; font-weight: bold; color: #00a8e8;"></div>
     </main>
     <hr>
     <footer>
         <p>&copy; 2025 Mark Nephi Javier | BYUH Research Survey</p>
     </footer>
 
-    <script>
-        document.getElementById('myform').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const studentID = document.getElementById('studentid').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const age = document.getElementById('age').value.trim();
-            const classification = document.getElementById('classification').value;
-            const consent = document.getElementById('consent').checked; 
-            if (!studentID || !email || !age || classification === 'blank') {
-                alert('Please fill in your Student ID, Email, Age, and select your Classification.');
-                return;
-            }
-            if (!consent) {
-                alert('You must provide consent to submit your responses.');
-                return;
-            }
-            alert('Thank you! Your survey has been submitted successfully.');
-            console.log('Student ID:', studentID);
-            console.log('Email:', email);
-            console.log('Age:', age);
-            console.log('Classification:', classification); 
-            console.log('Consent:', consent);
-            const formData = {
-                studentid: studentID,
-                email: email,
-                age: age,
-                classification: classification,
-                q1: document.getElementById('q1').value.trim(),
-                q2: document.getElementById('q2').value.trim(),
-                q3: document.getElementById('q3').value.trim()
-            };
-            console.log('Survey Data:', formData); 
-        });
-    </script>
+    <script src="form.js"></script> 
 </body>
 </html>
