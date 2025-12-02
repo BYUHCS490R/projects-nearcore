@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Recipe - The Culinary Compass</title>
+    <link rel="stylesheet" href="finaldraft.css">
+</head>
+<body>
+
+    <header>
+        <h1>Near's Web Design Site</h1>
+        <h2>The Culinary Compass: A Community Recipe Database</h2>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="current-page"><a href="form.html">Submit Recipe</a></li>
+            <li><a href="search.html">Find a Recipe</a></li>
+            <li><a href="desserts.html">Dessert Recipes</a></li>
+            <li><a href="maindishes.html">Main Dishes</a></li>
+            <li><a href="measurements.html">Measurements Table</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="proposal-section">
+            <h3 class="section-title">Share Your Culinary Masterpiece</h3>
+
+            <h4>Tips on Writing a Good Recipe</h4>
+            <ul>
+                <li>Be specific with measurements (use tsp, tbsp, cups, etc.).</li>
+                <li>List ingredients in the order they are used.</li>
+                <li>Break instructions into clear, numbered steps.</li>
+            </ul>
+            
+            <div id="success-message">
+                Recipe successfully submitted! Thank you for your contribution.
+                <p class="success-detail">(This message confirms the JavaScript processing is working.)</p>
+            </div>
+
+            <form id="recipe-submission-form">
+                
+                <label for="recipe-name">Recipe Name:</label>
+                <input type="text" id="recipe-name" name="recipe-name" required>
+
+                <label for="nickname">Your Name/Nickname:</label>
+                <input type="text" id="nickname" name="nickname" required>
+
+                <label for="food-type">Food Type:</label>
+                <select id="food-type" name="food-type" required>
+                    <option value="">-- Select a Type --</option>
+                    <option value="italian">Italian</option>
+                    <option value="asian">Asian</option>
+                    <option value="american">American</option>
+                    <option value="pacific">Pacific</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="meal-category">Meal Category:</label>
+                <select id="meal-category" name="meal-category" required>
+                    <option value="">-- Select a Category --</option>
+                    <option value="main-dish">Main Dish</option>
+                    <option value="dessert">Dessert</option>
+                    <option value="soup">Soup</option>
+                    <option value="side-dish">Side Dish</option>
+                </select>
+
+                <label for="prep-time">Prep Time (minutes):</label>
+                <input type="text" id="prep-time" name="prep-time">
+
+                <label for="cook-time">Cook Time (minutes):</label>
+                <input type="text" id="cook-time" name="cook-time">
+                
+                <label for="ingredients">Ingredients (list line by line):</label>
+                <textarea id="ingredients" name="ingredients" required></textarea>
+
+                <label for="instructions">Instructions (detailed steps):</label>
+                <textarea id="instructions" name="instructions" required></textarea>
+
+                <label for="image-link">Recipe Image Link (or Placeholder):</label>
+                <input type="text" id="image-link" name="image-link">
+
+                <button type="submit">Submit Recipe</button>
+            </form>
+        </section>
+    </main>
+
+    <hr>
+    <footer>
+        <p>&copy; 2025 Mark Nephi Javier. Images from Pexels and Unsplash.</p>
+    </footer>
+
+    <script src="form.js"></script>
+
+</body>
+</html>
