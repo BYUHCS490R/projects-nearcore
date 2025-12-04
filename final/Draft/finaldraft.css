@@ -102,6 +102,7 @@ footer {
     text-align: center;
     margin-top: 30px;
 }
+
 .accent-link {
     color: #00a8e8;
 }
@@ -204,6 +205,22 @@ form button {
     transition: background-color 0.3s;
 }
 form button:hover {
+    background-color: #00c0ff;
+}
+.button-style {
+    background-color: #00a8e8;
+    color: #0d121c;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+.button-style:hover {
     background-color: #00c0ff;
 }
 #success-message {
