@@ -9,8 +9,24 @@ body {
     background-attachment: fixed;
     background-position: center center;
     background-color: #0d121c;
-    
 }
+
+.desserts-page {
+    background-image: url('dessert-unsplash.jpg');
+}
+
+.form-page {
+    background-image: url('formbgp-freepik.jpg');
+}
+
+.main-dishes-page {
+    background-image: url('maindish-wikimedia.jpg');
+}
+
+.measurements-page {
+    background-image: url('measure-pixabay.jpg');
+}
+
 header {
     background-color: #172435;
     color: #cfeeff;
@@ -47,7 +63,6 @@ main {
     margin-bottom: 30px;
     border-radius: 8px;
     border-left: 5px solid #00a8e8;
-
 }
 .section-title {
     color: #00a8e8;
@@ -83,7 +98,6 @@ footer {
     color: #00a8e8;
     font-weight: 600;
 }
-
 .button-container {
     text-align: center;
     margin-top: 30px;
@@ -91,7 +105,6 @@ footer {
 .accent-link {
     color: #00a8e8;
 }
-
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -123,7 +136,12 @@ nav a:hover {
     color: #0d121c;
     font-weight: bold;
 }
-
+.page-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
 .data-table {
     border-collapse: collapse;
     text-align: left;
@@ -203,10 +221,35 @@ form button:hover {
     font-size: 0.9em;
     font-weight: normal;
 }
+.video-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    margin-top: 20px;
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.reference-link {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
 
 @media only screen and (max-width: 768px) {
+    
     nav ul {
         flex-direction: column;
+        border-top: 1px solid #00a8e8;
+    }
+    nav li {
+        width: 100%;
     }
     nav a {
         padding: 18px; 
@@ -220,5 +263,23 @@ form button:hover {
     .proposal-section {
         background-color: rgba(17, 30, 43, 0.9);
         padding: 15px;
+    }
+    
+    .page-list-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    .data-table {
+        min-width: 500px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    header h2 {
+        font-size: 1rem;
     }
 }
