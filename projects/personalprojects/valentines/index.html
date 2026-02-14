@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine</title>
+    <style>
+        body {
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .corner-img {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ff4d6d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: opacity 1.5s ease-in-out;
+            opacity: 0; 
+            z-index: 5;
+        }
+
+        .reveal { opacity: 1; }
+        .top-left { top: 20px; left: 20px; }
+        .top-right { top: 20px; right: 20px; }
+        .bottom-left { bottom: 20px; left: 20px; }
+        .bottom-right { bottom: 20px; right: 20px; }
+
+        .main-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 450px;
+            border: 2px solid #ffb3c1;
+            position: relative;
+            z-index: 10;
+        }
+
+        .option-btn {
+            background: #ffccd5;
+            width: 90%;
+            display: block;
+            margin: 12px auto;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .btn-group { position: relative; height: 100px; margin-top: 20px; }
+        #yes-btn { background-color: #ff4d6d; color: white; padding: 15px 30px; border-radius: 8px; border: none; cursor: pointer; }
+        #no-btn { background-color: #adb5bd; color: white; position: absolute; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; transition: 0.1s; }
+
+        .hidden { display: none; }
+        .binary-text { font-size: 0.9rem; color: #ff4d6d; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <img src="6104815263145899881.jpg" class="corner-img top-left" alt="Us">
+    <img src="6140807303834745995.jpg" class="corner-img top-right" alt="Us">
+    <img src="6140807303834745994.jpg" class="corner-img bottom-left" alt="Us">
+    <img src="6082157214715459973.jpg" class="corner-img bottom-right" alt="Us">
+
+    <div class="main-container">
+        <div id="intro-screen">
+            <h2 style="color: #ff4d6d;">Happy Valentines Mee ko!</h2>
+            <p>Sorry, ito lang muna ang gift ko sayo.<br>I hope you'll enjoy and love it mommy.</p>
+            <button id="start-btn" class="option-btn" style="background: #ff4d6d; color: white;">Proceed ❤️</button>
+        </div>
+
+        <div id="quiz-box" class="hidden">
+            <h2 id="question-text"></h2>
+            <div id="options-container"></div>
+        </div>
+
+        <div id="congrats-screen" class="hidden">
+            <h2 style="color: #ff4d6d;">Correct!</h2>
+            <p>You really do know us best, Mee. ❤️</p>
+            <button id="congrats-next-btn" class="option-btn" style="background: #ff4d6d; color: white;">Next</button>
+        </div>
+
+        <div id="final-ask" class="hidden">
+            <h2>Mee, will you be my Valentine?</h2>
+            <div class="btn-group">
+                <button id="yes-btn">YES</button>
+                <button id="no-btn">NO</button>
+            </div>
+        </div>
+
+        <div id="success-message" class="hidden">
+            <h1 class="binary-text">01001001 00100000 01101100 01101111 01110110 01100101 00100000 01111001 01101111 01110101</h1>
+            <p>Happy Valentine's Day Mee ko! Hehehe, copy mo itong mga binary sa taas love tapos ipacheck mo sa AI anong meaning ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "When is our first anniversary?", options: ["05/30/21", "09/08/21", "09/08/22"], answer: "09/08/22" },
+            { q: "What is our favorite snack?", options: ["pancit canton", "o-puffs", "gulay"], answer: ["pancit canton", "o-puffs"] },
+            { q: "Our most favorite season is:", options: ["Christmas Season", "Valentines Season", "Halloween Season"], answer: "Christmas Season" }
+        ];
+
+        let currentStep = 0;
+
+        // Button references
+        const startBtn = document.getElementById('start-btn');
+        const congratsNextBtn = document.getElementById('congrats-next-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+
+        // Step 1: Proceed
+        startBtn.onclick = function() {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-box').classList.remove('hidden');
+            document.querySelectorAll('.corner-img').forEach(img => img.classList.add('reveal'));
+            loadQuestion();
+        };
+
+        // Step 2: Quiz Logic
+        function loadQuestion() {
+            const qData = questions[currentStep];
+            document.getElementById('question-text').innerText = qData.q;
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            qData.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.className = 'option-btn';
+                btn.onclick = () => {
+                    const isCorrect = Array.isArray(qData.answer) ? qData.answer.includes(opt) : opt === qData.answer;
+                    if (isCorrect) {
+                        currentStep++;
+                        if (currentStep < questions.length) { loadQuestion(); } 
+                        else { 
+                            document.getElementById('quiz-box').classList.add('hidden');
+                            document.getElementById('congrats-screen').classList.remove('hidden');
+                        }
+                    } else {
+                        qData.options.reverse();
+                        loadQuestion();
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Step 3: Next
+        congratsNextBtn.onclick = function() {
+            document.getElementById('congrats-screen').classList.add('hidden');
+            document.getElementById('final-ask').classList.remove('hidden');
+        };
+
+        // Step 4: Evasive No
+        noBtn.onmouseover = function() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        };
+
+        // Step 5: Yes
+        yesBtn.onclick = function() {
+            document.getElementById('final-ask').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        };
+    </script>
+</body>
+</html>
