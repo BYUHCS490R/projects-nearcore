@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinese Vocabulary Reviewer</title>
+    <title>Chinese Vocabulary Reviewer with Audio</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -67,24 +67,29 @@
         }
         .controls {
             margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         button {
-            padding: 10px 25px;
+            padding: 10px 20px;
             font-size: 1rem;
-            margin: 0 10px;
             cursor: pointer;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             background-color: #3498db;
             color: white;
-            transition: 0.3s;
+            transition: 0.2s;
         }
-        button:hover {
-            background-color: #2980b9;
-        }
+        button:hover { background-color: #2980b9; }
+        .speak-btn { background-color: #2ecc71; }
+        .speak-btn:hover { background-color: #27ae60; }
+        .shuffle-btn { background-color: #9b59b6; }
         .counter {
             margin-top: 15px;
             color: #95a5a6;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -105,13 +110,15 @@
     <div class="counter" id="counter">Card 1 / 21</div>
 
     <div class="controls">
-        <button onclick="prevCard()">Previous</button>
+        <button onclick="prevCard()">Prev</button>
         <button onclick="flipCard()">Flip</button>
+        <button class="speak-btn" onclick="speakText(event)">🔊 Speak</button>
         <button onclick="nextCard()">Next</button>
+        <button class="shuffle-btn" onclick="shuffleCards()">Shuffle</button>
     </div>
 
     <script>
-        const vocab = [
+        const originalVocab = [
             { char: "病人", pinyin: "bìngrén", meaning: "patient" },
             { char: "醫院", pinyin: "yīyuàn", meaning: "hospital" },
             { char: "看病", pinyin: "kàn bìng", meaning: "to see a doctor" },
@@ -135,6 +142,7 @@
             { char: "辦法", pinyin: "bànfǎ", meaning: "method; way (of doing something)" }
         ];
 
+        let vocab = [...originalVocab];
         let currentIndex = 0;
         const card = document.getElementById('card');
         const charDisplay = document.getElementById('char-display');
@@ -166,11 +174,25 @@
             updateCard();
         }
 
-        // Spacebar to flip, Arrow keys to navigate
+        function shuffleCards() {
+            vocab.sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            updateCard();
+        }
+
+        function speakText(event) {
+            if(event) event.stopPropagation(); // Prevents flipping when clicking speak
+            const utterance = new SpeechSynthesisUtterance(vocab[currentIndex].char);
+            utterance.lang = 'zh-TW'; // Sets to Traditional Chinese/Mandarin
+            utterance.rate = 0.8;    // Slightly slower for better clarity
+            window.speechSynthesis.speak(utterance);
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.code === "Space") flipCard();
             if (e.code === "ArrowRight") nextCard();
             if (e.code === "ArrowLeft") prevCard();
+            if (e.code === "KeyV") speakText();
         });
     </script>
 </body>
