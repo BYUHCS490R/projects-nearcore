@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Vocabulary Reviewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .card-container {
+            perspective: 1000px;
+            width: 350px;
+            height: 250px;
+            cursor: pointer;
+        }
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: white;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #fffdf0;
+        }
+        .character {
+            font-size: 4rem;
+            color: #2c3e50;
+        }
+        .pinyin {
+            font-size: 1.5rem;
+            color: #e67e22;
+            margin-bottom: 10px;
+        }
+        .meaning {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
+        .controls {
+            margin-top: 30px;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 1rem;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .counter {
+            margin-top: 15px;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="character" id="char-display">病人</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="pinyin" id="pinyin-display">bìngrén</div>
+                <div class="meaning" id="meaning-display">patient</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="counter" id="counter">Card 1 / 21</div>
+
+    <div class="controls">
+        <button onclick="prevCard()">Previous</button>
+        <button onclick="flipCard()">Flip</button>
+        <button onclick="nextCard()">Next</button>
+    </div>
+
+    <script>
+        const vocab = [
+            { char: "病人", pinyin: "bìngrén", meaning: "patient" },
+            { char: "醫院", pinyin: "yīyuàn", meaning: "hospital" },
+            { char: "看病", pinyin: "kàn bìng", meaning: "to see a doctor" },
+            { char: "肚子", pinyin: "dùzi", meaning: "belly; abdomen; stomach" },
+            { char: "疼死", pinyin: "téng sǐ", meaning: "really painful" },
+            { char: "夜裡", pinyin: "yè li", meaning: "at night" },
+            { char: "好幾", pinyin: "hǎo jǐ", meaning: "quite a few" },
+            { char: "廁所", pinyin: "cèsuǒ", meaning: "restroom; toilet" },
+            { char: "把", pinyin: "bǎ", meaning: "prep. indicating disposition or arrangement" },
+            { char: "冰箱", pinyin: "bīngxiāng", meaning: "refrigerator" },
+            { char: "發燒", pinyin: "fā shāo", meaning: "to have a fever" },
+            { char: "躺下", pinyin: "tǎng xia", meaning: "to lie down" },
+            { char: "檢查", pinyin: "jiǎnchá", meaning: "to examine" },
+            { char: "吃壞", pinyin: "chī huài", meaning: "to get sick because of bad food" },
+            { char: "打針", pinyin: "dǎ zhēn", meaning: "to get an injection" },
+            { char: "藥", pinyin: "yào", meaning: "medicine" },
+            { char: "片", pinyin: "piàn", meaning: "measure word for tablets, slices, etc." },
+            { char: "遍", pinyin: "biàn", meaning: "measure word for complete courses of an action" },
+            { char: "最好", pinyin: "zuìhǎo", meaning: "had better" },
+            { char: "小時", pinyin: "xiǎoshí", meaning: "hour" },
+            { char: "辦法", pinyin: "bànfǎ", meaning: "method; way (of doing something)" }
+        ];
+
+        let currentIndex = 0;
+        const card = document.getElementById('card');
+        const charDisplay = document.getElementById('char-display');
+        const pinyinDisplay = document.getElementById('pinyin-display');
+        const meaningDisplay = document.getElementById('meaning-display');
+        const counterDisplay = document.getElementById('counter');
+
+        function updateCard() {
+            card.classList.remove('is-flipped');
+            setTimeout(() => {
+                charDisplay.innerText = vocab[currentIndex].char;
+                pinyinDisplay.innerText = vocab[currentIndex].pinyin;
+                meaningDisplay.innerText = vocab[currentIndex].meaning;
+                counterDisplay.innerText = `Card ${currentIndex + 1} / ${vocab.length}`;
+            }, 150);
+        }
+
+        function flipCard() {
+            card.classList.toggle('is-flipped');
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % vocab.length;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + vocab.length) % vocab.length;
+            updateCard();
+        }
+
+        // Spacebar to flip, Arrow keys to navigate
+        document.addEventListener('keydown', (e) => {
+            if (e.code === "Space") flipCard();
+            if (e.code === "ArrowRight") nextCard();
+            if (e.code === "ArrowLeft") prevCard();
+        });
+    </script>
+</body>
+</html>
