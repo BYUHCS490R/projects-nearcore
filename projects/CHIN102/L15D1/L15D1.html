@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinese Vocabulary Reviewer with Audio</title>
+    <title>Chinese Vocabulary Reviewer</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,6 +14,16 @@
             height: 100vh;
             margin: 0;
             background-color: #f0f2f5;
+        }
+        .selector-container {
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 8px 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
         }
         .card-container {
             perspective: 1000px;
@@ -95,6 +105,15 @@
 </head>
 <body>
 
+    <div class="selector-container">
+        <label for="section-select">Choose Section: </label>
+        <select id="section-select" onchange="changeSection()">
+            <option value="all">All Words (1-37)</option>
+            <option value="1">Section 1 (1-21)</option>
+            <option value="2">Section 2 (22-37)</option>
+        </select>
+    </div>
+
     <div class="card-container" onclick="flipCard()">
         <div class="card" id="card">
             <div class="card-face card-front">
@@ -107,39 +126,57 @@
         </div>
     </div>
 
-    <div class="counter" id="counter">Card 1 / 21</div>
+    <div class="counter" id="counter">Card 1 / 37</div>
 
     <div class="controls">
-        <button onclick="prevCard()">Prev</button>
-        <button onclick="flipCard()">Flip</button>
+        <button onclick="prevCard(event)">Prev</button>
+        <button onclick="flipCard(event)">Flip</button>
         <button class="speak-btn" onclick="speakText(event)">🔊 Speak</button>
-        <button onclick="nextCard()">Next</button>
+        <button onclick="nextCard(event)">Next</button>
         <button class="shuffle-btn" onclick="shuffleCards()">Shuffle</button>
     </div>
 
     <script>
         const originalVocab = [
-            { char: "病人", pinyin: "bìngrén", meaning: "patient" },
-            { char: "醫院", pinyin: "yīyuàn", meaning: "hospital" },
-            { char: "看病", pinyin: "kàn bìng", meaning: "to see a doctor" },
-            { char: "肚子", pinyin: "dùzi", meaning: "belly; abdomen; stomach" },
-            { char: "疼死", pinyin: "téng sǐ", meaning: "really painful" },
-            { char: "夜裡", pinyin: "yè li", meaning: "at night" },
-            { char: "好幾", pinyin: "hǎo jǐ", meaning: "quite a few" },
-            { char: "廁所", pinyin: "cèsuǒ", meaning: "restroom; toilet" },
-            { char: "把", pinyin: "bǎ", meaning: "prep. indicating disposition or arrangement" },
-            { char: "冰箱", pinyin: "bīngxiāng", meaning: "refrigerator" },
-            { char: "發燒", pinyin: "fā shāo", meaning: "to have a fever" },
-            { char: "躺下", pinyin: "tǎng xia", meaning: "to lie down" },
-            { char: "檢查", pinyin: "jiǎnchá", meaning: "to examine" },
-            { char: "吃壞", pinyin: "chī huài", meaning: "to get sick because of bad food" },
-            { char: "打針", pinyin: "dǎ zhēn", meaning: "to get an injection" },
-            { char: "藥", pinyin: "yào", meaning: "medicine" },
-            { char: "片", pinyin: "piàn", meaning: "measure word for tablets, slices, etc." },
-            { char: "遍", pinyin: "biàn", meaning: "measure word for complete courses of an action" },
-            { char: "最好", pinyin: "zuìhǎo", meaning: "had better" },
-            { char: "小時", pinyin: "xiǎoshí", meaning: "hour" },
-            { char: "辦法", pinyin: "bànfǎ", meaning: "method; way (of doing something)" }
+            // Section 1
+            { char: "病人", pinyin: "bìngrén", meaning: "patient", section: "1" },
+            { char: "醫院", pinyin: "yīyuàn", meaning: "hospital", section: "1" },
+            { char: "看病", pinyin: "kàn bìng", meaning: "to see a doctor", section: "1" },
+            { char: "肚子", pinyin: "dùzi", meaning: "belly; abdomen; stomach", section: "1" },
+            { char: "疼死", pinyin: "téng sǐ", meaning: "really painful", section: "1" },
+            { char: "夜裡", pinyin: "yè li", meaning: "at night", section: "1" },
+            { char: "好幾", pinyin: "hǎo jǐ", meaning: "quite a few", section: "1" },
+            { char: "廁所", pinyin: "cèsuǒ", meaning: "restroom; toilet", section: "1" },
+            { char: "把", pinyin: "bǎ", meaning: "prep. indicating disposition or arrangement", section: "1" },
+            { char: "冰箱", pinyin: "bīngxiāng", meaning: "refrigerator", section: "1" },
+            { char: "發燒", pinyin: "fā shāo", meaning: "to have a fever", section: "1" },
+            { char: "躺下", pinyin: "tǎng xia", meaning: "to lie down", section: "1" },
+            { char: "檢查", pinyin: "jiǎnchá", meaning: "to examine", section: "1" },
+            { char: "吃壞", pinyin: "chī huài", meaning: "to get sick because of bad food", section: "1" },
+            { char: "打針", pinyin: "dǎ zhēn", meaning: "to get an injection", section: "1" },
+            { char: "藥", pinyin: "yào", meaning: "medicine", section: "1" },
+            { char: "片", pinyin: "piàn", meaning: "measure word for tablets, slices, etc.", section: "1" },
+            { char: "遍", pinyin: "biàn", meaning: "measure word for complete courses of an action", section: "1" },
+            { char: "最好", pinyin: "zuìhǎo", meaning: "had better", section: "1" },
+            { char: "小時", pinyin: "xiǎoshí", meaning: "hour", section: "1" },
+            { char: "辦法", pinyin: "bànfǎ", meaning: "method; way (of doing something)", section: "1" },
+            // Section 2
+            { char: "生病", pinyin: "shēng bìng", meaning: "to get sick", section: "2" },
+            { char: "感冒", pinyin: "gǎnmào", meaning: "to have a cold", section: "2" },
+            { char: "身體", pinyin: "shēntǐ", meaning: "body; health", section: "2" },
+            { char: "癢", pinyin: "yǎng", meaning: "itchy", section: "2" },
+            { char: "過敏", pinyin: "guòmǐn", meaning: "to be allergic to", section: "2" },
+            { char: "藥店", pinyin: "yàodiàn", meaning: "pharmacy", section: "2" },
+            { char: "健康", pinyin: "jiànkāng", meaning: "healthy; health", section: "2" },
+            { char: "保險", pinyin: "bǎoxiǎn", meaning: "insurance; secure", section: "2" },
+            { char: "趕快", pinyin: "gǎnkuài", meaning: "right away; quickly; in a hurry", section: "2" },
+            { char: "要不然", pinyin: "yàobùrán", meaning: "otherwise", section: "2" },
+            { char: "越來越", pinyin: "yuè lái yuè", meaning: "more and more", section: "2" },
+            { char: "上次", pinyin: "shàng cì", meaning: "last time", section: "2" },
+            { char: "休息", pinyin: "xiūxi", meaning: "to take a break; to rest", section: "2" },
+            { char: "懶", pinyin: "lǎn", meaning: "lazy", section: "2" },
+            { char: "再說", pinyin: "zàishuō", meaning: "moreover", section: "2" },
+            { char: "亂", pinyin: "luàn", meaning: "randomly; arbitrarily; messily", section: "2" }
         ];
 
         let vocab = [...originalVocab];
@@ -149,27 +186,44 @@
         const pinyinDisplay = document.getElementById('pinyin-display');
         const meaningDisplay = document.getElementById('meaning-display');
         const counterDisplay = document.getElementById('counter');
+        const sectionSelect = document.getElementById('section-select');
+
+        function changeSection() {
+            const selectedValue = sectionSelect.value;
+            if (selectedValue === "all") {
+                vocab = [...originalVocab];
+            } else {
+                vocab = originalVocab.filter(item => item.section === selectedValue);
+            }
+            currentIndex = 0;
+            updateCard();
+        }
 
         function updateCard() {
             card.classList.remove('is-flipped');
             setTimeout(() => {
-                charDisplay.innerText = vocab[currentIndex].char;
-                pinyinDisplay.innerText = vocab[currentIndex].pinyin;
-                meaningDisplay.innerText = vocab[currentIndex].meaning;
-                counterDisplay.innerText = `Card ${currentIndex + 1} / ${vocab.length}`;
+                if (vocab.length > 0) {
+                    charDisplay.innerText = vocab[currentIndex].char;
+                    pinyinDisplay.innerText = vocab[currentIndex].pinyin;
+                    meaningDisplay.innerText = vocab[currentIndex].meaning;
+                    counterDisplay.innerText = `Card ${currentIndex + 1} / ${vocab.length}`;
+                }
             }, 150);
         }
 
-        function flipCard() {
+        function flipCard(event) {
+            if(event) event.stopPropagation();
             card.classList.toggle('is-flipped');
         }
 
-        function nextCard() {
+        function nextCard(event) {
+            if(event) event.stopPropagation();
             currentIndex = (currentIndex + 1) % vocab.length;
             updateCard();
         }
 
-        function prevCard() {
+        function prevCard(event) {
+            if(event) event.stopPropagation();
             currentIndex = (currentIndex - 1 + vocab.length) % vocab.length;
             updateCard();
         }
@@ -181,10 +235,10 @@
         }
 
         function speakText(event) {
-            if(event) event.stopPropagation(); // Prevents flipping when clicking speak
+            if(event) event.stopPropagation();
             const utterance = new SpeechSynthesisUtterance(vocab[currentIndex].char);
-            utterance.lang = 'zh-TW'; // Sets to Traditional Chinese/Mandarin
-            utterance.rate = 0.8;    // Slightly slower for better clarity
+            utterance.lang = 'zh-TW'; 
+            utterance.rate = 0.8;
             window.speechSynthesis.speak(utterance);
         }
 
@@ -194,6 +248,9 @@
             if (e.code === "ArrowLeft") prevCard();
             if (e.code === "KeyV") speakText();
         });
+        
+        // Initialize
+        updateCard();
     </script>
 </body>
 </html>
