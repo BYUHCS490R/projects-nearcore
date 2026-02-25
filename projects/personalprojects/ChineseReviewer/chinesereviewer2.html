@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinese Vocab Reviewer</title>
+    <title>Chinese Vocab Reviewer - Pro</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,18 +12,15 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             margin: 0;
         }
 
-        .controls {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
+        .header { text-align: center; margin-bottom: 20px; }
+        
         .card-container {
-            width: 350px;
-            height: 250px;
+            width: 380px;
+            height: 260px;
             perspective: 1000px;
             cursor: pointer;
         }
@@ -32,15 +29,13 @@
             width: 100%;
             height: 100%;
             position: relative;
-            transition: transform 0.6s;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
         }
 
-        .card.is-flipped {
-            transform: rotateY(180deg);
-        }
+        .card.is-flipped { transform: rotateY(180deg); }
 
         .card-face {
             position: absolute;
@@ -51,116 +46,154 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 30px;
             box-sizing: border-box;
             background: white;
-            border: 2px solid #e0e0e0;
+            border: 1px solid #ddd;
         }
 
-        .card-front {
-            font-size: 60px;
-            color: #2c3e50;
-        }
+        .card-front { font-size: 50px; color: #2c3e50; font-weight: bold; text-align: center; }
+        .card-back { transform: rotateY(180deg); background: #fafafa; text-align: center; }
 
-        .card-back {
-            transform: rotateY(180deg);
-            background: #fffdf5;
-            text-align: center;
-        }
+        .pinyin { font-size: 22px; color: #d35400; margin-bottom: 8px; font-style: italic; }
+        .meaning { font-size: 26px; color: #2c3e50; line-height: 1.2; }
+        .small-label { font-size: 12px; color: #95a5a6; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .pinyin { font-size: 20px; color: #e67e22; margin-bottom: 10px; }
-        .english { font-size: 24px; color: #2c3e50; font-weight: bold; }
-        .hidden { display: none !important; }
-
-        .btn-group {
-            margin-top: 30px;
-        }
+        .controls { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             background-color: #3498db;
             color: white;
-            transition: 0.3s;
+            transition: all 0.2s;
         }
 
-        button:hover { background-color: #2980b9; }
-        #toggleMode { background-color: #95a5a6; margin-bottom: 10px;}
+        button:hover { background-color: #2980b9; transform: translateY(-2px); }
+        #modeBtn { background-color: #8e44ad; }
+        #modeBtn:hover { background-color: #7d3c98; }
+        #shuffleBtn { background-color: #27ae60; }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div class="controls">
-        <button id="toggleMode">Mode: Trad -> English + Pinyin</button>
-        <p>Click card to flip, use button for next word.</p>
+    <div class="header">
+        <h2 id="currentModeDisplay">Mode: Traditional → English + Pinyin</h2>
     </div>
 
     <div class="card-container" onclick="flipCard()">
         <div class="card" id="card">
-            <div class="card-face card-front" id="frontText">同</div>
+            <div class="card-face card-front">
+                <div class="small-label" id="frontLabel">Traditional</div>
+                <div id="frontText">同</div>
+            </div>
             <div class="card-face card-back">
+                <div class="small-label" id="backLabel">English & Pinyin</div>
                 <div class="pinyin" id="backPinyin">tóng</div>
-                <div class="english" id="backEnglish">same</div>
+                <div class="meaning" id="backMeaning">same</div>
             </div>
         </div>
     </div>
 
-    <div class="btn-group">
-        <button onclick="nextCard()">Next Word</button>
+    <div class="controls">
+        <button id="modeBtn" onclick="cycleMode()">Switch Study Mode</button>
+        <button id="shuffleBtn" onclick="shuffleVocab()">Shuffle List</button>
+        <button onclick="nextCard()">Next Card →</button>
     </div>
 
     <script>
-        const vocab = [
+        const vocabList = [
             { char: "同", pinyin: "tóng", english: "same" },
             { char: "印象", pinyin: "yìnxiàng", english: "impression" },
             { char: "成", pinyin: "chéng", english: "to become" },
             { char: "演", pinyin: "yǎn", english: "to show (a film), to perform" },
             { char: "費", pinyin: "fèi", english: "to spend, to take (effort)" },
             { char: "力氣", pinyin: "lìqi", english: "strength, effort" },
-            { char: "就", pinyin: "jiù", english: "just, only (indicating a small number)" },
+            { char: "就", pinyin: "jiù", english: "just, only (a small number)" },
             { char: "倆", pinyin: "liǎ", english: "(coll.) two" },
             { char: "後天", pinyin: "hòutiān", english: "the day after tomorrow" },
-            { char: "一言為定", pinyin: "yì yán wéi dìng", english: "that settles it, it's decided" }
+            { char: "一言為定", pinyin: "yì yán wéi dìng", english: "that's settled" }
         ];
 
+        let currentVocab = [...vocabList];
         let currentIndex = 0;
-        let showPinyin = true;
+        let mode = 0; // 0: Trad->Eng+Pinyin, 1: Trad->Eng Only, 2: Eng->Trad
 
         const card = document.getElementById('card');
         const frontText = document.getElementById('frontText');
+        const frontLabel = document.getElementById('frontLabel');
         const backPinyin = document.getElementById('backPinyin');
-        const backEnglish = document.getElementById('backEnglish');
-        const toggleBtn = document.getElementById('toggleMode');
+        const backMeaning = document.getElementById('backMeaning');
+        const backLabel = document.getElementById('backLabel');
+        const modeDisplay = document.getElementById('currentModeDisplay');
 
-        function flipCard() {
-            card.classList.toggle('is-flipped');
+        function flipCard() { card.classList.toggle('is-flipped'); }
+
+        function cycleMode() {
+            mode = (mode + 1) % 3;
+            const modes = [
+                "Traditional → English + Pinyin",
+                "Traditional → English Only",
+                "English → Traditional"
+            ];
+            modeDisplay.innerText = "Mode: " + modes[mode];
+            nextCard();
+        }
+
+        function shuffleVocab() {
+            currentVocab.sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            nextCard();
         }
 
         function nextCard() {
             card.classList.remove('is-flipped');
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % vocab.length;
-                updateCard();
-            }, 200);
+            setTimeout(updateCard, 200);
         }
 
         function updateCard() {
-            frontText.innerText = vocab[currentIndex].char;
-            backPinyin.innerText = vocab[currentIndex].pinyin;
-            backEnglish.innerText = vocab[currentIndex].english;
+            const item = currentVocab[currentIndex];
             
-            backPinyin.classList.toggle('hidden', !showPinyin);
+            if (mode === 0) { // Trad -> Eng + Pinyin
+                frontLabel.innerText = "Traditional";
+                frontText.innerText = item.char;
+                backLabel.innerText = "English & Pinyin";
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.english;
+            } else if (mode === 1) { // Trad -> Eng Only
+                frontLabel.innerText = "Traditional";
+                frontText.innerText = item.char;
+                backLabel.innerText = "English";
+                backPinyin.classList.add('hidden');
+                backMeaning.innerText = item.english;
+            } else { // Eng -> Trad
+                frontLabel.innerText = "English";
+                frontText.innerText = item.english;
+                frontText.style.fontSize = "28px"; // Smaller text for long English phrases
+                backLabel.innerText = "Traditional & Pinyin";
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.char;
+                backMeaning.style.fontSize = "50px";
+            }
+
+            // Reset font sizes if they were changed
+            if (mode !== 2) frontText.style.fontSize = "50px";
+            if (mode !== 2) backMeaning.style.fontSize = "26px";
+
+            currentIndex = (currentIndex + 1) % currentVocab.length;
         }
 
-        toggleBtn.addEventListener('click', () => {
-            showPinyin = !showPinyin;
-            toggleBtn.innerText = showPinyin ? "Mode: Trad -> English + Pinyin" : "Mode: Trad -> English Only";
-            updateCard();
-        });
+        // Initialize first card
+        updateCard();
     </script>
 </body>
 </html>
