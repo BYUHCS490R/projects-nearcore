@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Vocab Reviewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-container {
+            width: 350px;
+            height: 250px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+            background: white;
+            border: 2px solid #e0e0e0;
+        }
+
+        .card-front {
+            font-size: 60px;
+            color: #2c3e50;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: #fffdf5;
+            text-align: center;
+        }
+
+        .pinyin { font-size: 20px; color: #e67e22; margin-bottom: 10px; }
+        .english { font-size: 24px; color: #2c3e50; font-weight: bold; }
+        .hidden { display: none !important; }
+
+        .btn-group {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover { background-color: #2980b9; }
+        #toggleMode { background-color: #95a5a6; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button id="toggleMode">Mode: Trad -> English + Pinyin</button>
+        <p>Click card to flip, use button for next word.</p>
+    </div>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front" id="frontText">同</div>
+            <div class="card-face card-back">
+                <div class="pinyin" id="backPinyin">tóng</div>
+                <div class="english" id="backEnglish">same</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button onclick="nextCard()">Next Word</button>
+    </div>
+
+    <script>
+        const vocab = [
+            { char: "同", pinyin: "tóng", english: "same" },
+            { char: "印象", pinyin: "yìnxiàng", english: "impression" },
+            { char: "成", pinyin: "chéng", english: "to become" },
+            { char: "演", pinyin: "yǎn", english: "to show (a film), to perform" },
+            { char: "費", pinyin: "fèi", english: "to spend, to take (effort)" },
+            { char: "力氣", pinyin: "lìqi", english: "strength, effort" },
+            { char: "就", pinyin: "jiù", english: "just, only (indicating a small number)" },
+            { char: "倆", pinyin: "liǎ", english: "(coll.) two" },
+            { char: "後天", pinyin: "hòutiān", english: "the day after tomorrow" },
+            { char: "一言為定", pinyin: "yì yán wéi dìng", english: "that settles it, it's decided" }
+        ];
+
+        let currentIndex = 0;
+        let showPinyin = true;
+
+        const card = document.getElementById('card');
+        const frontText = document.getElementById('frontText');
+        const backPinyin = document.getElementById('backPinyin');
+        const backEnglish = document.getElementById('backEnglish');
+        const toggleBtn = document.getElementById('toggleMode');
+
+        function flipCard() {
+            card.classList.toggle('is-flipped');
+        }
+
+        function nextCard() {
+            card.classList.remove('is-flipped');
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % vocab.length;
+                updateCard();
+            }, 200);
+        }
+
+        function updateCard() {
+            frontText.innerText = vocab[currentIndex].char;
+            backPinyin.innerText = vocab[currentIndex].pinyin;
+            backEnglish.innerText = vocab[currentIndex].english;
+            
+            backPinyin.classList.toggle('hidden', !showPinyin);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            showPinyin = !showPinyin;
+            toggleBtn.innerText = showPinyin ? "Mode: Trad -> English + Pinyin" : "Mode: Trad -> English Only";
+            updateCard();
+        });
+    </script>
+</body>
+</html>
