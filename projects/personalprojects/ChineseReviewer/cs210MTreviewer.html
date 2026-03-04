@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Master Reviewer</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .question-box { margin-bottom: 15px; padding: 10px; border-left: 5px solid #3498db; background: #eef2f7; }
+        input[type="text"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 150px; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; transition: 0.3s; }
+        .check-btn { background: #3498db; color: white; }
+        .check-btn:hover { background: #2980b9; }
+        .hard-mode-btn { background: #e74c3c; color: white; font-weight: bold; width: 100%; font-size: 1.1em; margin-top: 20px; }
+        .hard-mode-btn:hover { background: #c0392b; }
+        .feedback { font-weight: bold; margin-left: 10px; }
+        .correct { color: #27ae60; }
+        .wrong { color: #e74c3c; }
+        .hidden { display: none; }
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <h1>Binary & Hex Reviewer</h1>
+    
+    <div class="card">
+        <h2>Quick Concept Review</h2>
+        <ul>
+            <li><strong>Binary (Base 2):</strong> 0 and 1 only. Places: ... 16, 8, 4, 2, 1.</li>
+            <li><strong>Hexadecimal (Base 16):</strong> 0-9 then A(10), B(11), C(12), D(13), E(14), F(15).</li>
+            <li><strong>2's Complement:</strong> To negate, flip all bits and add 1.</li>
+        </ul>
+    </div>
+
+    <div id="standard-mode">
+        <h2>Standard Mode</h2>
+        <div id="standard-questions"></div>
+    </div>
+
+    <button class="hard-mode-btn" onclick="toggleHardMode()">ACTIVATE HARD MODE (Large Numbers & 2's Complement Math)</button>
+
+    <div id="hard-mode" class="hidden">
+        <h2 style="color: #c0392b;">Hard Mode: Challenge Accepted</h2>
+        <div id="hard-questions"></div>
+    </div>
+
+<script>
+const standardData = [
+    { q: "Convert Decimal 12 to 4-bit Binary:", a: "1100" },
+    { q: "Convert Binary 1011 to Decimal:", a: "11" },
+    { q: "Convert Hex 'A' to 4-bit Binary:", a: "1010" },
+    { q: "Convert Binary 1111 to Hex:", a: "F" },
+    { q: "Binary Addition: 101 + 011 =", a: "1000" },
+    { q: "Convert Decimal 25 to Binary:", a: "11001" },
+    { q: "In an 8-bit sign-bit system, what is -5? (Format: 10000xxx):", a: "10000101" },
+    { q: "Binary Subtraction: 111 - 010 =", a: "101" }
+];
+
+const hardData = [
+    { q: "Convert Decimal 157 to 8-bit Binary:", a: "10011101" },
+    { q: "Convert Hex 0x2C to Binary (8-bit):", a: "00101100" },
+    { q: "Binary to Hex: 11011011:", a: "DB" },
+    { q: "Represent -12 in 8-bit 2's Complement (Start with 00001100):", a: "11110100" },
+    { q: "Hard Addition: 11011 + 10110 =", a: "110001" },
+    { q: "What is the 2's complement of 10101000?", a: "01011000" },
+    { q: "Using 8-bit 2's complement, what is 00001010 - 00000100? (Result in binary):", a: "00000110" },
+    { q: "Convert Hex 0xFF to Decimal:", a: "255" }
+];
+
+function loadQuestions(data, containerId) {
+    const container = document.getElementById(containerId);
+    data.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'question-box';
+        div.innerHTML = `
+            <p>${index + 1}. ${item.q}</p>
+            <input type="text" id="${containerId}-ans-${index}" placeholder="Your answer...">
+            <button class="check-btn" onclick="checkAnswer('${containerId}', ${index}, '${item.a}')">Check</button>
+            <span id="${containerId}-feedback-${index}" class="feedback"></span>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function checkAnswer(mode, index, correct) {
+    const input = document.getElementById(`${mode}-ans-${index}`);
+    const feedback = document.getElementById(`${mode}-feedback-${index}`);
+    if (input.value.trim().toUpperCase() === correct.toUpperCase()) {
+        feedback.innerText = "✓ Correct!";
+        feedback.className = "feedback correct";
+    } else {
+        feedback.innerText = "✗ Wrong. Try again!";
+        feedback.className = "feedback wrong";
+    }
+}
+
+function toggleHardMode() {
+    const hm = document.getElementById('hard-mode');
+    hm.classList.toggle('hidden');
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+loadQuestions(standardData, 'standard-questions');
+loadQuestions(hardData, 'hard-questions');
+</script>
+
+</body>
+</html>
