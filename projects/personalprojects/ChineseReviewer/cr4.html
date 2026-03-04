@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Vocab Reviewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fdfdfd;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header { text-align: center; margin-bottom: 10px; }
+        #progress { font-size: 14px; color: #7f8c8d; margin-bottom: 20px; font-weight: bold;}
+        
+        .card-container {
+            width: 380px;
+            height: 260px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 20px;
+        }
+
+        .card.is-flipped { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            padding: 30px;
+            box-sizing: border-box;
+            background: white;
+            border: 2px solid #f0f0f0;
+        }
+
+        .card-front { font-size: 55px; color: #2c3e50; font-weight: bold; text-align: center; }
+        .card-back { transform: rotateY(180deg); background: #fff; text-align: center; }
+
+        .pinyin { font-size: 24px; color: #c0392b; margin-bottom: 10px; font-weight: 500; }
+        .meaning { font-size: 24px; color: #34495e; line-height: 1.3; }
+        .small-label { font-size: 10px; color: #bdc3c7; position: absolute; top: 20px; text-transform: uppercase; letter-spacing: 2px; }
+
+        .controls { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+        button {
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            background-color: #2c3e50;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        button:hover { background-color: #34495e; transform: scale(1.05); }
+        #modeBtn { background-color: #e67e22; }
+        #shuffleBtn { background-color: #27ae60; }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2 id="currentModeDisplay">Traditional → English + Pinyin</h2>
+        <div id="progress">1 / 17</div>
+    </div>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <div class="small-label" id="frontLabel">Question</div>
+                <div id="frontText">吵</div>
+            </div>
+            <div class="card-face card-back">
+                <div class="small-label" id="backLabel">Answer</div>
+                <div class="pinyin" id="backPinyin">chǎo</div>
+                <div class="meaning" id="backMeaning">to quarrel; noisy</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="modeBtn" onclick="cycleMode()">Change Mode</button>
+        <button id="shuffleBtn" onclick="shuffleVocab()">Shuffle</button>
+        <button onclick="prevCard()">Prev</button>
+        <button onclick="nextCard()">Next</button>
+    </div>
+
+    <script>
+        const newVocab = [
+            { char: "吵", pinyin: "chǎo", english: "to quarrel; noisy" },
+            { char: "連", pinyin: "lián", english: "even" },
+            { char: "做飯", pinyin: "zuò fàn", english: "to cook; prepare a meal" },
+            { char: "報紙", pinyin: "bàozhǐ", english: "newspaper" },
+            { char: "廣告", pinyin: "guǎnggào", english: "advertisement" },
+            { char: "附近", pinyin: "fùjìn", english: "vicinity; neighborhood" },
+            { char: "套", pinyin: "tào", english: "(measure word for sets)" },
+            { char: "公寓", pinyin: "gōngyù", english: "apartment" },
+            { char: "出租", pinyin: "chūzū", english: "to rent out" },
+            { char: "走路", pinyin: "zǒu lù", english: "to walk" },
+            { char: "分鐘", pinyin: "fēnzhōng", english: "minute" },
+            { char: "臥室", pinyin: "wòshì", english: "bedroom" },
+            { char: "廚房", pinyin: "chúfáng", english: "kitchen" },
+            { char: "衛生間", pinyin: "wèishēngjiān", english: "bathroom" },
+            { char: "客廳", pinyin: "kèting", english: "living room" },
+            { char: "傢俱", pinyin: "jiājù", english: "furniture" },
+            { char: "可能", pinyin: "kěnéng", english: "maybe; possible" }
+        ];
+
+        let currentVocab = [...newVocab];
+        let currentIndex = 0;
+        let mode = 0; 
+
+        const card = document.getElementById('card');
+        const frontText = document.getElementById('frontText');
+        const backPinyin = document.getElementById('backPinyin');
+        const backMeaning = document.getElementById('backMeaning');
+        const modeDisplay = document.getElementById('currentModeDisplay');
+        const progress = document.getElementById('progress');
+
+        function flipCard() { card.classList.toggle('is-flipped'); }
+
+        function cycleMode() {
+            mode = (mode + 1) % 3;
+            const modes = ["Traditional → English + Pinyin", "Traditional → English Only", "English → Traditional"];
+            modeDisplay.innerText = modes[mode];
+            resetPosition();
+        }
+
+        function shuffleVocab() {
+            currentVocab.sort(() => Math.random() - 0.5);
+            resetPosition();
+        }
+
+        function resetPosition() {
+            currentIndex = 0;
+            card.classList.remove('is-flipped');
+            setTimeout(updateCard, 200);
+        }
+
+        function nextCard() {
+            card.classList.remove('is-flipped');
+            currentIndex = (currentIndex + 1) % currentVocab.length;
+            setTimeout(updateCard, 200);
+        }
+
+        function prevCard() {
+            card.classList.remove('is-flipped');
+            currentIndex = (currentIndex - 1 + currentVocab.length) % currentVocab.length;
+            setTimeout(updateCard, 200);
+        }
+
+        function updateCard() {
+            const item = currentVocab[currentIndex];
+            progress.innerText = `${currentIndex + 1} / ${currentVocab.length}`;
+            
+            if (mode === 0) { // Trad -> Eng + Pinyin
+                frontText.innerText = item.char;
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.english;
+            } else if (mode === 1) { // Trad -> Eng Only
+                frontText.innerText = item.char;
+                backPinyin.classList.add('hidden');
+                backMeaning.innerText = item.english;
+            } else { // Eng -> Trad
+                frontText.innerText = item.english;
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.char;
+            }
+
+            // Text fitting
+            frontText.style.fontSize = frontText.innerText.length > 8 ? "28px" : "55px";
+            backMeaning.style.fontSize = backMeaning.innerText.length > 12 ? "22px" : "28px";
+        }
+
+        updateCard();
+    </script>
+</body>
+</html>
