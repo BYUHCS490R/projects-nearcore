@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 17: 租房子 Study Hub</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --accent: #8b5cf6;
+            --accent-hover: #a78bfa;
+            --success: #22c55e;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .lesson-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lesson-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-top: 5px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .select-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        select {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 2px solid var(--border);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus { border-color: var(--accent); }
+
+        #progress {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .card-container {
+            width: 420px;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card.is-flipped { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 24px;
+            padding: 40px;
+            box-sizing: border-box;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-front { font-size: 4rem; font-weight: 700; text-align: center; }
+        .card-back { transform: rotateY(180deg); text-align: center; }
+
+        .pinyin {
+            font-size: 1.6rem;
+            color: var(--accent-hover);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .meaning { font-size: 1.6rem; line-height: 1.4; color: var(--text-main); }
+
+        .label {
+            position: absolute;
+            top: 20px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .controls {
+            margin-top: 40px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 500px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            background-color: var(--border);
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: #475569;
+            transform: translateY(-2px);
+        }
+
+        button.primary { background-color: var(--accent); }
+        button.success { background-color: var(--success); color: white; }
+
+        .mode-display {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: var(--accent-hover);
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 450px) {
+            .card-container { width: 90vw; height: 260px; }
+            .card-front { font-size: 2.5rem; }
+            .lesson-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1 class="lesson-title">Lesson 17: 租房子</h1>
+        <div class="lesson-subtitle">Renting an Apartment</div>
+        
+        <div class="select-wrapper">
+            <select id="setSelector" onchange="changeSet()">
+                <option value="set1">Set 1: Housing Basics</option>
+                <option value="set2">Set 2: Furniture & Fees</option>
+            </select>
+            <div id="progress">1 / 17</div>
+        </div>
+        <div id="modeDisplay" class="mode-display">Mode: Chinese → English + Pinyin</div>
+    </div>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="card">
+            <div class="card-face card-front">
+                <span class="label">Question</span>
+                <div id="frontText">...</div>
+            </div>
+            <div class="card-face card-back">
+                <span class="label">Answer</span>
+                <div class="pinyin" id="backPinyin">...</div>
+                <div class="meaning" id="backMeaning">...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="primary" onclick="cycleMode()">Change Mode</button>
+        <button class="success" onclick="shuffleVocab()">Shuffle Deck</button>
+        <button onclick="prevCard()">Previous</button>
+        <button onclick="nextCard()">Next</button>
+    </div>
+
+    <script>
+        const vocabularySets = {
+            set1: [
+                { char: "吵", pinyin: "chǎo", english: "to quarrel; noisy" },
+                { char: "連", pinyin: "lián", english: "even" },
+                { char: "做飯", pinyin: "zuò fàn", english: "to cook; prepare a meal" },
+                { char: "報紙", pinyin: "bàozhǐ", english: "newspaper" },
+                { char: "廣告", pinyin: "guǎnggào", english: "advertisement" },
+                { char: "附近", pinyin: "fùjìn", english: "vicinity; neighborhood" },
+                { char: "套", pinyin: "tào", english: "(measure word for sets)" },
+                { char: "公寓", pinyin: "gōngyù", english: "apartment" },
+                { char: "出租", pinyin: "chūzū", english: "to rent out" },
+                { char: "走路", pinyin: "zǒu lù", english: "to walk" },
+                { char: "分鐘", pinyin: "fēnzhōng", english: "minute" },
+                { char: "臥室", pinyin: "wòshì", english: "bedroom" },
+                { char: "廚房", pinyin: "chúfáng", english: "kitchen" },
+                { char: "衛生間", pinyin: "wèishēngjiān", english: "bathroom" },
+                { char: "客廳", pinyin: "kèting", english: "living room" },
+                { char: "傢俱", pinyin: "jiājù", english: "furniture" },
+                { char: "可能", pinyin: "kěnéng", english: "maybe; possible" }
+            ],
+            set2: [
+                { char: "一房一廳", pinyin: "yì fáng yì tīng", english: "one bedroom and one living room" },
+                { char: "乾淨", pinyin: "gānjìng", english: "clean" },
+                { char: "沙發", pinyin: "shāfā", english: "sofa" },
+                { char: "飯桌", pinyin: "fànzhuō", english: "dining table" },
+                { char: "椅子", pinyin: "yǐzi", english: "chair" },
+                { char: "書桌", pinyin: "shūzhuō", english: "desk" },
+                { char: "書架", pinyin: "shūjià", english: "bookshelf" },
+                { char: "那裡", pinyin: "nàli", english: "there" },
+                { char: "安靜", pinyin: "ānjìng", english: "quiet" },
+                { char: "房租", pinyin: "fángzū", english: "rent" },
+                { char: "元", pinyin: "yuán", english: "Chinese currency" },
+                { char: "美元", pinyin: "měiyuán", english: "U.S. currency" },
+                { char: "人民幣", pinyin: "rénmínbì", english: "RMB (Chinese currency)" },
+                { char: "差不多", pinyin: "chàbuduō", english: "almost; nearly" },
+                { char: "費", pinyin: "fèi", english: "fee; expenses" },
+                { char: "押金", pinyin: "yājīn", english: "security deposit" },
+                { char: "當", pinyin: "dāng", english: "to serve as; to be" },
+                { char: "還", pinyin: "huán", english: "to return (something)" },
+                { char: "另外", pinyin: "lìngwài", english: "furthermore" },
+                { char: "准", pinyin: "zhǔn", english: "to allow; to permit" },
+                { char: "養", pinyin: "yǎng", english: "to raise (pet/child)" },
+                { char: "寵物", pinyin: "chǒngwù", english: "pet" },
+                { char: "興趣", pinyin: "xìngqù", english: "interest" }
+            ]
+        };
+
+        let currentVocab = [...vocabularySets.set1];
+        let currentIndex = 0;
+        let mode = 0; 
+
+        const card = document.getElementById('card');
+        const frontText = document.getElementById('frontText');
+        const backPinyin = document.getElementById('backPinyin');
+        const backMeaning = document.getElementById('backMeaning');
+        const modeDisplay = document.getElementById('modeDisplay');
+        const progress = document.getElementById('progress');
+        const setSelector = document.getElementById('setSelector');
+
+        function flipCard() { card.classList.toggle('is-flipped'); }
+
+        function changeSet() {
+            currentVocab = [...vocabularySets[setSelector.value]];
+            resetPosition();
+        }
+
+        function cycleMode() {
+            mode = (mode + 1) % 3;
+            const modes = ["Chinese → English + Pinyin", "Chinese → English Only", "English → Chinese"];
+            modeDisplay.innerText = "Mode: " + modes[mode];
+            resetPosition();
+        }
+
+        function shuffleVocab() {
+            currentVocab.sort(() => Math.random() - 0.5);
+            resetPosition();
+        }
+
+        function resetPosition() {
+            currentIndex = 0;
+            card.classList.remove('is-flipped');
+            setTimeout(updateCard, 150);
+        }
+
+        function nextCard() {
+            card.classList.remove('is-flipped');
+            currentIndex = (currentIndex + 1) % currentVocab.length;
+            setTimeout(updateCard, 150);
+        }
+
+        function prevCard() {
+            card.classList.remove('is-flipped');
+            currentIndex = (currentIndex - 1 + currentVocab.length) % currentVocab.length;
+            setTimeout(updateCard, 150);
+        }
+
+        function updateCard() {
+            const item = currentVocab[currentIndex];
+            progress.innerText = `${currentIndex + 1} / ${currentVocab.length}`;
+            
+            if (mode === 0) { // Trad -> All
+                frontText.innerText = item.char;
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.english;
+            } else if (mode === 1) { // Trad -> Eng
+                frontText.innerText = item.char;
+                backPinyin.classList.add('hidden');
+                backMeaning.innerText = item.english;
+            } else { // Eng -> Trad
+                frontText.innerText = item.english;
+                backPinyin.classList.remove('hidden');
+                backPinyin.innerText = item.pinyin;
+                backMeaning.innerText = item.char;
+            }
+
+            // Adaptive Sizing
+            frontText.style.fontSize = frontText.innerText.length > 6 ? "1.8rem" : "4.2rem";
+            backMeaning.style.fontSize = backMeaning.innerText.length > 20 ? "1.1rem" : "1.6rem";
+        }
+
+        updateCard();
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') { flipCard(); e.preventDefault(); }
+            if (e.key === 'ArrowRight') nextCard();
+            if (e.key === 'ArrowLeft') prevCard();
+        });
+    </script>
+</body>
+</html>
