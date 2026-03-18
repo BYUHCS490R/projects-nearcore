@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grammar Lab</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Sentence building</p>
+        <h1>Grammar Lab</h1>
+        <p class="subtitle">Practice patterns, sentence construction, and how one character can shift meaning across different situations.</p>
+      </div>
+      <nav class="topnav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="writing-practice.html">Writing Practice</a>
+        <a class="nav-link active" href="grammar-practice.html">Grammar Lab</a>
+      </nav>
+    </header>
+
+    <main class="grammar-layout">
+      <section class="panel">
+        <h2>Grammar patterns</h2>
+        <div id="grammarTopicList" class="topic-list"></div>
+      </section>
+
+      <section class="panel grammar-stage">
+        <div id="grammarDetails"></div>
+        <div class="challenge-box">
+          <div class="section-label">Sentence challenge</div>
+          <p id="challengePrompt"></p>
+          <button id="showAnswerButton" type="button">Show answer</button>
+          <div id="challengeAnswer" class="feedback-box hidden"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="grammar.js"></script>
+</body>
+</html>

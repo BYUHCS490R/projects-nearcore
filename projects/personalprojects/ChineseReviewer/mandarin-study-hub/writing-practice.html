@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Practice</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Character writing</p>
+        <h1>Writing Practice</h1>
+        <p class="subtitle">Train your eyes, ears, and hand movement with easier progression from support to full recall.</p>
+      </div>
+      <nav class="topnav">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="writing-practice.html">Writing Practice</a>
+        <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
+      </nav>
+    </header>
+
+    <main class="writing-layout">
+      <section class="panel">
+        <h2>Mode</h2>
+        <div class="mode-grid">
+          <button class="mode-button active" data-mode="easy" type="button">Easy</button>
+          <button class="mode-button" data-mode="medium" type="button">Medium</button>
+          <button class="mode-button" data-mode="hard" type="button">Hard</button>
+        </div>
+        <p id="modeDescription" class="subtitle"></p>
+      </section>
+
+      <section class="panel writing-stage">
+        <div class="writing-header">
+          <div>
+            <div class="section-label">Prompt</div>
+            <h2 id="writingPromptTitle">Character</h2>
+          </div>
+          <div class="button-row">
+            <button id="prevWritingButton" type="button">Previous</button>
+            <button id="nextWritingButton" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="writing-card" id="writingCard"></div>
+
+        <div class="section-block">
+          <div class="section-label">Stroke support</div>
+          <canvas id="writingCanvas" width="720" height="360"></canvas>
+          <div class="button-row">
+            <button id="clearCanvasButton" type="button">Clear</button>
+            <button id="toggleGuideButton" type="button">Toggle guide</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="writing.js"></script>
+</body>
+</html>
