@@ -12,18 +12,25 @@
       <div>
         <p class="eyebrow">Sentence building</p>
         <h1>Grammar Lab</h1>
-        <p class="subtitle">Practice patterns, sentence construction, and how one character can shift meaning across different situations.</p>
+        <p class="subtitle">Practice more of the grammar patterns that show up across your textbook lessons.</p>
       </div>
-      <nav class="topnav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link" href="writing-practice.html">Writing Practice</a>
-        <a class="nav-link active" href="grammar-practice.html">Grammar Lab</a>
-      </nav>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="writing-practice.html">Writing Practice</a>
+          <a class="nav-link active" href="grammar-practice.html">Grammar Lab</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
     </header>
 
     <main class="grammar-layout">
       <section class="panel">
         <h2>Grammar patterns</h2>
+        <label>
+          Filter by lesson
+          <select id="grammarLessonFilter"></select>
+        </label>
         <div id="grammarTopicList" class="topic-list"></div>
       </section>
 

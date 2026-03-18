@@ -1,36 +1,121 @@
+const WRITING_STORAGE_KEY = "mandarin-writing-v2";
+const THEME_KEY = "mandarin-theme";
+
 const writingDom = {
-  modeButtons: document.querySelectorAll(".mode-button"),
+  writingLessonSelector: document.querySelector("#writingLessonSelector"),
+  writingSetSelector: document.querySelector("#writingSetSelector"),
+  writingModeSelector: document.querySelector("#writingModeSelector"),
   modeDescription: document.querySelector("#modeDescription"),
   writingPromptTitle: document.querySelector("#writingPromptTitle"),
   writingCard: document.querySelector("#writingCard"),
   prevWritingButton: document.querySelector("#prevWritingButton"),
   nextWritingButton: document.querySelector("#nextWritingButton"),
+  playSoundButton: document.querySelector("#playSoundButton"),
+  checkCharacterButton: document.querySelector("#checkCharacterButton"),
+  hardModeAnswer: document.querySelector("#hardModeAnswer"),
+  themeToggleButton: document.querySelector("#themeToggleButton"),
   writingCanvas: document.querySelector("#writingCanvas"),
   clearCanvasButton: document.querySelector("#clearCanvasButton"),
   toggleGuideButton: document.querySelector("#toggleGuideButton")
 };
 
+const writingStorage = loadWritingStorage();
+
 const writingState = {
-  mode: "easy",
+  lessonKey: writingStorage.lessonKey || MandarinContent.lessons[0].id,
+  setName: writingStorage.setName || "",
+  mode: writingStorage.mode || "easy",
+  theme: localStorage.getItem(THEME_KEY) || writingStorage.theme || "light",
   index: 0,
   guideVisible: true
 };
 
+function loadWritingStorage() {
+  const fallback = {
+    lessonKey: MandarinContent.lessons[0].id,
+    setName: "",
+    mode: "easy",
+    theme: "light"
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(WRITING_STORAGE_KEY) || "null");
+    return saved ? { ...fallback, ...saved } : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveWritingStorage() {
+  localStorage.setItem(WRITING_STORAGE_KEY, JSON.stringify({
+    lessonKey: writingState.lessonKey,
+    setName: writingState.setName,
+    mode: writingState.mode,
+    theme: writingState.theme
+  }));
+  localStorage.setItem(THEME_KEY, writingState.theme);
+}
+
+function currentWritingLesson() {
+  return MandarinContent.lessons.find((lesson) => lesson.id === writingState.lessonKey) || MandarinContent.lessons[0];
+}
+
+function currentWritingCards() {
+  const lesson = currentWritingLesson();
+  return (lesson.sets[writingState.setName] || []).map((entry) => ({
+    ...entry,
+    radicals: entry.char === "把" ? "扌 + 巴" : "Not provided",
+    decomposition: `Study ${entry.char} by matching its sound ${entry.pinyin} to its meaning ${entry.english}.`,
+    strokeSupport: `Trace ${entry.char} while saying ${entry.pinyin} aloud.`
+  }));
+}
+
 function currentWritingPrompt() {
-  return MandarinContent.writingPrompts[writingState.index];
+  return currentWritingCards()[writingState.index] || null;
+}
+
+function applyTheme() {
+  document.body.classList.toggle("dark-mode", writingState.theme === "dark");
+  writingDom.themeToggleButton.textContent = writingState.theme === "light" ? "☾" : "☀";
+}
+
+function populateWritingSelectors() {
+  writingDom.writingLessonSelector.innerHTML = MandarinContent.lessons
+    .map((lesson) => `<option value="${lesson.id}">${lesson.title}</option>`)
+    .join("");
+  writingDom.writingLessonSelector.value = writingState.lessonKey;
+
+  const lesson = currentWritingLesson();
+  const setNames = Object.keys(lesson.sets);
+  if (!setNames.includes(writingState.setName)) {
+    writingState.setName = setNames[0];
+  }
+
+  writingDom.writingSetSelector.innerHTML = setNames
+    .map((setName) => `<option value="${setName}">${setName}</option>`)
+    .join("");
+  writingDom.writingSetSelector.value = writingState.setName;
+  writingDom.writingModeSelector.value = writingState.mode;
 }
 
 function renderWritingPrompt() {
   const prompt = currentWritingPrompt();
-  const mode = MandarinContent.writingModes[writingState.mode];
+  if (!prompt) return;
 
-  writingDom.modeDescription.textContent = mode.description;
-  writingDom.writingPromptTitle.textContent = `${mode.title}: ${prompt.char}`;
+  const descriptions = {
+    easy: "See the full character, meaning, and support details.",
+    medium: "Only the pinyin and English appear. Recall the character yourself.",
+    hard: "Only use the speaker button. Write what you hear, then check the answer."
+  };
 
-  let content = "";
+  writingDom.modeDescription.textContent = descriptions[writingState.mode];
+  writingDom.writingPromptTitle.textContent = `${currentWritingLesson().title} - ${writingState.setName}`;
+  writingDom.hardModeAnswer.classList.add("hidden");
+  writingDom.playSoundButton.classList.toggle("hidden", writingState.mode !== "hard");
+  writingDom.checkCharacterButton.classList.toggle("hidden", writingState.mode !== "hard");
 
   if (writingState.mode === "easy") {
-    content = `
+    writingDom.writingCard.innerHTML = `
       <div class="prompt-big">${prompt.char}</div>
       <div class="prompt-line"><strong>Character:</strong> ${prompt.char}</div>
       <div class="prompt-line"><strong>Pinyin:</strong> ${prompt.pinyin}</div>
@@ -39,31 +124,37 @@ function renderWritingPrompt() {
       <div class="prompt-line"><strong>Decomposition:</strong> ${prompt.decomposition}</div>
       <div class="prompt-line"><strong>Stroke support:</strong> ${prompt.strokeSupport}</div>
     `;
+    return;
   }
 
   if (writingState.mode === "medium") {
-    content = `
+    writingDom.writingCard.innerHTML = `
       <div class="prompt-big">${prompt.pinyin}</div>
-      <div class="prompt-line"><strong>English word:</strong> ${prompt.english}</div>
-      <div class="prompt-line"><strong>Character sound:</strong> ${prompt.pinyin}</div>
-      <div class="prompt-line">Write the character from memory before checking the next card.</div>
+      <div class="prompt-line"><strong>English:</strong> ${prompt.english}</div>
+      <div class="prompt-line"><strong>Pinyin:</strong> ${prompt.pinyin}</div>
     `;
+    return;
   }
 
-  if (writingState.mode === "hard") {
-    content = `
-      <div class="prompt-big">${prompt.pinyin}</div>
-      <div class="prompt-line"><strong>Character sound only:</strong> ${prompt.pinyin}</div>
-      <div class="prompt-line">No meaning clue here. Try to write the character from memory only from the sound.</div>
-    `;
-  }
-
-  writingDom.writingCard.innerHTML = content;
+  writingDom.writingCard.innerHTML = `
+    <div class="prompt-line">Press the speaker button, listen carefully, and write the character from sound only.</div>
+  `;
 }
 
 function moveWriting(step) {
-  writingState.index = (writingState.index + step + MandarinContent.writingPrompts.length) % MandarinContent.writingPrompts.length;
+  const cards = currentWritingCards();
+  writingState.index = (writingState.index + step + cards.length) % cards.length;
   renderWritingPrompt();
+}
+
+function speakPrompt() {
+  const prompt = currentWritingPrompt();
+  if (!prompt || !("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(prompt.char);
+  utterance.lang = "zh-TW";
+  utterance.rate = 0.85;
+  window.speechSynthesis.speak(utterance);
 }
 
 function initCanvas() {
@@ -137,22 +228,47 @@ function initCanvas() {
 }
 
 function bindWritingEvents() {
-  writingDom.modeButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      writingState.mode = button.dataset.mode;
-      writingDom.modeButtons.forEach((item) => item.classList.remove("active"));
-      button.classList.add("active");
-      renderWritingPrompt();
-    });
+  writingDom.writingLessonSelector.addEventListener("change", (event) => {
+    writingState.lessonKey = event.target.value;
+    writingState.index = 0;
+    populateWritingSelectors();
+    saveWritingStorage();
+    renderWritingPrompt();
+  });
+
+  writingDom.writingSetSelector.addEventListener("change", (event) => {
+    writingState.setName = event.target.value;
+    writingState.index = 0;
+    saveWritingStorage();
+    renderWritingPrompt();
+  });
+
+  writingDom.writingModeSelector.addEventListener("change", (event) => {
+    writingState.mode = event.target.value;
+    saveWritingStorage();
+    renderWritingPrompt();
   });
 
   writingDom.prevWritingButton.addEventListener("click", () => moveWriting(-1));
   writingDom.nextWritingButton.addEventListener("click", () => moveWriting(1));
+  writingDom.playSoundButton.addEventListener("click", speakPrompt);
+  writingDom.checkCharacterButton.addEventListener("click", () => {
+    const prompt = currentWritingPrompt();
+    writingDom.hardModeAnswer.textContent = `Correct character: ${prompt.char} (${prompt.pinyin}) - ${prompt.english}`;
+    writingDom.hardModeAnswer.classList.remove("hidden");
+  });
+  writingDom.themeToggleButton.addEventListener("click", () => {
+    writingState.theme = writingState.theme === "light" ? "dark" : "light";
+    saveWritingStorage();
+    applyTheme();
+  });
 }
 
 function initWritingPage() {
+  populateWritingSelectors();
   bindWritingEvents();
   initCanvas();
+  applyTheme();
   renderWritingPrompt();
 }
 

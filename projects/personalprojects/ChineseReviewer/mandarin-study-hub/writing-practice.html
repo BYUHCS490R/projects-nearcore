@@ -12,23 +12,37 @@
       <div>
         <p class="eyebrow">Character writing</p>
         <h1>Writing Practice</h1>
-        <p class="subtitle">Train your eyes, ears, and hand movement with easier progression from support to full recall.</p>
+        <p class="subtitle">Choose the lesson, set, and difficulty first. Then practice writing with the right amount of support.</p>
       </div>
-      <nav class="topnav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link active" href="writing-practice.html">Writing Practice</a>
-        <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
-      </nav>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link active" href="writing-practice.html">Writing Practice</a>
+          <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
     </header>
 
     <main class="writing-layout">
       <section class="panel">
-        <h2>Mode</h2>
-        <div class="mode-grid">
-          <button class="mode-button active" data-mode="easy" type="button">Easy</button>
-          <button class="mode-button" data-mode="medium" type="button">Medium</button>
-          <button class="mode-button" data-mode="hard" type="button">Hard</button>
-        </div>
+        <h2>Study setup</h2>
+        <label>
+          Lesson
+          <select id="writingLessonSelector"></select>
+        </label>
+        <label>
+          Section / set
+          <select id="writingSetSelector"></select>
+        </label>
+        <label>
+          Difficulty
+          <select id="writingModeSelector">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
         <p id="modeDescription" class="subtitle"></p>
       </section>
 
@@ -36,7 +50,7 @@
         <div class="writing-header">
           <div>
             <div class="section-label">Prompt</div>
-            <h2 id="writingPromptTitle">Character</h2>
+            <h2 id="writingPromptTitle">Choose a lesson and set</h2>
           </div>
           <div class="button-row">
             <button id="prevWritingButton" type="button">Previous</button>
@@ -45,6 +59,12 @@
         </div>
 
         <div class="writing-card" id="writingCard"></div>
+
+        <div class="button-row hard-actions">
+          <button id="playSoundButton" type="button" class="hidden">Speak</button>
+          <button id="checkCharacterButton" type="button" class="hidden">Check character</button>
+        </div>
+        <div id="hardModeAnswer" class="feedback-box hidden"></div>
 
         <div class="section-block">
           <div class="section-label">Stroke support</div>

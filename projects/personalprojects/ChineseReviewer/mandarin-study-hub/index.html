@@ -12,13 +12,16 @@
       <div>
         <p class="eyebrow">Chinese learning workspace</p>
         <h1>Mandarin Study Hub</h1>
-        <p class="subtitle">Build stronger recall, cleaner sentence patterns, and better writing habits from your textbook content.</p>
+        <p class="subtitle">Review by lesson and set, build stronger recall, and practice grammar and writing from your textbook.</p>
       </div>
-      <nav class="topnav">
-        <a class="nav-link active" href="index.html">Home</a>
-        <a class="nav-link" href="writing-practice.html">Writing Practice</a>
-        <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
-      </nav>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link active" href="index.html">Home</a>
+          <a class="nav-link" href="writing-practice.html">Writing Practice</a>
+          <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
     </header>
 
     <main class="layout-grid">
@@ -28,6 +31,10 @@
           <label>
             Lesson
             <select id="lessonSelector"></select>
+          </label>
+          <label>
+            Section / set
+            <select id="setSelector"></select>
           </label>
           <label>
             Flashcard prompt
@@ -95,25 +102,27 @@
                 <div id="backChar" class="back-char"></div>
                 <div id="backPinyin" class="pinyin-line"></div>
                 <div id="backMeaning" class="meaning-line"></div>
-                <div id="backUse" class="info-card"></div>
-                <div class="example-box">
-                  <div class="section-label">Example sentence</div>
-                  <div id="exampleHan" class="example-line"></div>
-                  <div id="examplePinyin" class="example-subline"></div>
-                  <div id="exampleEnglish" class="example-subline"></div>
-                </div>
               </div>
             </div>
             <div class="button-row">
               <button id="prevCardButton" type="button">Previous</button>
               <button id="nextCardButton" type="button">Next</button>
             </div>
+            <div class="example-box sentence-box">
+              <div class="sentence-header">
+                <div class="section-label">Example sentence</div>
+                <button id="generateSentenceButton" type="button">Generate sentence</button>
+              </div>
+              <div id="exampleHan" class="example-line"></div>
+              <div id="examplePinyin" class="example-subline"></div>
+              <div id="exampleEnglish" class="example-subline"></div>
+            </div>
           </div>
 
           <div class="stacked-panels">
             <div class="panel">
               <div class="section-label">Spaced Repetition Review</div>
-              <p class="subtitle">Simple review scheduling. Cards you miss come back sooner.</p>
+              <p class="subtitle">Cards you miss come back sooner.</p>
               <div class="review-buttons">
                 <button class="review-button review-again" data-rating="again" type="button">Again</button>
                 <button class="review-button review-hard" data-rating="hard" type="button">Hard</button>

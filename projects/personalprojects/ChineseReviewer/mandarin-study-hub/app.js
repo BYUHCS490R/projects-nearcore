@@ -1,11 +1,14 @@
-const STORAGE_KEY = "mandarin-study-hub-v2";
+const STORAGE_KEY = "mandarin-study-hub-v3";
+const THEME_KEY = "mandarin-theme";
 
 const dom = {
   lessonSelector: document.querySelector("#lessonSelector"),
+  setSelector: document.querySelector("#setSelector"),
   studyModeSelector: document.querySelector("#studyModeSelector"),
   queueSelector: document.querySelector("#queueSelector"),
   shuffleButton: document.querySelector("#shuffleButton"),
   resetProgressButton: document.querySelector("#resetProgressButton"),
+  themeToggleButton: document.querySelector("#themeToggleButton"),
   lessonDisplay: document.querySelector("#lessonDisplay"),
   lessonTopic: document.querySelector("#lessonTopic"),
   sessionStatus: document.querySelector("#sessionStatus"),
@@ -18,10 +21,10 @@ const dom = {
   backChar: document.querySelector("#backChar"),
   backPinyin: document.querySelector("#backPinyin"),
   backMeaning: document.querySelector("#backMeaning"),
-  backUse: document.querySelector("#backUse"),
   exampleHan: document.querySelector("#exampleHan"),
   examplePinyin: document.querySelector("#examplePinyin"),
   exampleEnglish: document.querySelector("#exampleEnglish"),
+  generateSentenceButton: document.querySelector("#generateSentenceButton"),
   prevCardButton: document.querySelector("#prevCardButton"),
   nextCardButton: document.querySelector("#nextCardButton"),
   flipButton: document.querySelector("#flipButton"),
@@ -38,20 +41,25 @@ const storage = loadStorage();
 
 const appState = {
   lessonKey: storage.lessonKey || MandarinContent.lessons[0].id,
+  setName: storage.setName || "",
   promptMode: storage.promptMode || "hanzi",
   queueMode: storage.queueMode || "lesson",
+  theme: localStorage.getItem(THEME_KEY) || storage.theme || "light",
   queue: [],
   currentIndex: 0,
   cardFlipped: false,
   selectedQuizAnswer: null,
-  currentQuiz: null
+  currentQuiz: null,
+  currentSentenceSeed: 0
 };
 
 function loadStorage() {
   const fallback = {
     lessonKey: MandarinContent.lessons[0].id,
+    setName: "",
     promptMode: "hanzi",
     queueMode: "lesson",
+    theme: "light",
     progress: {}
   };
 
@@ -65,13 +73,28 @@ function loadStorage() {
 
 function saveStorage() {
   storage.lessonKey = appState.lessonKey;
+  storage.setName = appState.setName;
   storage.promptMode = appState.promptMode;
   storage.queueMode = appState.queueMode;
+  storage.theme = appState.theme;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(storage));
+  localStorage.setItem(THEME_KEY, appState.theme);
 }
 
 function currentLesson() {
   return MandarinContent.lessons.find((lesson) => lesson.id === appState.lessonKey) || MandarinContent.lessons[0];
+}
+
+function currentSetEntries() {
+  const lesson = currentLesson();
+  const entries = lesson.sets[appState.setName] || [];
+  return entries.map((entry) => ({
+    lessonId: lesson.id,
+    setName: appState.setName,
+    char: entry.char,
+    pinyin: entry.pinyin,
+    english: entry.english
+  }));
 }
 
 function currentCard() {
@@ -79,7 +102,7 @@ function currentCard() {
 }
 
 function cardKey(card) {
-  return `${card.lessonId}:${card.char}`;
+  return `${card.lessonId}:${card.setName}:${card.char}`;
 }
 
 function cardProgress(card) {
@@ -90,9 +113,28 @@ function cardProgress(card) {
   return storage.progress[key];
 }
 
-function buildQueue() {
+function populateLessonSelector() {
+  dom.lessonSelector.innerHTML = MandarinContent.lessons
+    .map((lesson) => `<option value="${lesson.id}">${lesson.title}</option>`)
+    .join("");
+  dom.lessonSelector.value = appState.lessonKey;
+}
+
+function updateSetSelector() {
   const lesson = currentLesson();
-  let cards = [...lesson.cards];
+  const setNames = Object.keys(lesson.sets);
+  if (!setNames.includes(appState.setName)) {
+    appState.setName = setNames[0];
+  }
+
+  dom.setSelector.innerHTML = setNames
+    .map((setName) => `<option value="${setName}">${setName}</option>`)
+    .join("");
+  dom.setSelector.value = appState.setName;
+}
+
+function buildQueue() {
+  let cards = [...currentSetEntries()];
 
   if (appState.queueMode === "shuffle") {
     cards = shuffle(cards);
@@ -105,6 +147,7 @@ function buildQueue() {
   appState.queue = cards;
   appState.currentIndex = 0;
   appState.cardFlipped = false;
+  saveStorage();
   render();
 }
 
@@ -117,14 +160,9 @@ function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
-function populateSelectors() {
-  dom.lessonSelector.innerHTML = MandarinContent.lessons
-    .map((lesson) => `<option value="${lesson.id}">${lesson.title}</option>`)
-    .join("");
-
-  dom.lessonSelector.value = appState.lessonKey;
-  dom.studyModeSelector.value = appState.promptMode;
-  dom.queueSelector.value = appState.queueMode;
+function applyTheme() {
+  document.body.classList.toggle("dark-mode", appState.theme === "dark");
+  dom.themeToggleButton.textContent = appState.theme === "light" ? "☾" : "☀";
 }
 
 function render() {
@@ -132,13 +170,15 @@ function render() {
   const card = currentCard();
 
   dom.lessonDisplay.textContent = lesson.title;
-  dom.lessonTopic.textContent = lesson.topic;
-  dom.sessionStatus.textContent = `${appState.currentIndex + 1} of ${appState.queue.length} cards in this lesson`;
+  dom.lessonTopic.textContent = appState.setName;
+  dom.sessionStatus.textContent = `${appState.currentIndex + 1} of ${appState.queue.length} cards in ${appState.setName}`;
   renderGoals(lesson);
   renderGrammarPreview(lesson);
   renderStats();
   renderCard(card);
-  renderQuiz(card);
+  renderGeneratedSentence(card);
+  renderQuiz();
+  applyTheme();
 }
 
 function renderGoals(lesson) {
@@ -146,23 +186,27 @@ function renderGoals(lesson) {
 }
 
 function renderGrammarPreview(lesson) {
-  dom.grammarPreview.innerHTML = lesson.grammarFocus
-    .map((item) => `<div class="stack-item"><strong>${item.pattern}</strong><span>${item.simple}</span></div>`)
-    .join("");
+  const previewItems = MandarinContent.grammarTopics
+    .filter((topic) => topic.lessonId === lesson.id)
+    .slice(0, 4);
+
+  dom.grammarPreview.innerHTML = previewItems.length
+    ? previewItems.map((item) => `<div class="stack-item"><strong>${item.pattern}</strong><span>${item.simple}</span></div>`).join("")
+    : `<div class="stack-item"><strong>Lesson vocabulary</strong><span>Use this set in short spoken and written sentences.</span></div>`;
 }
 
 function renderStats() {
-  const lesson = currentLesson();
-  const total = lesson.cards.length;
-  const reviewed = lesson.cards.filter((card) => {
+  const cards = currentSetEntries();
+  const total = cards.length;
+  const reviewed = cards.filter((card) => {
     const progress = cardProgress(card);
     return progress.again + progress.hard + progress.good + progress.easy > 0;
   }).length;
-  const mastered = lesson.cards.filter((card) => cardProgress(card).easy > 0).length;
-  const weak = lesson.cards.filter((card) => cardProgress(card).again > cardProgress(card).good).length;
+  const mastered = cards.filter((card) => cardProgress(card).easy > 0).length;
+  const weak = cards.filter((card) => cardProgress(card).again > cardProgress(card).good).length;
 
   const stats = [
-    { label: "Cards in lesson", value: total },
+    { label: "Cards in set", value: total },
     { label: "Reviewed", value: reviewed },
     { label: "Marked easy", value: mastered },
     { label: "Needs work", value: weak }
@@ -179,7 +223,7 @@ function renderCard(card) {
   const promptLookup = {
     hanzi: { value: card.char, hint: "Say the sound and meaning before flipping." },
     english: { value: card.english, hint: "Recall the Hanzi and pinyin." },
-    pinyin: { value: card.pinyin, hint: "Write or say the Hanzi from the sound." }
+    pinyin: { value: card.pinyin, hint: "Recall the character from the sound." }
   };
 
   const prompt = promptLookup[appState.promptMode];
@@ -189,28 +233,64 @@ function renderCard(card) {
   dom.backChar.textContent = card.char;
   dom.backPinyin.textContent = card.pinyin;
   dom.backMeaning.textContent = card.english;
-  dom.backUse.innerHTML = `
-    <strong>Usage note</strong>
-    <p>${card.usage}</p>
-  `;
-  dom.exampleHan.textContent = card.example.hanzi;
-  dom.examplePinyin.textContent = card.example.pinyin;
-  dom.exampleEnglish.textContent = card.example.english;
 }
 
-function renderQuiz(card) {
-  if (!card) return;
+function buildSentenceTemplates(card) {
+  const pool = currentSetEntries().filter((item) => item.char !== card.char);
+  const support = pool[appState.currentSentenceSeed % Math.max(1, pool.length)] || card;
 
-  const pool = shuffle(currentLesson().cards.filter((item) => item.char !== card.char)).slice(0, 3);
-  const choices = shuffle([card, ...pool]);
+  return [
+    {
+      hanzi: `我想學會${card.char}這個詞。`,
+      pinyin: `Wǒ xiǎng xuéhuì ${card.pinyin} zhège cí.`,
+      english: `I want to learn the word ${card.english}.`
+    },
+    {
+      hanzi: `老師今天又用了${card.char}。`,
+      pinyin: `Lǎoshī jīntiān yòu yòng le ${card.pinyin}.`,
+      english: `The teacher used ${card.english} again today.`
+    },
+    {
+      hanzi: `${card.char}跟${support.char}常常一起出現在這課。`,
+      pinyin: `${card.pinyin} gēn ${support.pinyin} chángcháng yìqǐ chūxiàn zài zhè kè.`,
+      english: `${card.english} and ${support.english} often appear together in this lesson.`
+    }
+  ];
+}
+
+function renderGeneratedSentence(card) {
+  if (!card) return;
+  const templates = buildSentenceTemplates(card);
+  const sentence = templates[appState.currentSentenceSeed % templates.length];
+  dom.exampleHan.textContent = sentence.hanzi;
+  dom.examplePinyin.textContent = sentence.pinyin;
+  dom.exampleEnglish.textContent = sentence.english;
+}
+
+function randomQuizCard() {
+  const pool = currentSetEntries().filter((item) => {
+    const activeCard = currentCard();
+    return !activeCard || item.char !== activeCard.char;
+  });
+  const source = pool.length ? pool : currentSetEntries();
+  return source[Math.floor(Math.random() * source.length)];
+}
+
+function renderQuiz() {
+  const quizCard = randomQuizCard();
+  if (!quizCard) return;
+
+  const distractors = shuffle(currentSetEntries().filter((item) => item.char !== quizCard.char)).slice(0, 3);
+  const choices = shuffle([quizCard, ...distractors]);
 
   appState.currentQuiz = {
-    answer: card.english,
+    char: quizCard.char,
+    answer: quizCard.english,
     choices: choices.map((item) => item.english)
   };
   appState.selectedQuizAnswer = null;
 
-  dom.quizPrompt.textContent = `What is the best meaning for ${card.char}?`;
+  dom.quizPrompt.textContent = `What is the best meaning for ${quizCard.char}?`;
   dom.quizOptions.innerHTML = appState.currentQuiz.choices
     .map((choice, index) => `<button class="quiz-option" data-index="${index}" type="button">${choice}</button>`)
     .join("");
@@ -264,7 +344,12 @@ function speakCurrentCard() {
 function bindEvents() {
   dom.lessonSelector.addEventListener("change", (event) => {
     appState.lessonKey = event.target.value;
-    saveStorage();
+    updateSetSelector();
+    buildQueue();
+  });
+
+  dom.setSelector.addEventListener("change", (event) => {
+    appState.setName = event.target.value;
     buildQueue();
   });
 
@@ -276,7 +361,6 @@ function bindEvents() {
 
   dom.queueSelector.addEventListener("change", (event) => {
     appState.queueMode = event.target.value;
-    saveStorage();
     buildQueue();
   });
 
@@ -292,13 +376,23 @@ function bindEvents() {
     buildQueue();
   });
 
+  dom.themeToggleButton.addEventListener("click", () => {
+    appState.theme = appState.theme === "light" ? "dark" : "light";
+    saveStorage();
+    applyTheme();
+  });
+
   dom.prevCardButton.addEventListener("click", () => moveCard(-1));
   dom.nextCardButton.addEventListener("click", () => moveCard(1));
   dom.flipButton.addEventListener("click", flipCard);
   dom.card.addEventListener("click", flipCard);
   dom.speakButton.addEventListener("click", speakCurrentCard);
+  dom.generateSentenceButton.addEventListener("click", () => {
+    appState.currentSentenceSeed += 1;
+    renderGeneratedSentence(currentCard());
+  });
   dom.checkQuizButton.addEventListener("click", checkQuiz);
-  dom.newQuizButton.addEventListener("click", () => renderQuiz(currentCard()));
+  dom.newQuizButton.addEventListener("click", renderQuiz);
 
   document.querySelectorAll(".review-button").forEach((button) => {
     button.addEventListener("click", () => rateCard(button.dataset.rating));
@@ -314,7 +408,10 @@ function bindEvents() {
 }
 
 function init() {
-  populateSelectors();
+  populateLessonSelector();
+  updateSetSelector();
+  dom.studyModeSelector.value = appState.promptMode;
+  dom.queueSelector.value = appState.queueMode;
   bindEvents();
   buildQueue();
 }
