@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chinese Study Hub Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div>
+        <p class="eyebrow">Mandarin study system</p>
+        <h1 class="lesson-title">Chinese Study Hub Pro</h1>
+        <p class="subtitle">Spaced repetition, audio, examples, analytics, bookmarks, notes, and targeted practice.</p>
+      </div>
+
+      <section class="panel">
+        <h2>Study setup</h2>
+        <label>
+          Lesson
+          <select id="lessonSelector"></select>
+        </label>
+        <label>
+          Set
+          <select id="setSelector"></select>
+        </label>
+        <label>
+          Learning mode
+          <select id="studyModeSelector"></select>
+        </label>
+        <label>
+          Card filter
+          <select id="filterSelector"></select>
+        </label>
+        <label>
+          Sort queue
+          <select id="queueSelector"></select>
+        </label>
+        <div class="button-row compact">
+          <button id="shuffleButton" type="button">Shuffle queue</button>
+          <button id="resetProgressButton" type="button">Reset lesson stats</button>
+        </div>
+        <div class="toggle-grid">
+          <label><input type="checkbox" id="autoPlayToggle" checked /> Auto-play audio</label>
+          <label><input type="checkbox" id="smartRevealToggle" checked /> Smart pinyin reveal</label>
+          <label><input type="checkbox" id="mixOldNewToggle" checked /> Mix old + new</label>
+          <label><input type="checkbox" id="timedModeToggle" /> Timed review</label>
+        </div>
+      </section>
+
+      <section class="panel stats-panel">
+        <h2>Dashboard</h2>
+        <div class="stats-grid" id="statsGrid"></div>
+        <div class="heatmap-wrap">
+          <div class="section-label">Review heatmap</div>
+          <div id="heatmap" class="heatmap"></div>
+        </div>
+      </section>
+
+      <section class="panel compare-panel">
+        <h2>Compare similar words</h2>
+        <label>
+          Compare pair
+          <select id="compareSelector"></select>
+        </label>
+        <div id="compareContent" class="compare-content empty-state">Select a pair to compare close words.</div>
+      </section>
+    </aside>
+
+    <main class="main-content">
+      <section class="hero-row">
+        <div>
+          <p id="lessonDisplay" class="current-lesson">Lesson</p>
+          <div id="sessionStatus" class="session-status">Loading study queue...</div>
+        </div>
+        <div class="hero-actions">
+          <button id="showDashboardButton" type="button">Toggle dashboard</button>
+          <button id="speakButton" type="button">🔊 Speak</button>
+          <button id="repeatAudioButton" type="button">Repeat</button>
+          <button id="starButton" type="button">☆ Star</button>
+        </div>
+      </section>
+
+      <section class="flashcard-section">
+        <div class="card-container" id="cardContainer">
+          <div class="card" id="card">
+            <div class="card-face card-front">
+              <span class="label">Prompt</span>
+              <div id="frontPrompt" class="front-prompt">...</div>
+              <div id="frontHint" class="front-hint"></div>
+            </div>
+            <div class="card-face card-back">
+              <span class="label">Reveal</span>
+              <div class="back-header">
+                <div id="backChar" class="back-char">...</div>
+                <div id="backTags" class="tag-row"></div>
+              </div>
+              <div id="backPinyin" class="pinyin">...</div>
+              <div id="backMeaning" class="meaning">...</div>
+              <div id="backMeta" class="meta-grid"></div>
+              <div class="example-box">
+                <div class="section-label">Example sentence</div>
+                <div id="exampleHan" class="example-line">...</div>
+                <div id="examplePinyin" class="example-subline">...</div>
+                <div id="exampleEnglish" class="example-subline english">...</div>
+                <button id="newExampleButton" type="button" class="subtle-button">Generate another example</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel quick-review-panel">
+          <div class="section-label">Spaced repetition review</div>
+          <div class="review-buttons">
+            <button class="review again" data-rating="again" type="button">Again</button>
+            <button class="review hard" data-rating="hard" type="button">Hard</button>
+            <button class="review good" data-rating="good" type="button">Good</button>
+            <button class="review easy" data-rating="easy" type="button">Easy</button>
+          </div>
+          <div id="reviewFeedback" class="review-feedback">Review a card to train its schedule.</div>
+        </div>
+      </section>
+
+      <section class="practice-grid">
+        <div class="panel">
+          <h2>Recall challenge</h2>
+          <div id="quizPrompt" class="quiz-prompt">Switch to a quiz mode to start practicing.</div>
+          <div id="quizOptions" class="quiz-options"></div>
+          <div class="button-row compact">
+            <button id="checkQuizButton" type="button">Check answer</button>
+            <button id="skipQuizButton" type="button">Skip</button>
+          </div>
+          <div id="quizFeedback" class="quiz-feedback">Your answer accuracy and response speed will appear here.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Writing practice</h2>
+          <div class="section-label">Stroke order support</div>
+          <div id="strokeInfo" class="stroke-info">Character decomposition and radical info appear here.</div>
+          <canvas id="writingCanvas" width="440" height="220"></canvas>
+          <div class="button-row compact">
+            <button id="clearCanvasButton" type="button">Clear canvas</button>
+            <button id="toggleGuideButton" type="button">Toggle grid</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes-grid">
+        <div class="panel">
+          <h2>Personal notes & mnemonics</h2>
+          <textarea id="notesInput" rows="5" placeholder="Add memory tricks, confusing contrasts, translation nuance, or reminders here..."></textarea>
+          <div class="button-row compact">
+            <button id="saveNotesButton" type="button">Save notes</button>
+            <button id="clearNotesButton" type="button">Clear notes</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Study recommendations</h2>
+          <ul id="recommendationsList" class="recommendations"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
