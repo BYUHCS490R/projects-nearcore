@@ -811,10 +811,10 @@ function classifyCard(card) {
 
 function buildDynamicSentenceTemplates(card) {
   const kind = classifyCard(card);
-  const place = chooseRelatedWord(card, (item) => /(school|home|park|apartment|bookstore|restaurant|airport|hospital|city|center)/i.test(item.english), { char: "å­¸æ ¡", pinyin: "xuÃ©xiÃ o", english: "school" });
-  const noun = chooseRelatedWord(card, (item) => !item.english.toLowerCase().startsWith("to "), { char: "ä¸­æ–‡", pinyin: "ZhÅngwÃ©n", english: "Chinese language" });
-  const verb = chooseRelatedWord(card, (item) => item.english.toLowerCase().startsWith("to "), { char: "å­¸", pinyin: "xuÃ©", english: "to study" });
-  const adjective = chooseRelatedWord(card, (item) => /(cold|warm|hot|clean|quiet|interesting|dangerous|simple|comfortable|healthy|cute)/i.test(item.english), { char: "å¥½", pinyin: "hÇŽo", english: "good" });
+  const place = chooseRelatedWord(card, (item) => /(school|home|park|apartment|bookstore|restaurant|airport|hospital|city|center)/i.test(item.english), { char: "學校", pinyin: "xuéxiào", english: "school" });
+  const noun = chooseRelatedWord(card, (item) => !item.english.toLowerCase().startsWith("to "), { char: "中文", pinyin: "Zhōngwén", english: "Chinese language" });
+  const verb = chooseRelatedWord(card, (item) => item.english.toLowerCase().startsWith("to "), { char: "學", pinyin: "xué", english: "to study" });
+  const adjective = chooseRelatedWord(card, (item) => /(cold|warm|hot|clean|quiet|interesting|dangerous|simple|comfortable|healthy|cute)/i.test(item.english), { char: "好", pinyin: "hǎo", english: "good" });
 
   const foodPartner = chooseRelatedWord(card, (item) => /(soup|dumplings|rice|tea|fish|beef|tofu|vegetable|fruit|duck|cake|cucumber|meal)/i.test(item.english), { char: "米飯", pinyin: "mǐfàn", english: "rice" });
   const templates = [];
@@ -822,13 +822,13 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isVerb) {
     templates.push(
       {
-        hanzi: `æˆ‘æƒ³${card.char}ï¼Œå¯æ˜¯ä»Šå¤©æ²’æœ‰æ™‚é–“ã€‚`,
-        pinyin: `WÇ’ xiÇŽng ${card.pinyin}, kÄ›shÃ¬ jÄ«ntiÄn mÃ©iyÇ’u shÃ­jiÄn.`,
+        hanzi: `我想${card.char}，可是今天沒有時間。`,
+        pinyin: `Wǒ xiǎng ${card.pinyin}, kěshì jīntiān méiyǒu shíjiān.`,
         english: `I would like to ${bareVerbText(card.english)}, but I do not have time today.`
       },
       {
-        hanzi: `æˆ‘å€‘æ˜Žå¤©å¯ä»¥ä¸€èµ·${card.char}ã€‚`,
-        pinyin: `WÇ’men mÃ­ngtiÄn kÄ›yÇ yÃ¬qÇ ${card.pinyin}.`,
+        hanzi: `我們明天可以一起${card.char}。`,
+        pinyin: `Wǒmen míngtiān kěyǐ yìqǐ ${card.pinyin}.`,
         english: `We can ${bareVerbText(card.english)} together tomorrow.`
       }
     );
@@ -837,13 +837,13 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isPlace) {
     templates.push(
       {
-        hanzi: `${card.char}é›¢${place.char}ä¸é ã€‚`,
-        pinyin: `${card.pinyin} lÃ­ ${place.pinyin} bÃ¹ yuÇŽn.`,
+        hanzi: `${card.char}離${place.char}不遠。`,
+        pinyin: `${card.pinyin} lí ${place.pinyin} bù yuǎn.`,
         english: `${capitalizeText(nounPhrase(card.english, "the"))} is not far from ${nounPhrase(place.english, "the")}.`
       },
       {
-        hanzi: `æˆ‘æƒ³åŽ»${card.char}çœ‹çœ‹ã€‚`,
-        pinyin: `WÇ’ xiÇŽng qÃ¹ ${card.pinyin} kÃ nkan.`,
+        hanzi: `我想去${card.char}看看。`,
+        pinyin: `Wǒ xiǎng qù ${card.pinyin} kànkan.`,
         english: `I want to go to ${nounPhrase(card.english, "the")} and look around.`
       }
     );
@@ -852,13 +852,13 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isFood) {
     templates.push(
       {
-        hanzi: `ä»Šå¤©æˆ‘æƒ³åƒ${card.char}ã€‚`,
-        pinyin: `JÄ«ntiÄn wÇ’ xiÇŽng chÄ« ${card.pinyin}.`,
+        hanzi: `今天我想吃${card.char}。`,
+        pinyin: `Jīntiān wǒ xiǎng chī ${card.pinyin}.`,
         english: `I feel like eating ${nounPhrase(card.english)} today.`
       },
       {
-        hanzi: `${card.char}å’Œ${noun.char}éƒ½å¾ˆå—æ­¡è¿Žã€‚`,
-        pinyin: `${card.pinyin} hÃ© ${noun.pinyin} dÅu hÄ›n shÃ²u huÄnyÃ­ng.`,
+        hanzi: `${card.char}和${foodPartner.char}都很受歡迎。`,
+        pinyin: `${card.pinyin} hé ${foodPartner.pinyin} dōu hěn shòu huānyíng.`,
         english: `${capitalizeText(nounPhrase(card.english))} and ${nounPhrase(foodPartner.english)} are both popular choices.`
       }
     );
@@ -867,13 +867,13 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isAdjective) {
     templates.push(
       {
-        hanzi: `ä»Šå¤©çœŸçš„å¾ˆ${card.char}ã€‚`,
-        pinyin: `JÄ«ntiÄn zhÄ“nde hÄ›n ${card.pinyin}.`,
+        hanzi: `今天真的很${card.char}。`,
+        pinyin: `Jīntiān zhēnde hěn ${card.pinyin}.`,
         english: `It is really ${cleanMeaningText(card.english)} today.`
       },
       {
-        hanzi: `é€™è£¡åˆ${card.char}åˆ${adjective.char}ã€‚`,
-        pinyin: `ZhÃ¨lÇ yÃ²u ${card.pinyin} yÃ²u ${adjective.pinyin}.`,
+        hanzi: `這裡又${card.char}又${adjective.char}。`,
+        pinyin: `Zhèlǐ yòu ${card.pinyin} yòu ${adjective.pinyin}.`,
         english: `This place feels ${cleanMeaningText(card.english)} and ${cleanMeaningText(adjective.english)}.`
       }
     );
@@ -881,33 +881,33 @@ function buildDynamicSentenceTemplates(card) {
 
   if (card.char === "比" || card.char === "更") {
     templates.push({
-      hanzi: `ä»Šå¤©æ¯”æ˜¨å¤©${adjective.char}ã€‚`,
-      pinyin: `JÄ«ntiÄn bÇ zuÃ³tiÄn ${adjective.pinyin}.`,
+      hanzi: `今天比昨天${adjective.char}。`,
+      pinyin: `Jīntiān bǐ zuótiān ${adjective.pinyin}.`,
       english: `Today is ${cleanMeaningText(adjective.english)} than yesterday.`
     });
   }
 
   if (card.char === "要不要") {
     templates.push({
-      hanzi: `è¦ä¸è¦åŽ»${place.char}çœ‹çœ‹ï¼Ÿ`,
-      pinyin: `YÃ o bÃº yÃ o qÃ¹ ${place.pinyin} kÃ nkan?`,
+      hanzi: `要不要去${place.char}看看？`,
+      pinyin: `Yào bú yào qù ${place.pinyin} kànkan?`,
       english: `Do you want to go see ${nounPhrase(place.english, "the")}?`
     });
   }
 
   if (card.lessonId === "L18" && kind.isVerb) {
     templates.push({
-      hanzi: `æˆ‘ä¸‰å¤©æ²’æœ‰${card.char}äº†ã€‚`,
-      pinyin: `WÇ’ sÄn tiÄn mÃ©iyÇ’u ${card.pinyin} le.`,
+      hanzi: `我三天沒有${card.char}了。`,
+      pinyin: `Wǒ sān tiān méiyǒu ${card.pinyin} le.`,
       english: `I have not had a chance to ${bareVerbText(card.english)} in three days.`
     });
   }
 
   if (card.lessonId === "L15" && (card.char === "把" || kind.isVerb)) {
     templates.push({
-      hanzi: `ä½ å…ˆæŠŠ${noun.char}${verb.char}äº†ã€‚`,
-      pinyin: `NÇ xiÄn bÇŽ ${noun.pinyin} ${verb.pinyin} le.`,
-      english: `First, ${bareVerbText(verb.english)} ${nounPhrase(noun.english, "the")}.`
+      hanzi: `你先把${noun.char}${verb.char}好。`,
+      pinyin: `Nǐ xiān bǎ ${noun.pinyin} ${verb.pinyin} hǎo.`,
+      english: `First, ${bareVerbText(verb.english)} ${nounPhrase(noun.english, "the")} well.`
     });
   }
 
@@ -932,19 +932,19 @@ function buildSentenceTemplates(card) {
 
   return [
     {
-      hanzi: `${card.char}æ˜¯é€™ä¸€èª²å¾ˆé‡è¦çš„è©žã€‚`,
-      pinyin: `${card.pinyin} shÃ¬ zhÃ¨ yÃ­ kÃ¨ hÄ›n zhÃ²ngyÃ o de cÃ­.`,
-      english: `In this lesson, ${card.char} is an important word for ${cleanMeaningText(card.english)}.`
+      hanzi: `${card.char}是這一課很重要的詞。`,
+      pinyin: `${card.pinyin} shì zhè yí kè hěn zhòngyào de cí.`,
+      english: `"${card.char}" is one of the key words in this lesson.`
     },
     {
-      hanzi: `è€å¸«ä»Šå¤©åˆç”¨äº†${card.char}ã€‚`,
-      pinyin: `LÇŽoshÄ« jÄ«ntiÄn yÃ²u yÃ²ng le ${card.pinyin}.`,
-      english: `The teacher used ${card.char} again in class today.`
+      hanzi: `老師今天又用了${card.char}。`,
+      pinyin: `Lǎoshī jīntiān yòu yòng le ${card.pinyin}.`,
+      english: `The teacher used "${card.char}" again in class today.`
     },
     {
-      hanzi: `${card.char}å’Œ${support.char}å¸¸å¸¸ä¸€èµ·å‡ºç¾åœ¨é€™ä¸€èª²ã€‚`,
-      pinyin: `${card.pinyin} hÃ© ${support.pinyin} chÃ¡ngchÃ¡ng yÃ¬qÇ chÅ«xiÃ n zÃ i zhÃ¨ yÃ­ kÃ¨.`,
-      english: `${card.char} and ${support.char} often appear together in this lesson.`
+      hanzi: `${card.char}和${support.char}常常一起出現在這一課。`,
+      pinyin: `${card.pinyin} hé ${support.pinyin} chángcháng yìqǐ chūxiàn zài zhè yí kè.`,
+      english: `"${card.char}" often appears with "${support.char}" in this lesson.`
     }
   ];
 }
