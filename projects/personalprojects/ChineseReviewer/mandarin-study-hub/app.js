@@ -1,4 +1,4 @@
-const STORAGE_KEY = "mandarin-study-hub-v3";
+﻿const STORAGE_KEY = "mandarin-study-hub-v3";
 const THEME_KEY = "mandarin-theme";
 
 const dom = {
@@ -56,321 +56,321 @@ const appState = {
 const lessonSentenceBank = {
   L11: [
     {
-      uses: ["天氣", "冷"],
-      hanzi: "今天天氣很冷。",
-      pinyin: "Jīntiān tiānqì hěn lěng.",
+      uses: ["å¤©æ°£", "å†·"],
+      hanzi: "ä»Šå¤©å¤©æ°£å¾ˆå†·ã€‚",
+      pinyin: "JÄ«ntiÄn tiÄnqÃ¬ hÄ›n lÄ›ng.",
       english: "The weather is cold today."
     },
     {
-      uses: ["比", "更", "暖和"],
-      hanzi: "明天比今天更暖和。",
-      pinyin: "Míngtiān bǐ jīntiān gèng nuǎnhuo.",
+      uses: ["æ¯”", "æ›´", "æš–å’Œ"],
+      hanzi: "æ˜Žå¤©æ¯”ä»Šå¤©æ›´æš–å’Œã€‚",
+      pinyin: "MÃ­ngtiÄn bÇ jÄ«ntiÄn gÃ¨ng nuÇŽnhuo.",
       english: "Tomorrow will be even warmer than today."
     },
     {
-      uses: ["下雪", "公園"],
-      hanzi: "如果下雪，我們就不去公園了。",
-      pinyin: "Rúguǒ xià xuě, wǒmen jiù bú qù gōngyuán le.",
+      uses: ["ä¸‹é›ª", "å…¬åœ’"],
+      hanzi: "å¦‚æžœä¸‹é›ªï¼Œæˆ‘å€‘å°±ä¸åŽ»å…¬åœ’äº†ã€‚",
+      pinyin: "RÃºguÇ’ xiÃ  xuÄ›, wÇ’men jiÃ¹ bÃº qÃ¹ gÅngyuÃ¡n le.",
       english: "If it snows, we will not go to the park."
     },
     {
-      uses: ["預報", "網上"],
-      hanzi: "我剛才在網上看了天氣預報。",
-      pinyin: "Wǒ gāngcái zài wǎngshang kàn le tiānqì yùbào.",
+      uses: ["é å ±", "ç¶²ä¸Š"],
+      hanzi: "æˆ‘å‰›æ‰åœ¨ç¶²ä¸Šçœ‹äº†å¤©æ°£é å ±ã€‚",
+      pinyin: "WÇ’ gÄngcÃ¡i zÃ i wÇŽngshang kÃ n le tiÄnqÃ¬ yÃ¹bÃ o.",
       english: "I just checked the weather forecast online."
     },
     {
-      uses: ["不但...而且...", "暖和"],
-      hanzi: "明天不但不冷，而且很暖和。",
-      pinyin: "Míngtiān búdàn bù lěng, érqiě hěn nuǎnhuo.",
+      uses: ["ä¸ä½†...è€Œä¸”...", "æš–å’Œ"],
+      hanzi: "æ˜Žå¤©ä¸ä½†ä¸å†·ï¼Œè€Œä¸”å¾ˆæš–å’Œã€‚",
+      pinyin: "MÃ­ngtiÄn bÃºdÃ n bÃ¹ lÄ›ng, Ã©rqiÄ› hÄ›n nuÇŽnhuo.",
       english: "Tomorrow will not only be not cold, but also quite warm."
     }
   ],
   L12: [
     {
-      uses: ["點菜", "餃子", "酸辣湯"],
-      hanzi: "我們先點一盤餃子，再點一碗酸辣湯。",
-      pinyin: "Wǒmen xiān diǎn yì pán jiǎozi, zài diǎn yì wǎn suānlàtāng.",
+      uses: ["é»žèœ", "é¤ƒå­", "é…¸è¾£æ¹¯"],
+      hanzi: "æˆ‘å€‘å…ˆé»žä¸€ç›¤é¤ƒå­ï¼Œå†é»žä¸€ç¢—é…¸è¾£æ¹¯ã€‚",
+      pinyin: "WÇ’men xiÄn diÇŽn yÃ¬ pÃ¡n jiÇŽozi, zÃ i diÇŽn yÃ¬ wÇŽn suÄnlÃ tÄng.",
       english: "Let us order a plate of dumplings first, then a bowl of hot and sour soup."
     },
     {
-      uses: ["好吃", "魚"],
-      hanzi: "這個魚很好吃。",
-      pinyin: "Zhège yú hěn hǎochī.",
+      uses: ["å¥½åƒ", "é­š"],
+      hanzi: "é€™å€‹é­šå¾ˆå¥½åƒã€‚",
+      pinyin: "ZhÃ¨ge yÃº hÄ›n hÇŽochÄ«.",
       english: "This fish is delicious."
     },
     {
-      uses: ["辣", "湯"],
-      hanzi: "這個湯有一點辣。",
-      pinyin: "Zhège tāng yǒu yìdiǎn là.",
+      uses: ["è¾£", "æ¹¯"],
+      hanzi: "é€™å€‹æ¹¯æœ‰ä¸€é»žè¾£ã€‚",
+      pinyin: "ZhÃ¨ge tÄng yÇ’u yÃ¬diÇŽn lÃ .",
       english: "This soup is a little spicy."
     },
     {
-      uses: ["渴", "冰茶"],
-      hanzi: "我有一點渴，想喝冰茶。",
-      pinyin: "Wǒ yǒu yìdiǎn kě, xiǎng hē bīngchá.",
+      uses: ["æ¸´", "å†°èŒ¶"],
+      hanzi: "æˆ‘æœ‰ä¸€é»žæ¸´ï¼Œæƒ³å–å†°èŒ¶ã€‚",
+      pinyin: "WÇ’ yÇ’u yÃ¬diÇŽn kÄ›, xiÇŽng hÄ“ bÄ«ngchÃ¡.",
       english: "I am a little thirsty and want to drink iced tea."
     },
     {
-      uses: ["賣完", "青菜"],
-      hanzi: "青菜剛剛賣完了。",
-      pinyin: "Qīngcài gānggāng mài wán le.",
+      uses: ["è³£å®Œ", "é’èœ"],
+      hanzi: "é’èœå‰›å‰›è³£å®Œäº†ã€‚",
+      pinyin: "QÄ«ngcÃ i gÄnggÄng mÃ i wÃ¡n le.",
       english: "The green vegetables were just sold out."
     }
   ],
   L13: [
     {
-      uses: ["書店", "旁邊"],
-      hanzi: "書店在運動場旁邊。",
-      pinyin: "Shūdiàn zài yùndòngchǎng pángbiān.",
+      uses: ["æ›¸åº—", "æ—é‚Š"],
+      hanzi: "æ›¸åº—åœ¨é‹å‹•å ´æ—é‚Šã€‚",
+      pinyin: "ShÅ«diÃ n zÃ i yÃ¹ndÃ²ngchÇŽng pÃ¡ngbiÄn.",
       english: "The bookstore is next to the sports field."
     },
     {
-      uses: ["離", "近"],
-      hanzi: "中國城離這裡不遠，很近。",
-      pinyin: "Zhōngguóchéng lí zhèlǐ bù yuǎn, hěn jìn.",
+      uses: ["é›¢", "è¿‘"],
+      hanzi: "ä¸­åœ‹åŸŽé›¢é€™è£¡ä¸é ï¼Œå¾ˆè¿‘ã€‚",
+      pinyin: "ZhÅngguÃ³chÃ©ng lÃ­ zhÃ¨lÇ bÃ¹ yuÇŽn, hÄ›n jÃ¬n.",
       english: "Chinatown is not far from here; it is quite close."
     },
     {
-      uses: ["從", "一直", "往", "南"],
-      hanzi: "從這裡一直往南走。",
-      pinyin: "Cóng zhèlǐ yìzhí wǎng nán zǒu.",
+      uses: ["å¾ž", "ä¸€ç›´", "å¾€", "å—"],
+      hanzi: "å¾žé€™è£¡ä¸€ç›´å¾€å—èµ°ã€‚",
+      pinyin: "CÃ³ng zhÃ¨lÇ yÃ¬zhÃ­ wÇŽng nÃ¡n zÇ’u.",
       english: "Go straight south from here."
     },
     {
-      uses: ["路口", "右", "左"],
-      hanzi: "到了路口先往右拐，再往左走。",
-      pinyin: "Dào le lùkǒu xiān wǎng yòu guǎi, zài wǎng zuǒ zǒu.",
+      uses: ["è·¯å£", "å³", "å·¦"],
+      hanzi: "åˆ°äº†è·¯å£å…ˆå¾€å³æ‹ï¼Œå†å¾€å·¦èµ°ã€‚",
+      pinyin: "DÃ o le lÃ¹kÇ’u xiÄn wÇŽng yÃ²u guÇŽi, zÃ i wÇŽng zuÇ’ zÇ’u.",
       english: "When you reach the intersection, turn right first, then go left."
     },
     {
-      uses: ["前面", "紅綠燈"],
-      hanzi: "前面有一個紅綠燈。",
-      pinyin: "Qiánmiàn yǒu yí ge hónglǜdēng.",
+      uses: ["å‰é¢", "ç´…ç¶ ç‡ˆ"],
+      hanzi: "å‰é¢æœ‰ä¸€å€‹ç´…ç¶ ç‡ˆã€‚",
+      pinyin: "QiÃ¡nmiÃ n yÇ’u yÃ­ ge hÃ³nglÇœdÄ“ng.",
       english: "There is a traffic light up ahead."
     }
   ],
   L14: [
     {
-      uses: ["生日晚會", "禮物"],
-      hanzi: "我想帶一個禮物去生日晚會。",
-      pinyin: "Wǒ xiǎng dài yí ge lǐwù qù shēngrì wǎnhuì.",
+      uses: ["ç”Ÿæ—¥æ™šæœƒ", "ç¦®ç‰©"],
+      hanzi: "æˆ‘æƒ³å¸¶ä¸€å€‹ç¦®ç‰©åŽ»ç”Ÿæ—¥æ™šæœƒã€‚",
+      pinyin: "WÇ’ xiÇŽng dÃ i yÃ­ ge lÇwÃ¹ qÃ¹ shÄ“ngrÃ¬ wÇŽnhuÃ¬.",
       english: "I want to bring a gift to the birthday party."
     },
     {
-      uses: ["水果", "蛋糕"],
-      hanzi: "桌上有水果，也有蛋糕。",
-      pinyin: "Zhuō shàng yǒu shuǐguǒ, yě yǒu dàngāo.",
+      uses: ["æ°´æžœ", "è›‹ç³•"],
+      hanzi: "æ¡Œä¸Šæœ‰æ°´æžœï¼Œä¹Ÿæœ‰è›‹ç³•ã€‚",
+      pinyin: "ZhuÅ shÃ ng yÇ’u shuÇguÇ’, yÄ› yÇ’u dÃ ngÄo.",
       english: "There is fruit on the table, and there is cake too."
     },
     {
-      uses: ["最", "可愛"],
-      hanzi: "大家都覺得那個孩子最可愛。",
-      pinyin: "Dàjiā dōu juéde nàge háizi zuì kě'ài.",
+      uses: ["æœ€", "å¯æ„›"],
+      hanzi: "å¤§å®¶éƒ½è¦ºå¾—é‚£å€‹å­©å­æœ€å¯æ„›ã€‚",
+      pinyin: "DÃ jiÄ dÅu juÃ©de nÃ ge hÃ¡izi zuÃ¬ kÄ›'Ã i.",
       english: "Everyone thinks that child is the cutest."
     },
     {
-      uses: ["像", "臉", "圓"],
-      hanzi: "她的臉很圓，看起來像她媽媽。",
-      pinyin: "Tā de liǎn hěn yuán, kàn qǐlái xiàng tā māma.",
+      uses: ["åƒ", "è‡‰", "åœ“"],
+      hanzi: "å¥¹çš„è‡‰å¾ˆåœ“ï¼Œçœ‹èµ·ä¾†åƒå¥¹åª½åª½ã€‚",
+      pinyin: "TÄ de liÇŽn hÄ›n yuÃ¡n, kÃ n qÇlÃ¡i xiÃ ng tÄ mÄma.",
       english: "Her face is round, and she looks like her mother."
     },
     {
-      uses: ["送", "花"],
-      hanzi: "他想送她一把花。",
-      pinyin: "Tā xiǎng sòng tā yì bǎ huā.",
+      uses: ["é€", "èŠ±"],
+      hanzi: "ä»–æƒ³é€å¥¹ä¸€æŠŠèŠ±ã€‚",
+      pinyin: "TÄ xiÇŽng sÃ²ng tÄ yÃ¬ bÇŽ huÄ.",
       english: "He wants to give her a bouquet of flowers."
     }
   ],
   L15: [
     {
-      uses: ["肚子", "疼"],
-      hanzi: "我肚子很疼，今天不太舒服。",
-      pinyin: "Wǒ dùzi hěn téng, jīntiān bú tài shūfu.",
+      uses: ["è‚šå­", "ç–¼"],
+      hanzi: "æˆ‘è‚šå­å¾ˆç–¼ï¼Œä»Šå¤©ä¸å¤ªèˆ’æœã€‚",
+      pinyin: "WÇ’ dÃ¹zi hÄ›n tÃ©ng, jÄ«ntiÄn bÃº tÃ i shÅ«fu.",
       english: "My stomach hurts a lot, and I do not feel very well today."
     },
     {
-      uses: ["最好", "休息"],
-      hanzi: "你最好先休息一下。",
-      pinyin: "Nǐ zuìhǎo xiān xiūxi yíxià.",
+      uses: ["æœ€å¥½", "ä¼‘æ¯"],
+      hanzi: "ä½ æœ€å¥½å…ˆä¼‘æ¯ä¸€ä¸‹ã€‚",
+      pinyin: "NÇ zuÃ¬hÇŽo xiÄn xiÅ«xi yÃ­xiÃ .",
       english: "You had better rest for a bit first."
     },
     {
-      uses: ["把", "藥"],
-      hanzi: "你先把藥吃了，再回去休息。",
-      pinyin: "Nǐ xiān bǎ yào chī le, zài huí qù xiūxi.",
+      uses: ["æŠŠ", "è—¥"],
+      hanzi: "ä½ å…ˆæŠŠè—¥åƒäº†ï¼Œå†å›žåŽ»ä¼‘æ¯ã€‚",
+      pinyin: "NÇ xiÄn bÇŽ yÃ o chÄ« le, zÃ i huÃ­ qÃ¹ xiÅ«xi.",
       english: "Take the medicine first, then go back and rest."
     },
     {
-      uses: ["發燒", "醫院"],
-      hanzi: "如果你發燒了，就去醫院看病。",
-      pinyin: "Rúguǒ nǐ fāshāo le, jiù qù yīyuàn kànbìng.",
+      uses: ["ç™¼ç‡’", "é†«é™¢"],
+      hanzi: "å¦‚æžœä½ ç™¼ç‡’äº†ï¼Œå°±åŽ»é†«é™¢çœ‹ç—…ã€‚",
+      pinyin: "RÃºguÇ’ nÇ fÄshÄo le, jiÃ¹ qÃ¹ yÄ«yuÃ n kÃ nbÃ¬ng.",
       english: "If you get a fever, then go to the hospital to see a doctor."
     },
     {
-      uses: ["過敏", "藥店"],
-      hanzi: "他對花粉過敏，所以先去藥店。",
-      pinyin: "Tā duì huāfěn guòmǐn, suǒyǐ xiān qù yàodiàn.",
+      uses: ["éŽæ•", "è—¥åº—"],
+      hanzi: "ä»–å°èŠ±ç²‰éŽæ•ï¼Œæ‰€ä»¥å…ˆåŽ»è—¥åº—ã€‚",
+      pinyin: "TÄ duÃ¬ huÄfÄ›n guÃ²mÇn, suÇ’yÇ xiÄn qÃ¹ yÃ odiÃ n.",
       english: "He is allergic to pollen, so he is going to the pharmacy first."
     }
   ],
   L16: [
     {
-      uses: ["後天", "電影"],
-      hanzi: "我們後天一起去看電影吧。",
-      pinyin: "Wǒmen hòutiān yìqǐ qù kàn diànyǐng ba.",
+      uses: ["å¾Œå¤©", "é›»å½±"],
+      hanzi: "æˆ‘å€‘å¾Œå¤©ä¸€èµ·åŽ»çœ‹é›»å½±å§ã€‚",
+      pinyin: "WÇ’men hÃ²utiÄn yÃ¬qÇ qÃ¹ kÃ n diÃ nyÇng ba.",
       english: "Let us go watch a movie together the day after tomorrow."
     },
     {
-      uses: ["印象", "好"],
-      hanzi: "那部電影給我的印象很好。",
-      pinyin: "Nà bù diànyǐng gěi wǒ de yìnxiàng hěn hǎo.",
+      uses: ["å°è±¡", "å¥½"],
+      hanzi: "é‚£éƒ¨é›»å½±çµ¦æˆ‘çš„å°è±¡å¾ˆå¥½ã€‚",
+      pinyin: "NÃ  bÃ¹ diÃ nyÇng gÄ›i wÇ’ de yÃ¬nxiÃ ng hÄ›n hÇŽo.",
       english: "That movie left a very good impression on me."
     },
     {
-      uses: ["就", "倆"],
-      hanzi: "今天就我們倆去。",
-      pinyin: "Jīntiān jiù wǒmen liǎ qù.",
+      uses: ["å°±", "å€†"],
+      hanzi: "ä»Šå¤©å°±æˆ‘å€‘å€†åŽ»ã€‚",
+      pinyin: "JÄ«ntiÄn jiÃ¹ wÇ’men liÇŽ qÃ¹.",
       english: "Today it will be just the two of us going."
     },
     {
-      uses: ["記得", "號碼"],
-      hanzi: "你還記得他的號碼嗎？",
-      pinyin: "Nǐ hái jìde tā de hàomǎ ma?",
+      uses: ["è¨˜å¾—", "è™Ÿç¢¼"],
+      hanzi: "ä½ é‚„è¨˜å¾—ä»–çš„è™Ÿç¢¼å—Žï¼Ÿ",
+      pinyin: "NÇ hÃ¡i jÃ¬de tÄ de hÃ omÇŽ ma?",
       english: "Do you still remember his number?"
     },
     {
-      uses: ["一言為定"],
-      hanzi: "好，後天見，一言為定。",
-      pinyin: "Hǎo, hòutiān jiàn, yì yán wéi dìng.",
+      uses: ["ä¸€è¨€ç‚ºå®š"],
+      hanzi: "å¥½ï¼Œå¾Œå¤©è¦‹ï¼Œä¸€è¨€ç‚ºå®šã€‚",
+      pinyin: "HÇŽo, hÃ²utiÄn jiÃ n, yÃ¬ yÃ¡n wÃ©i dÃ¬ng.",
       english: "Okay, see you the day after tomorrow. It is settled."
     }
   ],
   L17: [
     {
-      uses: ["公寓", "乾淨"],
-      hanzi: "這套公寓很乾淨，也很安靜。",
-      pinyin: "Zhè tào gōngyù hěn gānjìng, yě hěn ānjìng.",
+      uses: ["å…¬å¯“", "ä¹¾æ·¨"],
+      hanzi: "é€™å¥—å…¬å¯“å¾ˆä¹¾æ·¨ï¼Œä¹Ÿå¾ˆå®‰éœã€‚",
+      pinyin: "ZhÃ¨ tÃ o gÅngyÃ¹ hÄ›n gÄnjÃ¬ng, yÄ› hÄ›n ÄnjÃ¬ng.",
       english: "This apartment is very clean and also very quiet."
     },
     {
-      uses: ["客廳", "臥室", "廚房"],
-      hanzi: "這個房子有客廳、臥室和廚房。",
-      pinyin: "Zhège fángzi yǒu kètīng, wòshì hé chúfáng.",
+      uses: ["å®¢å»³", "è‡¥å®¤", "å»šæˆ¿"],
+      hanzi: "é€™å€‹æˆ¿å­æœ‰å®¢å»³ã€è‡¥å®¤å’Œå»šæˆ¿ã€‚",
+      pinyin: "ZhÃ¨ge fÃ¡ngzi yÇ’u kÃ¨tÄ«ng, wÃ²shÃ¬ hÃ© chÃºfÃ¡ng.",
       english: "This place has a living room, a bedroom, and a kitchen."
     },
     {
-      uses: ["房租", "押金"],
-      hanzi: "房租不太貴，但是要先付押金。",
-      pinyin: "Fángzū bú tài guì, dànshì yào xiān fù yājīn.",
+      uses: ["æˆ¿ç§Ÿ", "æŠ¼é‡‘"],
+      hanzi: "æˆ¿ç§Ÿä¸å¤ªè²´ï¼Œä½†æ˜¯è¦å…ˆä»˜æŠ¼é‡‘ã€‚",
+      pinyin: "FÃ¡ngzÅ« bÃº tÃ i guÃ¬, dÃ nshÃ¬ yÃ o xiÄn fÃ¹ yÄjÄ«n.",
       english: "The rent is not too expensive, but you need to pay the deposit first."
     },
     {
-      uses: ["准", "寵物"],
-      hanzi: "這裡不准養寵物。",
-      pinyin: "Zhèlǐ bù zhǔn yǎng chǒngwù.",
+      uses: ["å‡†", "å¯µç‰©"],
+      hanzi: "é€™è£¡ä¸å‡†é¤Šå¯µç‰©ã€‚",
+      pinyin: "ZhÃ¨lÇ bÃ¹ zhÇ”n yÇŽng chÇ’ngwÃ¹.",
       english: "Pets are not allowed here."
     },
     {
-      uses: ["差不多", "人民幣"],
-      hanzi: "這個房租差不多一千人民幣。",
-      pinyin: "Zhège fángzū chàbuduō yì qiān rénmínbì.",
+      uses: ["å·®ä¸å¤š", "äººæ°‘å¹£"],
+      hanzi: "é€™å€‹æˆ¿ç§Ÿå·®ä¸å¤šä¸€åƒäººæ°‘å¹£ã€‚",
+      pinyin: "ZhÃ¨ge fÃ¡ngzÅ« chÃ buduÅ yÃ¬ qiÄn rÃ©nmÃ­nbÃ¬.",
       english: "The rent is about one thousand RMB."
     }
   ],
   L18: [
     {
-      uses: ["跑步", "簡單"],
-      hanzi: "跑步很簡單，可是要每天做。",
-      pinyin: "Pǎobù hěn jiǎndān, kěshì yào měitiān zuò.",
+      uses: ["è·‘æ­¥", "ç°¡å–®"],
+      hanzi: "è·‘æ­¥å¾ˆç°¡å–®ï¼Œå¯æ˜¯è¦æ¯å¤©åšã€‚",
+      pinyin: "PÇŽobÃ¹ hÄ›n jiÇŽndÄn, kÄ›shÃ¬ yÃ o mÄ›itiÄn zuÃ².",
       english: "Jogging is simple, but you need to do it every day."
     },
     {
-      uses: ["游泳", "危險"],
-      hanzi: "不會游泳的時候，下水很危險。",
-      pinyin: "Bú huì yóuyǒng de shíhou, xià shuǐ hěn wēixiǎn.",
+      uses: ["æ¸¸æ³³", "å±éšª"],
+      hanzi: "ä¸æœƒæ¸¸æ³³çš„æ™‚å€™ï¼Œä¸‹æ°´å¾ˆå±éšªã€‚",
+      pinyin: "BÃº huÃ¬ yÃ³uyÇ’ng de shÃ­hou, xiÃ  shuÇ hÄ›n wÄ“ixiÇŽn.",
       english: "When you do not know how to swim, getting in the water is dangerous."
     },
     {
-      uses: ["足球", "比賽"],
-      hanzi: "他每個星期都看足球比賽。",
-      pinyin: "Tā měi ge xīngqí dōu kàn zúqiú bǐsài.",
+      uses: ["è¶³çƒ", "æ¯”è³½"],
+      hanzi: "ä»–æ¯å€‹æ˜ŸæœŸéƒ½çœ‹è¶³çƒæ¯”è³½ã€‚",
+      pinyin: "TÄ mÄ›i ge xÄ«ngqÃ­ dÅu kÃ n zÃºqiÃº bÇsÃ i.",
       english: "He watches soccer matches every week."
     },
     {
-      uses: ["應該", "運動服"],
-      hanzi: "你應該先換上運動服。",
-      pinyin: "Nǐ yīnggāi xiān huàn shàng yùndòngfú.",
+      uses: ["æ‡‰è©²", "é‹å‹•æœ"],
+      hanzi: "ä½ æ‡‰è©²å…ˆæ›ä¸Šé‹å‹•æœã€‚",
+      pinyin: "NÇ yÄ«nggÄi xiÄn huÃ n shÃ ng yÃ¹ndÃ²ngfÃº.",
       english: "You should put on sportswear first."
     },
     {
-      uses: ["半天", "累"],
-      hanzi: "我打了半天球，現在很累。",
-      pinyin: "Wǒ dǎ le bàntiān qiú, xiànzài hěn lèi.",
+      uses: ["åŠå¤©", "ç´¯"],
+      hanzi: "æˆ‘æ‰“äº†åŠå¤©çƒï¼Œç¾åœ¨å¾ˆç´¯ã€‚",
+      pinyin: "WÇ’ dÇŽ le bÃ ntiÄn qiÃº, xiÃ nzÃ i hÄ›n lÃ¨i.",
       english: "I played ball for a long time, and now I am tired."
     }
   ],
   L19: [
     {
-      uses: ["打算", "旅行"],
-      hanzi: "我暑假打算去北京旅行。",
-      pinyin: "Wǒ shǔjià dǎsuàn qù Běijīng lǚxíng.",
+      uses: ["æ‰“ç®—", "æ—…è¡Œ"],
+      hanzi: "æˆ‘æš‘å‡æ‰“ç®—åŽ»åŒ—äº¬æ—…è¡Œã€‚",
+      pinyin: "WÇ’ shÇ”jiÃ  dÇŽsuÃ n qÃ¹ BÄ›ijÄ«ng lÇšxÃ­ng.",
       english: "I plan to travel to Beijing during summer vacation."
     },
     {
-      uses: ["護照", "簽證"],
-      hanzi: "出國以前要先準備護照和簽證。",
-      pinyin: "Chūguó yǐqián yào xiān zhǔnbèi hùzhào hé qiānzhèng.",
+      uses: ["è­·ç…§", "ç°½è­‰"],
+      hanzi: "å‡ºåœ‹ä»¥å‰è¦å…ˆæº–å‚™è­·ç…§å’Œç°½è­‰ã€‚",
+      pinyin: "ChÅ«guÃ³ yÇqiÃ¡n yÃ o xiÄn zhÇ”nbÃ¨i hÃ¹zhÃ o hÃ© qiÄnzhÃ¨ng.",
       english: "Before going abroad, you need to prepare your passport and visa first."
     },
     {
-      uses: ["導遊", "長城"],
-      hanzi: "導遊明天會帶我們去長城。",
-      pinyin: "Dǎoyóu míngtiān huì dài wǒmen qù Chángchéng.",
+      uses: ["å°ŽéŠ", "é•·åŸŽ"],
+      hanzi: "å°ŽéŠæ˜Žå¤©æœƒå¸¶æˆ‘å€‘åŽ»é•·åŸŽã€‚",
+      pinyin: "DÇŽoyÃ³u mÃ­ngtiÄn huÃ¬ dÃ i wÇ’men qÃ¹ ChÃ¡ngchÃ©ng.",
       english: "The tour guide will take us to the Great Wall tomorrow."
     },
     {
-      uses: ["航班", "直飛"],
-      hanzi: "這個航班可以直飛北京。",
-      pinyin: "Zhège hángbān kěyǐ zhífēi Běijīng.",
+      uses: ["èˆªç­", "ç›´é£›"],
+      hanzi: "é€™å€‹èˆªç­å¯ä»¥ç›´é£›åŒ—äº¬ã€‚",
+      pinyin: "ZhÃ¨ge hÃ¡ngbÄn kÄ›yÇ zhÃ­fÄ“i BÄ›ijÄ«ng.",
       english: "This flight can go directly to Beijing."
     },
     {
-      uses: ["旅館", "訂"],
-      hanzi: "我已經訂好了旅館。",
-      pinyin: "Wǒ yǐjīng dìng hǎo le lǚguǎn.",
+      uses: ["æ—…é¤¨", "è¨‚"],
+      hanzi: "æˆ‘å·²ç¶“è¨‚å¥½äº†æ—…é¤¨ã€‚",
+      pinyin: "WÇ’ yÇjÄ«ng dÃ¬ng hÇŽo le lÇšguÇŽn.",
       english: "I have already booked the hotel."
     }
   ],
   L20: [
     {
-      uses: ["行李", "托運"],
-      hanzi: "這兩件行李都要托運。",
-      pinyin: "Zhè liǎng jiàn xíngli dōu yào tuōyùn.",
+      uses: ["è¡ŒæŽ", "æ‰˜é‹"],
+      hanzi: "é€™å…©ä»¶è¡ŒæŽéƒ½è¦æ‰˜é‹ã€‚",
+      pinyin: "ZhÃ¨ liÇŽng jiÃ n xÃ­ngli dÅu yÃ o tuÅyÃ¹n.",
       english: "Both of these pieces of luggage need to be checked."
     },
     {
-      uses: ["箱子", "超重"],
-      hanzi: "這個箱子太重了，已經超重了。",
-      pinyin: "Zhège xiāngzi tài zhòng le, yǐjīng chāozhòng le.",
+      uses: ["ç®±å­", "è¶…é‡"],
+      hanzi: "é€™å€‹ç®±å­å¤ªé‡äº†ï¼Œå·²ç¶“è¶…é‡äº†ã€‚",
+      pinyin: "ZhÃ¨ge xiÄngzi tÃ i zhÃ²ng le, yÇjÄ«ng chÄozhÃ²ng le.",
       english: "This suitcase is too heavy; it is already overweight."
     },
     {
-      uses: ["登機牌", "登機口"],
-      hanzi: "請先看登機牌，再去登機口。",
-      pinyin: "Qǐng xiān kàn dēngjīpái, zài qù dēngjīkǒu.",
+      uses: ["ç™»æ©Ÿç‰Œ", "ç™»æ©Ÿå£"],
+      hanzi: "è«‹å…ˆçœ‹ç™»æ©Ÿç‰Œï¼Œå†åŽ»ç™»æ©Ÿå£ã€‚",
+      pinyin: "QÇng xiÄn kÃ n dÄ“ngjÄ«pÃ¡i, zÃ i qÃ¹ dÄ“ngjÄ«kÇ’u.",
       english: "Please check the boarding pass first, then go to the gate."
     },
     {
-      uses: ["照顧", "小心"],
-      hanzi: "路上小心，也要照顧好自己。",
-      pinyin: "Lùshàng xiǎoxīn, yě yào zhàogù hǎo zìjǐ.",
+      uses: ["ç…§é¡§", "å°å¿ƒ"],
+      hanzi: "è·¯ä¸Šå°å¿ƒï¼Œä¹Ÿè¦ç…§é¡§å¥½è‡ªå·±ã€‚",
+      pinyin: "LÃ¹shÃ ng xiÇŽoxÄ«n, yÄ› yÃ o zhÃ ogÃ¹ hÇŽo zÃ¬jÇ.",
       english: "Be careful on the way, and take good care of yourself too."
     },
     {
-      uses: ["一路平安", "歡迎"],
-      hanzi: "祝你一路平安，到了北京大家都歡迎你。",
-      pinyin: "Zhù nǐ yí lù píng'ān, dào le Běijīng dàjiā dōu huānyíng nǐ.",
+      uses: ["ä¸€è·¯å¹³å®‰", "æ­¡è¿Ž"],
+      hanzi: "ç¥ä½ ä¸€è·¯å¹³å®‰ï¼Œåˆ°äº†åŒ—äº¬å¤§å®¶éƒ½æ­¡è¿Žä½ ã€‚",
+      pinyin: "ZhÃ¹ nÇ yÃ­ lÃ¹ pÃ­ng'Än, dÃ o le BÄ›ijÄ«ng dÃ jiÄ dÅu huÄnyÃ­ng nÇ.",
       english: "Have a safe trip; everyone will welcome you when you arrive in Beijing."
     }
   ]
@@ -378,167 +378,167 @@ const lessonSentenceBank = {
 
 const hiddenSentenceDatabase = {
   helperWords: [
-    { char: "我", pinyin: "wǒ", english: "I" },
-    { char: "你", pinyin: "nǐ", english: "you" },
-    { char: "他", pinyin: "tā", english: "he" },
-    { char: "她", pinyin: "tā", english: "she" },
-    { char: "它", pinyin: "tā", english: "it" },
-    { char: "我們", pinyin: "wǒmen", english: "we" },
-    { char: "你們", pinyin: "nǐmen", english: "you plural" },
-    { char: "他們", pinyin: "tāmen", english: "they" },
-    { char: "大家", pinyin: "dàjiā", english: "everyone" },
-    { char: "誰", pinyin: "shéi", english: "who" },
-    { char: "什麼", pinyin: "shénme", english: "what" },
-    { char: "哪", pinyin: "nǎ", english: "which" },
-    { char: "哪裡", pinyin: "nǎlǐ", english: "where" },
-    { char: "幾", pinyin: "jǐ", english: "how many" },
-    { char: "怎麼", pinyin: "zěnme", english: "how" },
-    { char: "為什麼", pinyin: "wèishénme", english: "why" },
-    { char: "今天", pinyin: "jīntiān", english: "today" },
-    { char: "明天", pinyin: "míngtiān", english: "tomorrow" },
-    { char: "昨天", pinyin: "zuótiān", english: "yesterday" },
-    { char: "前天", pinyin: "qiántiān", english: "the day before yesterday" },
-    { char: "後天", pinyin: "hòutiān", english: "the day after tomorrow" },
-    { char: "現在", pinyin: "xiànzài", english: "now" },
-    { char: "早上", pinyin: "zǎoshang", english: "morning" },
-    { char: "中午", pinyin: "zhōngwǔ", english: "noon" },
-    { char: "下午", pinyin: "xiàwǔ", english: "afternoon" },
-    { char: "晚上", pinyin: "wǎnshang", english: "evening" },
-    { char: "星期", pinyin: "xīngqī", english: "week" },
-    { char: "星期一", pinyin: "xīngqīyī", english: "Monday" },
-    { char: "星期二", pinyin: "xīngqī'èr", english: "Tuesday" },
-    { char: "星期三", pinyin: "xīngqīsān", english: "Wednesday" },
-    { char: "星期四", pinyin: "xīngqīsì", english: "Thursday" },
-    { char: "星期五", pinyin: "xīngqīwǔ", english: "Friday" },
-    { char: "星期六", pinyin: "xīngqīliù", english: "Saturday" },
-    { char: "星期天", pinyin: "xīngqītiān", english: "Sunday" },
-    { char: "星期日", pinyin: "xīngqīrì", english: "Sunday" },
-    { char: "月", pinyin: "yuè", english: "month" },
-    { char: "一月", pinyin: "yīyuè", english: "January" },
-    { char: "二月", pinyin: "èryuè", english: "February" },
-    { char: "三月", pinyin: "sānyuè", english: "March" },
-    { char: "四月", pinyin: "sìyuè", english: "April" },
-    { char: "五月", pinyin: "wǔyuè", english: "May" },
-    { char: "六月", pinyin: "liùyuè", english: "June" },
-    { char: "七月", pinyin: "qīyuè", english: "July" },
-    { char: "八月", pinyin: "bāyuè", english: "August" },
-    { char: "九月", pinyin: "jiǔyuè", english: "September" },
-    { char: "十月", pinyin: "shíyuè", english: "October" },
-    { char: "十一月", pinyin: "shíyīyuè", english: "November" },
-    { char: "十二月", pinyin: "shí'èryuè", english: "December" },
-    { char: "號", pinyin: "hào", english: "day of month" },
-    { char: "時候", pinyin: "shíhou", english: "time; moment" },
-    { char: "時間", pinyin: "shíjiān", english: "time" },
-    { char: "這裡", pinyin: "zhèlǐ", english: "here" },
-    { char: "那裡", pinyin: "nàlǐ", english: "there" },
-    { char: "這個", pinyin: "zhège", english: "this" },
-    { char: "那個", pinyin: "nàge", english: "that" },
-    { char: "裡", pinyin: "lǐ", english: "inside" },
-    { char: "外面", pinyin: "wàimiàn", english: "outside" },
-    { char: "前面", pinyin: "qiánmiàn", english: "in front" },
-    { char: "後面", pinyin: "hòumiàn", english: "behind" },
-    { char: "旁邊", pinyin: "pángbiān", english: "beside" },
-    { char: "上面", pinyin: "shàngmiàn", english: "above" },
-    { char: "下面", pinyin: "xiàmiàn", english: "below" },
-    { char: "學校", pinyin: "xuéxiào", english: "school" },
-    { char: "家", pinyin: "jiā", english: "home" },
-    { char: "教室", pinyin: "jiàoshì", english: "classroom" },
-    { char: "商店", pinyin: "shāngdiàn", english: "store" },
-    { char: "路", pinyin: "lù", english: "road" },
-    { char: "地方", pinyin: "dìfang", english: "place" },
-    { char: "北京", pinyin: "Běijīng", english: "Beijing" },
-    { char: "中文", pinyin: "Zhōngwén", english: "Chinese language" },
-    { char: "朋友", pinyin: "péngyou", english: "friend" },
-    { char: "老師", pinyin: "lǎoshī", english: "teacher" },
-    { char: "學生", pinyin: "xuésheng", english: "student" },
-    { char: "媽媽", pinyin: "māma", english: "mother" },
-    { char: "爸爸", pinyin: "bàba", english: "father" },
-    { char: "很", pinyin: "hěn", english: "very" },
-    { char: "一", pinyin: "yī", english: "one" },
-    { char: "二", pinyin: "èr", english: "two" },
-    { char: "三", pinyin: "sān", english: "three" },
-    { char: "四", pinyin: "sì", english: "four" },
-    { char: "五", pinyin: "wǔ", english: "five" },
-    { char: "六", pinyin: "liù", english: "six" },
-    { char: "七", pinyin: "qī", english: "seven" },
-    { char: "八", pinyin: "bā", english: "eight" },
-    { char: "九", pinyin: "jiǔ", english: "nine" },
-    { char: "十", pinyin: "shí", english: "ten" },
-    { char: "兩", pinyin: "liǎng", english: "two for counting" },
-    { char: "百", pinyin: "bǎi", english: "hundred" },
-    { char: "千", pinyin: "qiān", english: "thousand" },
-    { char: "真", pinyin: "zhēn", english: "really" },
-    { char: "太", pinyin: "tài", english: "too; very" },
-    { char: "有一點", pinyin: "yǒu yìdiǎn", english: "a little" },
-    { char: "比較", pinyin: "bǐjiào", english: "relatively; comparatively" },
-    { char: "也", pinyin: "yě", english: "also" },
-    { char: "都", pinyin: "dōu", english: "all" },
-    { char: "還", pinyin: "hái", english: "still; also" },
-    { char: "再", pinyin: "zài", english: "again; then" },
-    { char: "就", pinyin: "jiù", english: "then; just" },
-    { char: "才", pinyin: "cái", english: "only then" },
-    { char: "先", pinyin: "xiān", english: "first" },
-    { char: "再", pinyin: "zài", english: "then again" },
-    { char: "一起", pinyin: "yìqǐ", english: "together" },
-    { char: "因為", pinyin: "yīnwèi", english: "because" },
-    { char: "所以", pinyin: "suǒyǐ", english: "so; therefore" },
-    { char: "但是", pinyin: "dànshì", english: "but" },
-    { char: "如果", pinyin: "rúguǒ", english: "if" },
-    { char: "跟", pinyin: "gēn", english: "with" },
-    { char: "和", pinyin: "hé", english: "and" },
-    { char: "給", pinyin: "gěi", english: "give; for" },
-    { char: "在", pinyin: "zài", english: "at; in" },
-    { char: "從", pinyin: "cóng", english: "from" },
-    { char: "到", pinyin: "dào", english: "arrive; to" },
-    { char: "往", pinyin: "wǎng", english: "toward" },
-    { char: "可以", pinyin: "kěyǐ", english: "can; may" },
-    { char: "會", pinyin: "huì", english: "will; can" },
-    { char: "應該", pinyin: "yīnggāi", english: "should" },
-    { char: "想", pinyin: "xiǎng", english: "want; think" },
-    { char: "去", pinyin: "qù", english: "go" },
-    { char: "來", pinyin: "lái", english: "come" },
-    { char: "看", pinyin: "kàn", english: "look; watch" },
-    { char: "學", pinyin: "xué", english: "study" },
-    { char: "買", pinyin: "mǎi", english: "buy" },
-    { char: "吃", pinyin: "chī", english: "eat" },
-    { char: "喝", pinyin: "hē", english: "drink" },
-    { char: "說", pinyin: "shuō", english: "speak; say" },
-    { char: "聽", pinyin: "tīng", english: "listen" },
-    { char: "寫", pinyin: "xiě", english: "write" },
-    { char: "讀", pinyin: "dú", english: "read" },
-    { char: "做", pinyin: "zuò", english: "do; make" },
-    { char: "用", pinyin: "yòng", english: "use" },
-    { char: "帶", pinyin: "dài", english: "bring" },
-    { char: "走", pinyin: "zǒu", english: "walk; leave" },
-    { char: "回", pinyin: "huí", english: "return" },
-    { char: "住", pinyin: "zhù", english: "live" },
-    { char: "等", pinyin: "děng", english: "wait" },
-    { char: "找", pinyin: "zhǎo", english: "look for" },
-    { char: "喜歡", pinyin: "xǐhuan", english: "like" },
-    { char: "覺得", pinyin: "juéde", english: "feel; think" },
-    { char: "知道", pinyin: "zhīdào", english: "know" },
-    { char: "認識", pinyin: "rènshi", english: "know; be acquainted with" },
-    { char: "準備", pinyin: "zhǔnbèi", english: "prepare" },
-    { char: "有", pinyin: "yǒu", english: "have; there is" },
-    { char: "沒有", pinyin: "méiyǒu", english: "not have; did not" },
-    { char: "是", pinyin: "shì", english: "to be" },
-    { char: "不是", pinyin: "bú shì", english: "is not" },
-    { char: "好", pinyin: "hǎo", english: "good" },
-    { char: "大", pinyin: "dà", english: "big" },
-    { char: "小", pinyin: "xiǎo", english: "small" },
-    { char: "多", pinyin: "duō", english: "many; much" },
-    { char: "少", pinyin: "shǎo", english: "few; little" },
-    { char: "高", pinyin: "gāo", english: "tall; high" },
-    { char: "新", pinyin: "xīn", english: "new" },
-    { char: "老", pinyin: "lǎo", english: "old" },
-    { char: "快", pinyin: "kuài", english: "fast" },
-    { char: "慢", pinyin: "màn", english: "slow" },
-    { char: "忙", pinyin: "máng", english: "busy" },
-    { char: "累", pinyin: "lèi", english: "tired" },
-    { char: "高興", pinyin: "gāoxìng", english: "happy" },
-    { char: "喜歡", pinyin: "xǐhuan", english: "to like" },
-    { char: "沒有關係", pinyin: "méi yǒu guānxi", english: "it does not matter" },
-    { char: "了", pinyin: "le", english: "completed action particle" }
+    { char: "æˆ‘", pinyin: "wÇ’", english: "I" },
+    { char: "ä½ ", pinyin: "nÇ", english: "you" },
+    { char: "ä»–", pinyin: "tÄ", english: "he" },
+    { char: "å¥¹", pinyin: "tÄ", english: "she" },
+    { char: "å®ƒ", pinyin: "tÄ", english: "it" },
+    { char: "æˆ‘å€‘", pinyin: "wÇ’men", english: "we" },
+    { char: "ä½ å€‘", pinyin: "nÇmen", english: "you plural" },
+    { char: "ä»–å€‘", pinyin: "tÄmen", english: "they" },
+    { char: "å¤§å®¶", pinyin: "dÃ jiÄ", english: "everyone" },
+    { char: "èª°", pinyin: "shÃ©i", english: "who" },
+    { char: "ä»€éº¼", pinyin: "shÃ©nme", english: "what" },
+    { char: "å“ª", pinyin: "nÇŽ", english: "which" },
+    { char: "å“ªè£¡", pinyin: "nÇŽlÇ", english: "where" },
+    { char: "å¹¾", pinyin: "jÇ", english: "how many" },
+    { char: "æ€Žéº¼", pinyin: "zÄ›nme", english: "how" },
+    { char: "ç‚ºä»€éº¼", pinyin: "wÃ¨ishÃ©nme", english: "why" },
+    { char: "ä»Šå¤©", pinyin: "jÄ«ntiÄn", english: "today" },
+    { char: "æ˜Žå¤©", pinyin: "mÃ­ngtiÄn", english: "tomorrow" },
+    { char: "æ˜¨å¤©", pinyin: "zuÃ³tiÄn", english: "yesterday" },
+    { char: "å‰å¤©", pinyin: "qiÃ¡ntiÄn", english: "the day before yesterday" },
+    { char: "å¾Œå¤©", pinyin: "hÃ²utiÄn", english: "the day after tomorrow" },
+    { char: "ç¾åœ¨", pinyin: "xiÃ nzÃ i", english: "now" },
+    { char: "æ—©ä¸Š", pinyin: "zÇŽoshang", english: "morning" },
+    { char: "ä¸­åˆ", pinyin: "zhÅngwÇ”", english: "noon" },
+    { char: "ä¸‹åˆ", pinyin: "xiÃ wÇ”", english: "afternoon" },
+    { char: "æ™šä¸Š", pinyin: "wÇŽnshang", english: "evening" },
+    { char: "æ˜ŸæœŸ", pinyin: "xÄ«ngqÄ«", english: "week" },
+    { char: "æ˜ŸæœŸä¸€", pinyin: "xÄ«ngqÄ«yÄ«", english: "Monday" },
+    { char: "æ˜ŸæœŸäºŒ", pinyin: "xÄ«ngqÄ«'Ã¨r", english: "Tuesday" },
+    { char: "æ˜ŸæœŸä¸‰", pinyin: "xÄ«ngqÄ«sÄn", english: "Wednesday" },
+    { char: "æ˜ŸæœŸå››", pinyin: "xÄ«ngqÄ«sÃ¬", english: "Thursday" },
+    { char: "æ˜ŸæœŸäº”", pinyin: "xÄ«ngqÄ«wÇ”", english: "Friday" },
+    { char: "æ˜ŸæœŸå…­", pinyin: "xÄ«ngqÄ«liÃ¹", english: "Saturday" },
+    { char: "æ˜ŸæœŸå¤©", pinyin: "xÄ«ngqÄ«tiÄn", english: "Sunday" },
+    { char: "æ˜ŸæœŸæ—¥", pinyin: "xÄ«ngqÄ«rÃ¬", english: "Sunday" },
+    { char: "æœˆ", pinyin: "yuÃ¨", english: "month" },
+    { char: "ä¸€æœˆ", pinyin: "yÄ«yuÃ¨", english: "January" },
+    { char: "äºŒæœˆ", pinyin: "Ã¨ryuÃ¨", english: "February" },
+    { char: "ä¸‰æœˆ", pinyin: "sÄnyuÃ¨", english: "March" },
+    { char: "å››æœˆ", pinyin: "sÃ¬yuÃ¨", english: "April" },
+    { char: "äº”æœˆ", pinyin: "wÇ”yuÃ¨", english: "May" },
+    { char: "å…­æœˆ", pinyin: "liÃ¹yuÃ¨", english: "June" },
+    { char: "ä¸ƒæœˆ", pinyin: "qÄ«yuÃ¨", english: "July" },
+    { char: "å…«æœˆ", pinyin: "bÄyuÃ¨", english: "August" },
+    { char: "ä¹æœˆ", pinyin: "jiÇ”yuÃ¨", english: "September" },
+    { char: "åæœˆ", pinyin: "shÃ­yuÃ¨", english: "October" },
+    { char: "åä¸€æœˆ", pinyin: "shÃ­yÄ«yuÃ¨", english: "November" },
+    { char: "åäºŒæœˆ", pinyin: "shÃ­'Ã¨ryuÃ¨", english: "December" },
+    { char: "è™Ÿ", pinyin: "hÃ o", english: "day of month" },
+    { char: "æ™‚å€™", pinyin: "shÃ­hou", english: "time; moment" },
+    { char: "æ™‚é–“", pinyin: "shÃ­jiÄn", english: "time" },
+    { char: "é€™è£¡", pinyin: "zhÃ¨lÇ", english: "here" },
+    { char: "é‚£è£¡", pinyin: "nÃ lÇ", english: "there" },
+    { char: "é€™å€‹", pinyin: "zhÃ¨ge", english: "this" },
+    { char: "é‚£å€‹", pinyin: "nÃ ge", english: "that" },
+    { char: "è£¡", pinyin: "lÇ", english: "inside" },
+    { char: "å¤–é¢", pinyin: "wÃ imiÃ n", english: "outside" },
+    { char: "å‰é¢", pinyin: "qiÃ¡nmiÃ n", english: "in front" },
+    { char: "å¾Œé¢", pinyin: "hÃ²umiÃ n", english: "behind" },
+    { char: "æ—é‚Š", pinyin: "pÃ¡ngbiÄn", english: "beside" },
+    { char: "ä¸Šé¢", pinyin: "shÃ ngmiÃ n", english: "above" },
+    { char: "ä¸‹é¢", pinyin: "xiÃ miÃ n", english: "below" },
+    { char: "å­¸æ ¡", pinyin: "xuÃ©xiÃ o", english: "school" },
+    { char: "å®¶", pinyin: "jiÄ", english: "home" },
+    { char: "æ•™å®¤", pinyin: "jiÃ oshÃ¬", english: "classroom" },
+    { char: "å•†åº—", pinyin: "shÄngdiÃ n", english: "store" },
+    { char: "è·¯", pinyin: "lÃ¹", english: "road" },
+    { char: "åœ°æ–¹", pinyin: "dÃ¬fang", english: "place" },
+    { char: "åŒ—äº¬", pinyin: "BÄ›ijÄ«ng", english: "Beijing" },
+    { char: "ä¸­æ–‡", pinyin: "ZhÅngwÃ©n", english: "Chinese language" },
+    { char: "æœ‹å‹", pinyin: "pÃ©ngyou", english: "friend" },
+    { char: "è€å¸«", pinyin: "lÇŽoshÄ«", english: "teacher" },
+    { char: "å­¸ç”Ÿ", pinyin: "xuÃ©sheng", english: "student" },
+    { char: "åª½åª½", pinyin: "mÄma", english: "mother" },
+    { char: "çˆ¸çˆ¸", pinyin: "bÃ ba", english: "father" },
+    { char: "å¾ˆ", pinyin: "hÄ›n", english: "very" },
+    { char: "ä¸€", pinyin: "yÄ«", english: "one" },
+    { char: "äºŒ", pinyin: "Ã¨r", english: "two" },
+    { char: "ä¸‰", pinyin: "sÄn", english: "three" },
+    { char: "å››", pinyin: "sÃ¬", english: "four" },
+    { char: "äº”", pinyin: "wÇ”", english: "five" },
+    { char: "å…­", pinyin: "liÃ¹", english: "six" },
+    { char: "ä¸ƒ", pinyin: "qÄ«", english: "seven" },
+    { char: "å…«", pinyin: "bÄ", english: "eight" },
+    { char: "ä¹", pinyin: "jiÇ”", english: "nine" },
+    { char: "å", pinyin: "shÃ­", english: "ten" },
+    { char: "å…©", pinyin: "liÇŽng", english: "two for counting" },
+    { char: "ç™¾", pinyin: "bÇŽi", english: "hundred" },
+    { char: "åƒ", pinyin: "qiÄn", english: "thousand" },
+    { char: "çœŸ", pinyin: "zhÄ“n", english: "really" },
+    { char: "å¤ª", pinyin: "tÃ i", english: "too; very" },
+    { char: "æœ‰ä¸€é»ž", pinyin: "yÇ’u yÃ¬diÇŽn", english: "a little" },
+    { char: "æ¯”è¼ƒ", pinyin: "bÇjiÃ o", english: "relatively; comparatively" },
+    { char: "ä¹Ÿ", pinyin: "yÄ›", english: "also" },
+    { char: "éƒ½", pinyin: "dÅu", english: "all" },
+    { char: "é‚„", pinyin: "hÃ¡i", english: "still; also" },
+    { char: "å†", pinyin: "zÃ i", english: "again; then" },
+    { char: "å°±", pinyin: "jiÃ¹", english: "then; just" },
+    { char: "æ‰", pinyin: "cÃ¡i", english: "only then" },
+    { char: "å…ˆ", pinyin: "xiÄn", english: "first" },
+    { char: "å†", pinyin: "zÃ i", english: "then again" },
+    { char: "ä¸€èµ·", pinyin: "yÃ¬qÇ", english: "together" },
+    { char: "å› ç‚º", pinyin: "yÄ«nwÃ¨i", english: "because" },
+    { char: "æ‰€ä»¥", pinyin: "suÇ’yÇ", english: "so; therefore" },
+    { char: "ä½†æ˜¯", pinyin: "dÃ nshÃ¬", english: "but" },
+    { char: "å¦‚æžœ", pinyin: "rÃºguÇ’", english: "if" },
+    { char: "è·Ÿ", pinyin: "gÄ“n", english: "with" },
+    { char: "å’Œ", pinyin: "hÃ©", english: "and" },
+    { char: "çµ¦", pinyin: "gÄ›i", english: "give; for" },
+    { char: "åœ¨", pinyin: "zÃ i", english: "at; in" },
+    { char: "å¾ž", pinyin: "cÃ³ng", english: "from" },
+    { char: "åˆ°", pinyin: "dÃ o", english: "arrive; to" },
+    { char: "å¾€", pinyin: "wÇŽng", english: "toward" },
+    { char: "å¯ä»¥", pinyin: "kÄ›yÇ", english: "can; may" },
+    { char: "æœƒ", pinyin: "huÃ¬", english: "will; can" },
+    { char: "æ‡‰è©²", pinyin: "yÄ«nggÄi", english: "should" },
+    { char: "æƒ³", pinyin: "xiÇŽng", english: "want; think" },
+    { char: "åŽ»", pinyin: "qÃ¹", english: "go" },
+    { char: "ä¾†", pinyin: "lÃ¡i", english: "come" },
+    { char: "çœ‹", pinyin: "kÃ n", english: "look; watch" },
+    { char: "å­¸", pinyin: "xuÃ©", english: "study" },
+    { char: "è²·", pinyin: "mÇŽi", english: "buy" },
+    { char: "åƒ", pinyin: "chÄ«", english: "eat" },
+    { char: "å–", pinyin: "hÄ“", english: "drink" },
+    { char: "èªª", pinyin: "shuÅ", english: "speak; say" },
+    { char: "è½", pinyin: "tÄ«ng", english: "listen" },
+    { char: "å¯«", pinyin: "xiÄ›", english: "write" },
+    { char: "è®€", pinyin: "dÃº", english: "read" },
+    { char: "åš", pinyin: "zuÃ²", english: "do; make" },
+    { char: "ç”¨", pinyin: "yÃ²ng", english: "use" },
+    { char: "å¸¶", pinyin: "dÃ i", english: "bring" },
+    { char: "èµ°", pinyin: "zÇ’u", english: "walk; leave" },
+    { char: "å›ž", pinyin: "huÃ­", english: "return" },
+    { char: "ä½", pinyin: "zhÃ¹", english: "live" },
+    { char: "ç­‰", pinyin: "dÄ›ng", english: "wait" },
+    { char: "æ‰¾", pinyin: "zhÇŽo", english: "look for" },
+    { char: "å–œæ­¡", pinyin: "xÇhuan", english: "like" },
+    { char: "è¦ºå¾—", pinyin: "juÃ©de", english: "feel; think" },
+    { char: "çŸ¥é“", pinyin: "zhÄ«dÃ o", english: "know" },
+    { char: "èªè­˜", pinyin: "rÃ¨nshi", english: "know; be acquainted with" },
+    { char: "æº–å‚™", pinyin: "zhÇ”nbÃ¨i", english: "prepare" },
+    { char: "æœ‰", pinyin: "yÇ’u", english: "have; there is" },
+    { char: "æ²’æœ‰", pinyin: "mÃ©iyÇ’u", english: "not have; did not" },
+    { char: "æ˜¯", pinyin: "shÃ¬", english: "to be" },
+    { char: "ä¸æ˜¯", pinyin: "bÃº shÃ¬", english: "is not" },
+    { char: "å¥½", pinyin: "hÇŽo", english: "good" },
+    { char: "å¤§", pinyin: "dÃ ", english: "big" },
+    { char: "å°", pinyin: "xiÇŽo", english: "small" },
+    { char: "å¤š", pinyin: "duÅ", english: "many; much" },
+    { char: "å°‘", pinyin: "shÇŽo", english: "few; little" },
+    { char: "é«˜", pinyin: "gÄo", english: "tall; high" },
+    { char: "æ–°", pinyin: "xÄ«n", english: "new" },
+    { char: "è€", pinyin: "lÇŽo", english: "old" },
+    { char: "å¿«", pinyin: "kuÃ i", english: "fast" },
+    { char: "æ…¢", pinyin: "mÃ n", english: "slow" },
+    { char: "å¿™", pinyin: "mÃ¡ng", english: "busy" },
+    { char: "ç´¯", pinyin: "lÃ¨i", english: "tired" },
+    { char: "é«˜èˆˆ", pinyin: "gÄoxÃ¬ng", english: "happy" },
+    { char: "å–œæ­¡", pinyin: "xÇhuan", english: "to like" },
+    { char: "æ²’æœ‰é—œä¿‚", pinyin: "mÃ©i yÇ’u guÄnxi", english: "it does not matter" },
+    { char: "äº†", pinyin: "le", english: "completed action particle" }
   ]
 };
 
@@ -649,9 +649,56 @@ function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
+function cleanMeaningText(english) {
+  return english
+    .split(";")[0]
+    .replace(/\([^)]*\)/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function bareVerbText(english) {
+  return cleanMeaningText(english).replace(/^to\s+/i, "").trim();
+}
+
+function capitalizeText(text) {
+  return text ? `${text.charAt(0).toUpperCase()}${text.slice(1)}` : text;
+}
+
+function isProperEnglishLabel(text) {
+  return /^[A-Z][A-Za-z]*(?:[ -][A-Z][A-Za-z]*)*$/.test(text);
+}
+
+function needsArticle(text) {
+  return !(
+    isProperEnglishLabel(text) ||
+    /^(weather|homework|furniture|rice|beef|tofu|tea|coffee|water|sportswear|politics|culture|health|luggage|electricity|insurance|music)$/i.test(text) ||
+    /s$/i.test(text)
+  );
+}
+
+function withIndefiniteArticle(text) {
+  if (!needsArticle(text)) return text;
+  return /^[aeiou]/i.test(text) ? `an ${text}` : `a ${text}`;
+}
+
+function nounPhrase(english, article = "none") {
+  const base = cleanMeaningText(english);
+  if (article === "the") {
+    if (needsArticle(base) && !/^the /i.test(base)) return `the ${base}`;
+    return base;
+  }
+
+  if (article === "indefinite") {
+    return withIndefiniteArticle(base);
+  }
+
+  return base;
+}
+
 function applyTheme() {
   document.body.classList.toggle("dark-mode", appState.theme === "dark");
-  dom.themeToggleButton.textContent = appState.theme === "light" ? "☾" : "☀";
+  dom.themeToggleButton.textContent = appState.theme === "light" ? "â˜¾" : "â˜€";
 }
 
 function render() {
@@ -764,24 +811,25 @@ function classifyCard(card) {
 
 function buildDynamicSentenceTemplates(card) {
   const kind = classifyCard(card);
-  const place = chooseRelatedWord(card, (item) => /(school|home|park|apartment|bookstore|restaurant|airport|hospital|city|center)/i.test(item.english), { char: "學校", pinyin: "xuéxiào", english: "school" });
-  const noun = chooseRelatedWord(card, (item) => !item.english.toLowerCase().startsWith("to "), { char: "中文", pinyin: "Zhōngwén", english: "Chinese language" });
-  const verb = chooseRelatedWord(card, (item) => item.english.toLowerCase().startsWith("to "), { char: "學", pinyin: "xué", english: "to study" });
-  const adjective = chooseRelatedWord(card, (item) => /(cold|warm|hot|clean|quiet|interesting|dangerous|simple|comfortable|healthy|cute)/i.test(item.english), { char: "好", pinyin: "hǎo", english: "good" });
+  const place = chooseRelatedWord(card, (item) => /(school|home|park|apartment|bookstore|restaurant|airport|hospital|city|center)/i.test(item.english), { char: "å­¸æ ¡", pinyin: "xuÃ©xiÃ o", english: "school" });
+  const noun = chooseRelatedWord(card, (item) => !item.english.toLowerCase().startsWith("to "), { char: "ä¸­æ–‡", pinyin: "ZhÅngwÃ©n", english: "Chinese language" });
+  const verb = chooseRelatedWord(card, (item) => item.english.toLowerCase().startsWith("to "), { char: "å­¸", pinyin: "xuÃ©", english: "to study" });
+  const adjective = chooseRelatedWord(card, (item) => /(cold|warm|hot|clean|quiet|interesting|dangerous|simple|comfortable|healthy|cute)/i.test(item.english), { char: "å¥½", pinyin: "hÇŽo", english: "good" });
 
+  const foodPartner = chooseRelatedWord(card, (item) => /(soup|dumplings|rice|tea|fish|beef|tofu|vegetable|fruit|duck|cake|cucumber|meal)/i.test(item.english), { char: "米飯", pinyin: "mǐfàn", english: "rice" });
   const templates = [];
 
   if (kind.isVerb) {
     templates.push(
       {
-        hanzi: `我想${card.char}，可是今天沒有時間。`,
-        pinyin: `Wǒ xiǎng ${card.pinyin}, kěshì jīntiān méiyǒu shíjiān.`,
-        english: `I want to ${card.english.replace(/^to /, "")}, but I do not have time today.`
+        hanzi: `æˆ‘æƒ³${card.char}ï¼Œå¯æ˜¯ä»Šå¤©æ²’æœ‰æ™‚é–“ã€‚`,
+        pinyin: `WÇ’ xiÇŽng ${card.pinyin}, kÄ›shÃ¬ jÄ«ntiÄn mÃ©iyÇ’u shÃ­jiÄn.`,
+        english: `I would like to ${bareVerbText(card.english)}, but I do not have time today.`
       },
       {
-        hanzi: `我們明天可以一起${card.char}。`,
-        pinyin: `Wǒmen míngtiān kěyǐ yìqǐ ${card.pinyin}.`,
-        english: `We can ${card.english.replace(/^to /, "")} together tomorrow.`
+        hanzi: `æˆ‘å€‘æ˜Žå¤©å¯ä»¥ä¸€èµ·${card.char}ã€‚`,
+        pinyin: `WÇ’men mÃ­ngtiÄn kÄ›yÇ yÃ¬qÇ ${card.pinyin}.`,
+        english: `We can ${bareVerbText(card.english)} together tomorrow.`
       }
     );
   }
@@ -789,14 +837,14 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isPlace) {
     templates.push(
       {
-        hanzi: `${card.char}離${place.char}不遠。`,
-        pinyin: `${card.pinyin} lí ${place.pinyin} bù yuǎn.`,
-        english: `${card.english} is not far from ${place.english}.`
+        hanzi: `${card.char}é›¢${place.char}ä¸é ã€‚`,
+        pinyin: `${card.pinyin} lÃ­ ${place.pinyin} bÃ¹ yuÇŽn.`,
+        english: `${capitalizeText(nounPhrase(card.english, "the"))} is not far from ${nounPhrase(place.english, "the")}.`
       },
       {
-        hanzi: `我想去${card.char}看看。`,
-        pinyin: `Wǒ xiǎng qù ${card.pinyin} kànkan.`,
-        english: `I want to go check out the ${card.english}.`
+        hanzi: `æˆ‘æƒ³åŽ»${card.char}çœ‹çœ‹ã€‚`,
+        pinyin: `WÇ’ xiÇŽng qÃ¹ ${card.pinyin} kÃ nkan.`,
+        english: `I want to go to ${nounPhrase(card.english, "the")} and look around.`
       }
     );
   }
@@ -804,14 +852,14 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isFood) {
     templates.push(
       {
-        hanzi: `今天我想吃${card.char}。`,
-        pinyin: `Jīntiān wǒ xiǎng chī ${card.pinyin}.`,
-        english: `Today I want to eat ${card.english}.`
+        hanzi: `ä»Šå¤©æˆ‘æƒ³åƒ${card.char}ã€‚`,
+        pinyin: `JÄ«ntiÄn wÇ’ xiÇŽng chÄ« ${card.pinyin}.`,
+        english: `I feel like eating ${nounPhrase(card.english)} today.`
       },
       {
-        hanzi: `${card.char}和${noun.char}都很受歡迎。`,
-        pinyin: `${card.pinyin} hé ${noun.pinyin} dōu hěn shòu huānyíng.`,
-        english: `${card.english} and ${noun.english} are both popular.`
+        hanzi: `${card.char}å’Œ${noun.char}éƒ½å¾ˆå—æ­¡è¿Žã€‚`,
+        pinyin: `${card.pinyin} hÃ© ${noun.pinyin} dÅu hÄ›n shÃ²u huÄnyÃ­ng.`,
+        english: `${capitalizeText(nounPhrase(card.english))} and ${nounPhrase(foodPartner.english)} are both popular choices.`
       }
     );
   }
@@ -819,47 +867,47 @@ function buildDynamicSentenceTemplates(card) {
   if (kind.isAdjective) {
     templates.push(
       {
-        hanzi: `今天真的很${card.char}。`,
-        pinyin: `Jīntiān zhēnde hěn ${card.pinyin}.`,
-        english: `Today is really ${card.english}.`
+        hanzi: `ä»Šå¤©çœŸçš„å¾ˆ${card.char}ã€‚`,
+        pinyin: `JÄ«ntiÄn zhÄ“nde hÄ›n ${card.pinyin}.`,
+        english: `It is really ${cleanMeaningText(card.english)} today.`
       },
       {
-        hanzi: `這裡又${card.char}又${adjective.char}。`,
-        pinyin: `Zhèlǐ yòu ${card.pinyin} yòu ${adjective.pinyin}.`,
-        english: `This place is both ${card.english} and ${adjective.english}.`
+        hanzi: `é€™è£¡åˆ${card.char}åˆ${adjective.char}ã€‚`,
+        pinyin: `ZhÃ¨lÇ yÃ²u ${card.pinyin} yÃ²u ${adjective.pinyin}.`,
+        english: `This place feels ${cleanMeaningText(card.english)} and ${cleanMeaningText(adjective.english)}.`
       }
     );
   }
 
-  if (card.lessonId === "L11" || card.char === "比" || card.char === "更") {
+  if (card.char === "比" || card.char === "更") {
     templates.push({
-      hanzi: `今天比昨天${adjective.char}。`,
-      pinyin: `Jīntiān bǐ zuótiān ${adjective.pinyin}.`,
-      english: `Today is ${adjective.english} than yesterday.`
+      hanzi: `ä»Šå¤©æ¯”æ˜¨å¤©${adjective.char}ã€‚`,
+      pinyin: `JÄ«ntiÄn bÇ zuÃ³tiÄn ${adjective.pinyin}.`,
+      english: `Today is ${cleanMeaningText(adjective.english)} than yesterday.`
     });
   }
 
-  if (card.lessonId === "L17") {
+  if (card.char === "要不要") {
     templates.push({
-      hanzi: `要不要去${place.char}看看？`,
-      pinyin: `Yào bú yào qù ${place.pinyin} kànkan?`,
-      english: `Do you want to go look at the ${place.english}?`
+      hanzi: `è¦ä¸è¦åŽ»${place.char}çœ‹çœ‹ï¼Ÿ`,
+      pinyin: `YÃ o bÃº yÃ o qÃ¹ ${place.pinyin} kÃ nkan?`,
+      english: `Do you want to go see ${nounPhrase(place.english, "the")}?`
     });
   }
 
   if (card.lessonId === "L18" && kind.isVerb) {
     templates.push({
-      hanzi: `我三天沒有${card.char}了。`,
-      pinyin: `Wǒ sān tiān méiyǒu ${card.pinyin} le.`,
-      english: `I have not ${card.english.replace(/^to /, "")} for three days.`
+      hanzi: `æˆ‘ä¸‰å¤©æ²’æœ‰${card.char}äº†ã€‚`,
+      pinyin: `WÇ’ sÄn tiÄn mÃ©iyÇ’u ${card.pinyin} le.`,
+      english: `I have not had a chance to ${bareVerbText(card.english)} in three days.`
     });
   }
 
   if (card.lessonId === "L15" && (card.char === "把" || kind.isVerb)) {
     templates.push({
-      hanzi: `你先把${noun.char}${verb.char}了。`,
-      pinyin: `Nǐ xiān bǎ ${noun.pinyin} ${verb.pinyin} le.`,
-      english: `First, ${verb.english.replace(/^to /, "")} the ${noun.english}.`
+      hanzi: `ä½ å…ˆæŠŠ${noun.char}${verb.char}äº†ã€‚`,
+      pinyin: `NÇ xiÄn bÇŽ ${noun.pinyin} ${verb.pinyin} le.`,
+      english: `First, ${bareVerbText(verb.english)} ${nounPhrase(noun.english, "the")}.`
     });
   }
 
@@ -884,19 +932,19 @@ function buildSentenceTemplates(card) {
 
   return [
     {
-      hanzi: `${card.char}是這一課很重要的詞。`,
-      pinyin: `${card.pinyin} shì zhè yí kè hěn zhòngyào de cí.`,
-      english: `${card.english} is an important word in this lesson.`
+      hanzi: `${card.char}æ˜¯é€™ä¸€èª²å¾ˆé‡è¦çš„è©žã€‚`,
+      pinyin: `${card.pinyin} shÃ¬ zhÃ¨ yÃ­ kÃ¨ hÄ›n zhÃ²ngyÃ o de cÃ­.`,
+      english: `In this lesson, ${card.char} is an important word for ${cleanMeaningText(card.english)}.`
     },
     {
-      hanzi: `老師今天又用了${card.char}。`,
-      pinyin: `Lǎoshī jīntiān yòu yòng le ${card.pinyin}.`,
-      english: `The teacher used ${card.english} again today.`
+      hanzi: `è€å¸«ä»Šå¤©åˆç”¨äº†${card.char}ã€‚`,
+      pinyin: `LÇŽoshÄ« jÄ«ntiÄn yÃ²u yÃ²ng le ${card.pinyin}.`,
+      english: `The teacher used ${card.char} again in class today.`
     },
     {
-      hanzi: `${card.char}和${support.char}常常一起出現在這一課。`,
-      pinyin: `${card.pinyin} hé ${support.pinyin} chángcháng yìqǐ chūxiàn zài zhè yí kè.`,
-      english: `${card.english} and ${support.english} often appear together in this lesson.`
+      hanzi: `${card.char}å’Œ${support.char}å¸¸å¸¸ä¸€èµ·å‡ºç¾åœ¨é€™ä¸€èª²ã€‚`,
+      pinyin: `${card.pinyin} hÃ© ${support.pinyin} chÃ¡ngchÃ¡ng yÃ¬qÇ chÅ«xiÃ n zÃ i zhÃ¨ yÃ­ kÃ¨.`,
+      english: `${card.char} and ${support.char} often appear together in this lesson.`
     }
   ];
 }
