@@ -873,7 +873,8 @@ function buildSentenceTemplates(card) {
   const englishMatches = sentencePool.filter((sentence) => sentence.english.toLowerCase().includes(englishNeedle));
   const dynamicMatches = buildDynamicSentenceTemplates(card);
 
-  const merged = uniqueBy([...exactMatches, ...englishMatches, ...dynamicMatches], (item) => item.hanzi);
+  const merged = uniqueBy([...exactMatches, ...englishMatches, ...dynamicMatches], (item) => item.hanzi)
+    .filter((item) => item.hanzi.includes(card.char));
   if (merged.length) {
     return merged;
   }
