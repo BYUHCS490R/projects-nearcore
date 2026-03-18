@@ -286,6 +286,14 @@ body.dark-mode #writingCanvas { background: #faf6ee; }
 
 .hidden { display: none !important; }
 
+.site-footer {
+  margin-top: 28px;
+  padding: 16px 4px 4px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 1080px) {
   .layout-grid,
   .study-grid,
