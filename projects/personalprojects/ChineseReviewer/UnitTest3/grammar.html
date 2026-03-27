@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grammar Lab — Unit 3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CHIN 102 · Unit 3 L17–L18</p>
+        <h1>Grammar Lab</h1>
+        <p class="subtitle">Practice the sentence patterns from 租房子 and 運動 that are tested in Unit 3.</p>
+      </div>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link active" href="grammar.html">Grammar Lab</a>
+          <a class="nav-link" href="writing.html">Writing Practice</a>
+          <a class="nav-link" href="test-review.html">Test Review</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
+    </header>
+
+    <main class="grammar-layout">
+      <section class="panel">
+        <h2>Grammar patterns</h2>
+        <label>
+          Filter by lesson
+          <select id="grammarLessonFilter"></select>
+        </label>
+        <div id="grammarTopicList" class="topic-list" style="margin-top:14px"></div>
+      </section>
+
+      <section class="panel grammar-stage">
+        <div id="grammarDetails"></div>
+        <div class="challenge-box">
+          <div class="section-label">Sentence challenge</div>
+          <p id="challengePrompt"></p>
+          <button id="showAnswerButton" type="button">Show answer</button>
+          <div id="challengeAnswer" class="feedback-box hidden" style="margin-top:10px"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">何尼腓 2026 · Unit 3 Test Review</footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="grammar.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Review — Unit 3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CHIN 102 · L17 – L18</p>
+        <h1>Test Review</h1>
+        <p class="subtitle">Every section of your Unit 3 test, broken down. Know what to study and how much each part is worth.</p>
+      </div>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="grammar.html">Grammar Lab</a>
+          <a class="nav-link" href="writing.html">Writing Practice</a>
+          <a class="nav-link active" href="test-review.html">Test Review</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
+    </header>
+
+    <!-- Score summary bar -->
+    <div class="panel" style="margin-bottom:20px;padding:18px 24px">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <span style="font-weight:700;margin-right:8px">Test breakdown:</span>
+        <span class="badge" style="background:rgba(182,64,64,0.12);color:#b44040;font-size:0.85rem">🎧 Listening 40%</span>
+        <span class="badge" style="background:rgba(47,111,98,0.12);color:var(--accent-2);font-size:0.85rem">✍️ Translation 15%</span>
+        <span class="badge" style="background:rgba(64,124,194,0.14);color:#407ac2;font-size:0.85rem">📖 Reading 15%</span>
+        <span class="badge" style="background:rgba(213,155,45,0.16);color:#c47a00;font-size:0.85rem">🏠 Rental Ads 10%</span>
+        <span class="badge" style="background:rgba(181,82,51,0.12);color:var(--accent);font-size:0.85rem">❓ Short Q 5%</span>
+        <span class="badge" style="background:rgba(100,100,200,0.12);color:#5555cc;font-size:0.85rem">🖊️ Writing 15%</span>
+      </div>
+    </div>
+
+    <main class="test-layout">
+      <!-- Sidebar nav -->
+      <aside>
+        <div class="panel">
+          <h2>Sections</h2>
+          <div class="test-nav" id="testNav"></div>
+        </div>
+      </aside>
+
+      <!-- Main content area -->
+      <section class="panel" id="testContent" style="min-height:500px">
+        <!-- Rendered by JS -->
+      </section>
+    </main>
+
+    <footer class="site-footer">何尼腓 2026 · Unit 3 Test Review</footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="test-review.js"></script>
+</body>
+</html>

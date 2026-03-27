@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mandarin Study Hub</title>
+  <title>Unit 3 Test Review — CHIN 102</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">Chinese learning workspace</p>
-        <h1>Mandarin Study Hub</h1>
-        <p class="subtitle">Review by lesson and set, build stronger recall, and practice grammar and writing from your textbook.</p>
+        <p class="eyebrow">CHIN 102 · L17 – L18</p>
+        <h1>Unit 3 Test Review</h1>
+        <p class="subtitle">Flashcards, grammar, writing practice, and a full test-section breakdown for L17 (租房子) and L18 (運動).</p>
       </div>
       <div class="topbar-actions">
         <nav class="topnav">
           <a class="nav-link active" href="index.html">Home</a>
-          <a class="nav-link" href="writing-practice.html">Writing Practice</a>
-          <a class="nav-link" href="grammar-practice.html">Grammar Lab</a>
+          <a class="nav-link" href="grammar.html">Grammar Lab</a>
+          <a class="nav-link" href="writing.html">Writing Practice</a>
+          <a class="nav-link" href="test-review.html">Test Review</a>
         </nav>
         <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
       </div>
@@ -33,7 +34,7 @@
             <select id="lessonSelector"></select>
           </label>
           <label>
-            Section / set
+            Set / Section
             <select id="setSelector"></select>
           </label>
           <label>
@@ -49,10 +50,9 @@
             <select id="queueSelector">
               <option value="lesson">Lesson order</option>
               <option value="shuffle">Shuffle</option>
-              <option value="due">Review due first</option>
             </select>
           </label>
-          <div class="button-row">
+          <div class="button-row" style="margin-top:14px">
             <button id="shuffleButton" type="button">Shuffle queue</button>
             <button id="resetProgressButton" type="button">Reset progress</button>
           </div>
@@ -70,7 +70,7 @@
         <section class="panel">
           <h2>Grammar Focus</h2>
           <div id="grammarPreview" class="stack-list"></div>
-          <a class="button-link" href="grammar-practice.html">Open grammar lab</a>
+          <a class="button-link" href="grammar.html" style="margin-top:12px;display:block;text-align:center">Open Grammar Lab</a>
         </section>
       </aside>
 
@@ -84,7 +84,7 @@
           <div class="button-row">
             <button id="speakButton" type="button">Speak</button>
             <button id="flipButton" type="button">Flip card</button>
-            <a class="button-link" href="writing-practice.html">Open writing page</a>
+            <a class="button-link" href="test-review.html">Test Review</a>
           </div>
         </section>
 
@@ -111,7 +111,6 @@
             <div class="example-box sentence-box">
               <div class="sentence-header">
                 <div class="section-label">Example sentence</div>
-                <button id="generateSentenceButton" type="button">Generate sentence</button>
               </div>
               <div id="exampleHan" class="example-line"></div>
               <div id="examplePinyin" class="example-subline"></div>
@@ -129,25 +128,25 @@
                 <button class="review-button review-good" data-rating="good" type="button">Good</button>
                 <button class="review-button review-easy" data-rating="easy" type="button">Easy</button>
               </div>
-              <div id="reviewFeedback" class="feedback-box">Rate the card after you check yourself.</div>
+              <div id="reviewFeedback" class="feedback-box" style="margin-top:12px">Rate the card after you check yourself.</div>
             </div>
 
             <div class="panel">
               <h2>Recall Challenge</h2>
               <div id="quizPrompt" class="quiz-prompt"></div>
-              <div id="quizOptions" class="quiz-options"></div>
-              <div class="button-row">
+              <div id="quizOptions" class="quiz-options" style="margin-top:12px"></div>
+              <div class="button-row" style="margin-top:12px">
                 <button id="checkQuizButton" type="button">Check answer</button>
                 <button id="newQuizButton" type="button">New challenge</button>
               </div>
-              <div id="quizFeedback" class="feedback-box">Choose the best answer and check it.</div>
+              <div id="quizFeedback" class="feedback-box" style="margin-top:12px">Choose the best answer and check it.</div>
             </div>
           </div>
         </section>
       </section>
     </main>
 
-    <footer class="site-footer">何尼腓 2026</footer>
+    <footer class="site-footer">何尼腓 2026 · Unit 3 Test Review</footer>
   </div>
 
   <script src="data.js"></script>

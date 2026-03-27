@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Practice — Unit 3</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CHIN 102 · Unit 3 L17–L18</p>
+        <h1>Writing Practice</h1>
+        <p class="subtitle">Practice writing key characters from 租房子 and 運動. The writing section is 15% of your test.</p>
+      </div>
+      <div class="topbar-actions">
+        <nav class="topnav">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="grammar.html">Grammar Lab</a>
+          <a class="nav-link active" href="writing.html">Writing Practice</a>
+          <a class="nav-link" href="test-review.html">Test Review</a>
+        </nav>
+        <button id="themeToggleButton" class="theme-toggle" type="button" aria-label="Toggle theme">☾</button>
+      </div>
+    </header>
+
+    <main class="grammar-layout">
+      <section class="panel">
+        <h2>Study setup</h2>
+        <label>
+          Lesson
+          <select id="writingLessonSelector"></select>
+        </label>
+        <label>
+          Set / Section
+          <select id="writingSetSelector"></select>
+        </label>
+        <label>
+          Difficulty
+          <select id="writingModeSelector">
+            <option value="easy">Easy — see full character + info</option>
+            <option value="medium">Medium — see pinyin + English</option>
+            <option value="hard">Hard — hear it, write it</option>
+          </select>
+        </label>
+        <p id="modeDescription" class="subtitle" style="margin-top:10px"></p>
+
+        <div class="section-block" style="margin-top:20px">
+          <div class="section-label">⚠️ Test Writing Tip</div>
+          <div class="feedback-box" style="margin-top:8px;font-size:0.9rem">
+            Know all sports with the <strong>correct verb</strong>: 打籃球、打網球、踢足球、游泳、打美式足球、跑步. Know how to write <strong>星期</strong>.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel writing-stage">
+        <div class="writing-header">
+          <div>
+            <div class="section-label">Prompt</div>
+            <h2 id="writingPromptTitle">Choose a lesson and set</h2>
+          </div>
+          <div class="button-row">
+            <button id="prevWritingButton" type="button">Previous</button>
+            <button id="nextWritingButton" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="writing-card" id="writingCard"></div>
+
+        <div class="button-row hard-actions">
+          <button id="playSoundButton" type="button" class="hidden">🔊 Speak</button>
+          <button id="checkCharacterButton" type="button" class="hidden">Check character</button>
+        </div>
+        <div id="hardModeAnswer" class="feedback-box hidden" style="margin-top:8px"></div>
+
+        <div class="section-block">
+          <div class="section-label">Stroke canvas</div>
+          <canvas id="writingCanvas" width="720" height="340"></canvas>
+          <div class="button-row" style="margin-top:10px">
+            <button id="clearCanvasButton" type="button">Clear</button>
+            <button id="toggleGuideButton" type="button">Toggle guide</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">何尼腓 2026 · Unit 3 Test Review</footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="writing.js"></script>
+</body>
+</html>

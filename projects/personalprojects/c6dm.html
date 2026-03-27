@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 6: SQL Advanced Queries - PRO Reviewer</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #282a36;
+            --text-main: #f8f8f2;
+            --accent: #bd93f9;
+            --accent-hover: #ff79c6;
+            --correct: #50fa7b;
+            --wrong: #ff5555;
+            --secondary-text: #6272a4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-top: 0;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--secondary-text);
+            padding-bottom: 15px;
+        }
+
+        .progress {
+            text-align: center;
+            color: var(--secondary-text);
+            font-size: 1rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .question {
+            font-size: 1.25rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background-color: var(--bg-color);
+            border: 2px solid var(--secondary-text);
+            color: var(--text-main);
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.05rem;
+            text-align: left;
+        }
+
+        .option:hover:not(:disabled) {
+            border-color: var(--accent);
+            background-color: #383a59;
+            transform: translateX(5px);
+        }
+
+        .option:disabled {
+            cursor: default;
+        }
+
+        .option.correct {
+            border-color: var(--correct);
+            background-color: rgba(80, 250, 123, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--wrong);
+            background-color: rgba(255, 85, 85, 0.1);
+        }
+
+        .feedback {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            display: none;
+            line-height: 1.6;
+            border-left: 5px solid var(--accent);
+            font-size: 1.05rem;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        button.btn {
+            background-color: var(--accent);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button.btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        #next-btn {
+            display: none;
+        }
+
+        .results {
+            text-align: center;
+            display: none;
+        }
+
+        .results h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .results p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--text-main);
+        }
+        
+        code {
+            background-color: #191a21;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f1fa8c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <div id="quiz">
+            <h1>Chapter 6: SQL Advanced Queries (PRO)</h1>
+            <div id="progress" class="progress">Question 1 of 50</div>
+            <div id="question-container" class="question"></div>
+            <div id="options-container" class="options"></div>
+            <div id="feedback" class="feedback"></div>
+            <div class="controls">
+                <button id="next-btn" class="btn">Next Question &rarr;</button>
+            </div>
+        </div>
+
+        <div id="results" class="results">
+            <h2>Quiz Completed!</h2>
+            <p id="score-text"></p>
+            <button id="restart-btn" class="btn">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // Basic Structure & Order of Execution
+            {
+                question: "Which of the following represents the correct order of execution for a standard SQL query?",
+                options: ["SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY", "FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY", "FROM, SELECT, WHERE, GROUP BY, HAVING, ORDER BY", "SELECT, WHERE, FROM, GROUP BY, HAVING, ORDER BY"],
+                answer: 1,
+                explanation: "The system executes the clauses in this specific order: FROM (sets up tables), WHERE (filters rows), GROUP BY (forms groups), HAVING (filters groups), SELECT (picks columns), ORDER BY (sorts output)."
+            },
+            {
+                question: "Are SQL keywords (like SELECT, FROM, WHERE) case-sensitive?",
+                options: ["Yes, they must always be capitalized.", "No, any combination of upper and lower case is acceptable.", "Only SELECT and FROM are case-sensitive.", "They are case-sensitive depending on the operating system."],
+                answer: 1,
+                explanation: "SQL keywords are NOT case-sensitive. 'SELECT', 'select', and 'SeLeCt' all function exactly the same."
+            },
+            {
+                question: "How does SQL typically handle case sensitivity for string literals compared to the data in the database?",
+                options: ["String literals are never case-sensitive.", "String literals are always case-sensitive, regardless of the DBMS.", "String literals enclosed in single quotes are generally treated as case-sensitive depending on DBMS configuration.", "String literals must be double-quoted to be case-sensitive."],
+                answer: 2,
+                explanation: "The textbook assumes data values ARE case-sensitive. 'Black' versus 'black' will generally yield different results based on the DBMS configuration."
+            },
+            {
+                question: "What happens if you use the DISTINCT keyword in a SELECT clause with multiple columns? (e.g., SELECT DISTINCT FirstName, LastName, City)",
+                options: ["It causes a syntax error.", "It only applies to the very first column listed (FirstName).", "It eliminates rows where ALL selected columns are identical to another row.", "It eliminates rows where ANY of the selected columns match another row."],
+                answer: 2,
+                explanation: "DISTINCT applies to the ENTIRE SET of columns in the SELECT clause. A row is only eliminated if every single column value matches another row exactly."
+            },
+            {
+                question: "When creating an alias name for a column that includes spaces (e.g., Total Item Amount), what must you do?",
+                options: ["Use single quotes around the alias name.", "Use double quotes around the alias name.", "Place the alias name in parentheses.", "It is impossible to have spaces in an alias name."],
+                answer: 1,
+                explanation: "If you include spaces in an alias name, you must enclose it within double quotes (e.g., AS \"Total Item Amt\")."
+            },
+            
+            // WHERE Clause & Operators
+            {
+                question: "Which operator provides a cleaner alternative to chaining multiple OR statements together for the same column?",
+                options: ["BETWEEN", "LIKE", "IN", "EXISTS"],
+                answer: 2,
+                explanation: "The IN operator checks if a value matches any value in a specified set. e.g., Category IN ('flats', 'sandals', 'heels')."
+            },
+            {
+                question: "You want to find products priced at exactly $20 or exactly $50. Which syntax is correct?",
+                options: ["WHERE ListPrice = 20 AND 50", "WHERE ListPrice = 20 OR ListPrice = 50", "WHERE ListPrice BETWEEN 20 AND 50", "WHERE ListPrice IN (20 AND 50)"],
+                answer: 1,
+                explanation: "To match specific values using OR, you must restate the column name: ListPrice = 20 OR ListPrice = 50. (Alternatively, you could use IN (20, 50))."
+            },
+            {
+                question: "In the LIKE operator, what does the percent sign (%) represent?",
+                options: ["Exactly one unspecified character", "A numeric digit only", "Zero or more unspecified characters", "A blank space"],
+                answer: 2,
+                explanation: "The % wildcard stands for zero or more unspecified characters. The underscore (_) stands for exactly one."
+            },
+            {
+                question: "How do you properly check if a manufacturer's State has NOT been entered into the database?",
+                options: ["WHERE State = NULL", "WHERE State = ' '", "WHERE State IS NULL", "WHERE State NOT EXISTS"],
+                answer: 2,
+                explanation: "NULL is a special value meaning unknown or not applicable. You cannot use '=' to check for it; you must use the 'IS NULL' test."
+            },
+            {
+                question: "Is a NULL value the same thing as a zero-length string ('') or a field containing spaces?",
+                options: ["Yes, they evaluate to the same thing.", "No, they are fundamentally different.", "Only if the column is a numeric data type.", "Only in Oracle databases."],
+                answer: 1,
+                explanation: "NULL means unknown. It is not equal to a blank space, a zero, or an empty string. Testing for State = '' will not return records where State is NULL."
+            },
+
+            // Joins & Multi-Table Queries
+            {
+                question: "When joining two tables, does the join condition ALWAYS have to be a Primary Key - Foreign Key relationship?",
+                options: ["Yes, this is a strict rule of relational databases.", "No, SQL permits joins on any compatible fields across tables.", "No, but they must have the exact same column name.", "Yes, unless you are using an OUTER JOIN."],
+                answer: 1,
+                explanation: "SQL supports joins on any compatible fields. The field names don't have to be the same, but they must have the same data type and domain range."
+            },
+            {
+                question: "When is it strictly REQUIRED to use table aliases in the FROM clause?",
+                options: ["When joining more than two tables.", "When joining tables on non-key fields.", "When joining a table to itself (a self-join).", "Whenever you use the DISTINCT keyword."],
+                answer: 2,
+                explanation: "In a self-join, you must define two 'copies' of the same relation in the FROM clause. Aliases (e.g., Employee E JOIN Employee M) are required to distinguish between them."
+            },
+            {
+                question: "In the 1987 SQL standard for joining tables, where was the join condition located?",
+                options: ["In the FROM clause using the ON keyword.", "In the WHERE clause.", "In the HAVING clause.", "In the SELECT clause."],
+                answer: 1,
+                explanation: "In the older 1987 standard, tables were separated by commas in the FROM clause, and the equivalence condition (e.g., P.ManufacturerID = M.ManufacturerID) was placed in the WHERE clause."
+            },
+            {
+                question: "If you have an ambiguous column name (like ManufacturerID) that appears in multiple tables in your FROM clause, what must you do?",
+                options: ["Rename one of the columns using AS.", "Prefix the column name with the table name or its alias.", "Use a subquery instead of a join.", "Put the column name in brackets."],
+                answer: 1,
+                explanation: "To resolve ambiguity, you must prefix the column name with its table identifier (e.g., Product.ManufacturerID or P.ManufacturerID)."
+            },
+
+            // UNION and INTERSECT
+            {
+                question: "What does the INTERSECT operator do?",
+                options: ["Combines columns from two tables horizontally.", "Yields only those rows that are contained in BOTH original tables.", "Yields all rows from both tables, keeping duplicates.", "Eliminates rows from the first table that match the second table."],
+                answer: 1,
+                explanation: "INTERSECT compares data from two queries and yields only the exact rows that are present in the result set of BOTH queries."
+            },
+            {
+                question: "Which of the following is NOT a rule for using UNION and INTERSECT?",
+                options: ["The number of columns in each SELECT statement must be the same.", "The columns from each SELECT statement must be in the same order.", "The corresponding columns must have similar data types.", "Both tables must have a foreign key relationship."],
+                answer: 3,
+                explanation: "UNION and INTERSECT are set operations. They require matching column counts, order, and types, but they do NOT require any underlying primary/foreign key relationships between the tables."
+            },
+            {
+                question: "By default, does the UNION operator eliminate duplicate rows?",
+                options: ["Yes, it removes duplicates automatically.", "No, you must use UNION ALL to remove duplicates.", "No, it keeps duplicates unless you use the DISTINCT keyword.", "It depends if the columns are primary keys."],
+                answer: 0,
+                explanation: "The standard UNION operator automatically eliminates duplicate data rows from the combined result set."
+            },
+
+            // Scalar and Built-in Functions
+            {
+                question: "What is the key characteristic of a scalar function (like UPPER or MONTH)?",
+                options: ["It returns multiple rows for a single input.", "It only works on numeric data types.", "It operates on a single row and returns a single value for that row.", "It computes a single summary value across an entire set of rows."],
+                answer: 2,
+                explanation: "Scalar functions process input from an individual column in a single row to return a new, single value for that specific row."
+            },
+            {
+                question: "Which string function removes trailing spaces from the end of a character string?",
+                options: ["LTRIM", "RTRIM", "REPLACE", "SUBSTRING"],
+                answer: 1,
+                explanation: "RTRIM(x) removes trailing spaces. LTRIM(x) removes leading spaces."
+            },
+            {
+                question: "If you nest functions like LEN(LTRIM(RTRIM(Address))), in what order are they evaluated?",
+                options: ["From left to right", "From right to left", "From the inside out", "From the outside in"],
+                answer: 2,
+                explanation: "Nested functions evaluate from the inside out. RTRIM is evaluated first, then LTRIM, and finally LEN."
+            },
+            
+            // Aggregate Functions
+            {
+                question: "Which of the following is considered an aggregate function?",
+                options: ["MONTH()", "CONCAT()", "MAX()", "ABS()"],
+                answer: 2,
+                explanation: "Aggregate functions compute statistical data across a set of rows. SUM, AVG, COUNT, MAX, and MIN are aggregate functions."
+            },
+            {
+                question: "You want to know how many distinct types of shoe categories exist in the Product table. Which query is correct?",
+                options: ["SELECT COUNT(Category) FROM Product", "SELECT DISTINCT COUNT(Category) FROM Product", "SELECT COUNT(DISTINCT Category) FROM Product", "SELECT SUM(Category) FROM Product"],
+                answer: 2,
+                explanation: "To avoid counting the same category multiple times, DISTINCT must be placed inside the COUNT function: COUNT(DISTINCT Category)."
+            },
+
+            // GROUP BY and HAVING
+            {
+                question: "If an aggregate function appears in the SELECT clause, what rule applies to any other columns listed in that SELECT clause?",
+                options: ["They must be placed inside a subquery.", "They must be removed.", "They must also appear in the GROUP BY clause.", "They must be used in the WHERE clause."],
+                answer: 2,
+                explanation: "If you select an aggregate function (like MAX(Price)) and a standard column (like Category), you MUST group by that standard column. (e.g., GROUP BY Category)."
+            },
+            {
+                question: "What is the primary difference between the WHERE clause and the HAVING clause?",
+                options: ["WHERE evaluates groups, HAVING evaluates individual rows.", "WHERE is evaluated after the GROUP BY clause, HAVING is evaluated before.", "WHERE filters individual rows, HAVING filters groups formed by an aggregate function.", "There is no functional difference."],
+                answer: 2,
+                explanation: "WHERE tests values in individual rows BEFORE they are grouped. HAVING tests values or counts on the groups AFTER they are formed by the GROUP BY clause."
+            },
+            {
+                question: "Can a query contain both a WHERE clause and a HAVING clause?",
+                options: ["No, they are mutually exclusive.", "Yes, but HAVING must be written before WHERE.", "Yes, WHERE is applied first to rows, then GROUP BY forms groups, then HAVING filters those groups.", "Yes, but they must test the exact same column."],
+                answer: 2,
+                explanation: "It is common to use both. The WHERE clause eliminates unwanted rows first, then the remaining rows are grouped, and finally HAVING eliminates unwanted groups."
+            },
+
+            // Subqueries
+            {
+                question: "What distinguishes a 'correlated subquery' from a 'non-correlated subquery'?",
+                options: ["A correlated subquery is located in the FROM clause.", "A correlated subquery executes independently of the main query.", "The execution of a correlated subquery depends on the specific row currently being examined by the main query.", "A correlated subquery does not use parentheses."],
+                answer: 2,
+                explanation: "A correlated subquery contains a reference to a column from the main (outer) query. Therefore, it must be recalculated for every single row the main query processes."
+            },
+            {
+                question: "If a subquery in a WHERE clause uses the 'IN' operator (e.g., WHERE ManufacturerID IN (SELECT...)), how many columns should the subquery's SELECT clause return?",
+                options: ["Exactly one column.", "As many columns as are in the outer query.", "Two columns: a key and a value.", "It doesn't matter."],
+                answer: 0,
+                explanation: "If the outer query says 'WHERE ManufacturerID IN...', the subquery must return a list containing exactly one column matching that data type (ManufacturerID)."
+            },
+            {
+                question: "When a subquery is used in the SELECT clause, what type of value must it return?",
+                options: ["A temporary table.", "A list of values.", "Exactly one value per row of the main query.", "A boolean (True/False)."],
+                answer: 2,
+                explanation: "A subquery in the SELECT clause acts like a column calculation. It must produce a single, constant value (or a single correlated value) for each row processed by the main query."
+            },
+            {
+                question: "When a subquery is placed in the FROM clause, what does it effectively create?",
+                options: ["A permanent database view.", "A temporary table (inline view) that must usually be given an alias.", "A syntax error.", "An aggregate constraint."],
+                answer: 1,
+                explanation: "A subquery in the FROM clause generates a temporary result set that the main query treats as a table. It almost always requires an AS alias so the outer query can reference it."
+            },
+
+            // Database Change Operations (INSERT, UPDATE, DELETE)
+            {
+                question: "You want to archive all December SaleItem records into a SaleItemArchive table. How can you use a subquery to accomplish this?",
+                options: ["INSERT INTO SaleItemArchive (SELECT * FROM SaleItem WHERE month = 12)", "INSERT INTO SaleItemArchive SELECT * FROM SaleItem WHERE SaleID IN (SELECT SaleID FROM Sale WHERE Month(SaleDate) = 12)", "UPDATE SaleItem SET Archive = 1 WHERE Month = 12", "You cannot use subqueries with INSERT."],
+                answer: 1,
+                explanation: "You can use an INSERT... SELECT statement, where the SELECT uses a subquery to locate the correct SaleIDs from the parent Sale table."
+            },
+            {
+                question: "When using multiple DELETE statements on tables with parent-child relationships (like Sale and SaleItem), why does the execution order matter?",
+                options: ["It doesn't matter.", "Because deleting the parent (Sale) first might violate foreign key constraints or leave orphans, preventing the deletion of the children (SaleItem).", "Because DELETE statements sort alphabetically.", "Because subqueries only work on the first table deleted."],
+                answer: 1,
+                explanation: "You must delete the child records (SaleItem) BEFORE deleting the parent records (Sale). If you delete the parent first, the subquery trying to find matching children will turn up empty, or the DBMS will block it due to referential integrity rules."
+            },
+
+            // Views
+            {
+                question: "What is a database VIEW?",
+                options: ["A physical copy of the data stored on a separate disk.", "A temporary table created in the FROM clause.", "A window into a portion of the database defined by a query, saved in the schema.", "A specific type of OUTER JOIN."],
+                answer: 2,
+                explanation: "A view is defined in the database schema by a query specification. It does not store data itself; it dynamically retrieves data from underlying 'base tables' whenever it is accessed."
+            },
+            {
+                question: "If the data in a base table is updated, what happens to a VIEW that references that table?",
+                options: ["The view becomes invalid and must be recreated.", "The view must be manually refreshed.", "Nothing, the view retains a snapshot of the old data.", "The view automatically reflects the updated data the next time it is accessed."],
+                answer: 3,
+                explanation: "Because a view executes its defining query at the time it is accessed, it always dynamically pulls the most current data from the base tables."
+            },
+            {
+                question: "Which table in the DBMS maintains data about all the tables and views in the database?",
+                options: ["master_schema", "information_schema.tables", "db_views", "system_catalog"],
+                answer: 1,
+                explanation: "You can query 'information_schema.tables' to see a list of tables and views in your specific database schema."
+            },
+
+            // Outer Joins
+            {
+                question: "What is the primary difference between an INNER JOIN and an OUTER JOIN?",
+                options: ["INNER JOIN is for primary keys, OUTER JOIN is for non-keys.", "INNER JOIN returns only rows that meet the matching criteria. OUTER JOIN returns matching rows PLUS unmatched rows from specified tables.", "INNER JOIN includes NULLs, OUTER JOIN drops NULLs.", "There is no difference."],
+                answer: 1,
+                explanation: "An INNER JOIN drops any records that don't find a match. An OUTER JOIN ensures that all records from one (or both) tables are returned, filling in NULLs where matches don't exist."
+            },
+            {
+                question: "If you use a LEFT OUTER JOIN, which rows are guaranteed to be included in the result?",
+                options: ["All rows from the second (right) table listed.", "All rows from the first (left) table listed.", "Only rows that have a match in both tables.", "All rows from both tables."],
+                answer: 1,
+                explanation: "A LEFT OUTER JOIN returns all rows from the left table (the one listed first), including those that do not have a matching row in the right table."
+            },
+            {
+                question: "You want a list of ALL employees, plus any purchases they made. Some employees made no purchases. Which syntax is correct? (Assuming Employee is listed first)",
+                options: ["FROM Employee E RIGHT OUTER JOIN Purchase P", "FROM Employee E FULL OUTER JOIN Purchase P", "FROM Employee E LEFT OUTER JOIN Purchase P", "FROM Employee E INNER JOIN Purchase P"],
+                answer: 2,
+                explanation: "Because Employee is listed on the LEFT side of the join, a LEFT OUTER JOIN guarantees every employee is listed, showing NULLs for those without purchases."
+            },
+            {
+                question: "What is a major danger of placing a WHERE clause condition on the 'null-padded' table of an OUTER JOIN (e.g., WHERE Month(PurchaseDate) = 12)?",
+                options: ["It causes an infinite loop.", "It turns the OUTER JOIN into a FULL OUTER JOIN.", "It evaluates AFTER the join, meaning it will filter out the rows containing NULLs, effectively destroying the purpose of the outer join.", "It is a syntax error to use WHERE with an OUTER JOIN."],
+                answer: 2,
+                explanation: "Because the WHERE clause evaluates after the FROM clause builds the outer join, a condition like 'PurchaseDate = 12' will exclude all the employees who had NULL purchase dates, inadvertently acting like an INNER JOIN."
+            },
+            {
+                question: "What does a FULL OUTER JOIN do?",
+                options: ["Returns a cross product of all rows.", "Returns all rows from BOTH tables, matching them where possible and putting NULLs where there is no match on either side.", "It is just another name for an INNER JOIN.", "It joins every table in the database schema at once."],
+                answer: 1,
+                explanation: "A FULL OUTER JOIN acts as a combination of a Left and Right Outer Join, ensuring no rows from either table are left behind."
+            },
+            {
+                question: "Can an OUTER JOIN and an INNER JOIN be combined in the same query?",
+                options: ["Yes, you can chain multiple joins of different types in the FROM clause.", "No, a query must be exclusively inner joins or exclusively outer joins.", "Yes, but only if they use the older 1987 standard syntax.", "No, they will cancel each other out."],
+                answer: 0,
+                explanation: "You can chain them (e.g., FROM Table A LEFT JOIN Table B ON... INNER JOIN Table C ON...). The system simply resolves the joins sequentially."
+            },
+
+            // Advanced Nuances & Caveats
+            {
+                question: "If a subquery expects a numeric input but is given a string, what typically happens?",
+                options: ["It works perfectly if the string has numbers in it.", "It causes a syntax or type mismatch error.", "It converts the string to zero.", "It ignores the WHERE clause."],
+                answer: 1,
+                explanation: "Data types must match or be compatible. You must ensure the returned value's type is correct for the location where the subquery is nested."
+            },
+            {
+                question: "When calculating a weighted average, why might simply joining tables and using AVG(ListPrice) yield an incorrect result?",
+                options: ["AVG only works on integers.", "AVG cannot be used with JOINs.", "Different products might appear various numbers of times in the joined table (e.g., a popular shoe appears 50 times), heavily skewing the simple average.", "You must use SUM instead of AVG."],
+                answer: 2,
+                explanation: "A standard join duplicates parent rows for every matching child row. Taking a simple AVG() of a parent column (ListPrice) across the joined set counts the price multiple times based on sales volume, which is usually not the intended calculation."
+            },
+            {
+                question: "What function calculates the absolute value of a number?",
+                options: ["SQR()", "ABS()", "ROUND()", "VAL()"],
+                answer: 1,
+                explanation: "ABS(x) returns the absolute value of a number (e.g., ABS(-120) returns 120)."
+            },
+            {
+                question: "Which of the following is the correct syntax for the SUBSTRING function?",
+                options: ["SUBSTRING(string, length)", "SUBSTRING(string, start_position, length)", "SUBSTRING(start_position, length, string)", "SUBSTRING(length, string)"],
+                answer: 1,
+                explanation: "SUBSTRING(x, s, n) takes the target string 'x', starts at position 's', and returns 'n' characters."
+            },
+            {
+                question: "If you want to display the number with exactly two decimal places, which function should you use?",
+                options: ["DECIMAL()", "TRUNCATE()", "ROUND(x, d)", "FLOAT()"],
+                answer: 2,
+                explanation: "ROUND(x, d) rounds the numeric value 'x' to 'd' decimal places."
+            },
+            {
+                question: "In the context of the FROM clause, what does this snippet do? `FROM SaleItem QueryAlias`",
+                options: ["It renames the base table permanently.", "It creates a view named QueryAlias.", "It provides a temporary alias 'QueryAlias' for the SaleItem table for the duration of this query.", "It causes a syntax error because the 'AS' keyword is missing."],
+                answer: 2,
+                explanation: "It assigns a table alias. The 'AS' keyword is optional for table aliases in many DBMS implementations."
+            },
+            {
+                question: "Which keyword must accompany the CREATE VIEW statement?",
+                options: ["AS", "IS", "LIKE", "SELECT"],
+                answer: 0,
+                explanation: "The syntax is CREATE VIEW view_name AS query_specification."
+            },
+            {
+                question: "Can a subquery be placed inside an UPDATE statement?",
+                options: ["No, subqueries are only for SELECT statements.", "Yes, commonly in the WHERE clause to identify which rows to update based on data in another table.", "Yes, but only in the SET clause.", "Only if it is a non-correlated subquery."],
+                answer: 1,
+                explanation: "Subqueries are frequently used in the WHERE clause of an UPDATE to identify the proper records to modify."
+            },
+            {
+                question: "What happens if a query has a GROUP BY clause but omits the HAVING clause?",
+                options: ["The query fails.", "The rows are grouped, but no aggregate conditions are applied to filter the resulting groups.", "It defaults to HAVING COUNT(*) > 1.", "The GROUP BY clause is ignored."],
+                answer: 1,
+                explanation: "HAVING is optional. Without it, the query simply returns all the groups formed by the GROUP BY clause."
+            },
+            {
+                question: "To verify if a set of columns is truly a primary key for a table, what aggregate function check can you perform?",
+                options: ["Compare SUM(columns) to COUNT(*)", "Compare COUNT(DISTINCT key_columns) to COUNT(*)", "Check if MAX(key) = MIN(key)", "You cannot verify keys with aggregate functions."],
+                answer: 1,
+                explanation: "If you count all rows `COUNT(*)` and it equals the count of unique key values `COUNT(DISTINCT Col1, Col2)`, then those columns uniquely identify every row and can serve as the key."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionEl = document.getElementById('question-container');
+        const optionsEl = document.getElementById('options-container');
+        const feedbackEl = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const progressEl = document.getElementById('progress');
+        const quizDiv = document.getElementById('quiz');
+        const resultsDiv = document.getElementById('results');
+        const scoreText = document.getElementById('score-text');
+        const restartBtn = document.getElementById('restart-btn');
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            
+            progressEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            questionEl.textContent = currentQ.question;
+            
+            optionsEl.innerHTML = '';
+            feedbackEl.style.display = 'none';
+            nextBtn.style.display = 'none';
+
+            currentQ.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('option');
+                button.addEventListener('click', () => selectAnswer(index));
+                optionsEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const currentQ = questions[currentQuestionIndex];
+            const buttons = optionsEl.querySelectorAll('.option');
+
+            buttons.forEach(btn => btn.disabled = true);
+
+            const isCorrect = selectedIndex === currentQ.answer;
+
+            if (isCorrect) {
+                buttons[selectedIndex].classList.add('correct');
+                score++;
+                feedbackEl.innerHTML = `<strong>Correct!</strong><br><br>${currentQ.explanation}`;
+            } else {
+                buttons[selectedIndex].classList.add('wrong');
+                buttons[currentQ.answer].classList.add('correct');
+                feedbackEl.innerHTML = `<strong>Incorrect.</strong><br><br>${currentQ.explanation}`;
+            }
+
+            feedbackEl.style.display = 'block';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = "See Final Results";
+            } else {
+                nextBtn.textContent = "Next Question &rarr;";
+                nextBtn.innerHTML = "Next Question &rarr;"; 
+            }
+            
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizDiv.style.display = 'none';
+            resultsDiv.style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            let message = "";
+            
+            if (percentage >= 90) message = "Outstanding! You are definitely ready for the Chapter 6 exam.";
+            else if (percentage >= 75) message = "Great job! You have a very solid grasp of the concepts.";
+            else if (percentage >= 60) message = "Good effort. Review the areas where you slipped up before the test.";
+            else message = "Keep studying! Review the text on Subqueries and Outer Joins and try again.";
+
+            scoreText.innerHTML = `You scored <strong>${score}</strong> out of <strong>${questions.length}</strong> (${percentage}%).<br><br>${message}`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            quizDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+            loadQuestion();
+        }
+
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        loadQuestion();
+    </script>
+</body>
+</html>

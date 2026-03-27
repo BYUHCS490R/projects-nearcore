@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Master Pro: Chapter 6</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/alasql@4.2.3/dist/alasql.min.js"></script>
+</head>
+<body class="dark-mode">
+
+    <nav class="navbar">
+        <div class="logo">🚀 SQL Master Pro</div>
+        <div class="nav-controls">
+            <button id="themeToggle" class="icon-btn">☀️</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="left-panel panel">
+            <div class="panel-header">
+                <h2>Curriculum (60 Missions)</h2>
+                <button id="schemaBtn" class="secondary-btn">🗂️ Show Table Map</button>
+            </div>
+            
+            <div class="filters">
+                <select id="tierSelect"></select>
+                <select id="missionSelect"></select>
+            </div>
+
+            <div class="mission-card">
+                <h3 id="mTitle">Mission Title</h3>
+                <p id="mTask" class="task-text">Select a mission to begin.</p>
+                
+                <div class="mission-actions">
+                    <button id="clueBtn" class="action-btn clue">💡 Get a Clue</button>
+                    <button id="answerBtn" class="action-btn danger">🚨 Show Answer</button>
+                </div>
+                
+                <div id="clueBox" class="hidden-box clue-box"></div>
+                <div id="answerBox" class="hidden-box answer-box"></div>
+            </div>
+        </aside>
+
+        <main class="right-panel panel">
+            <h2>Live SQL Sandbox</h2>
+            <p class="subtitle">Write your queries here. Data is refreshed automatically.</p>
+            
+            <textarea id="sqlInput" placeholder="SELECT * FROM Product;"></textarea>
+            
+            <div class="sandbox-actions">
+                <button id="runBtn" class="primary-btn">▶ Run Query</button>
+                <span id="statusMsg" class="status-msg loading">Initializing Database...</span>
+            </div>
+
+            <div class="table-container">
+                <table id="resultTable">
+                    <thead id="tHead"></thead>
+                    <tbody id="tBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="schemaModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeSchema">&times;</span>
+            <h2>Database Schema Map</h2>
+            <div class="schema-grid">
+                <div class="schema-card"><strong>Customer:</strong> CustomerID (PK), FirstName, LastName, StreetAddress, City, State, PostalCode, Country, Phone</div>
+                <div class="schema-card"><strong>Product:</strong> ProductID (PK), ProductName, ManufacturerID (FK), Composition, ListPrice, Gender, Category, Color, Description</div>
+                <div class="schema-card"><strong>Manufacturer:</strong> ManufacturerID (PK), ManufacturerName, Address1, Address2, City, State, PostalCode, Phone, Fax, Contact, URL</div>
+                <div class="schema-card"><strong>Sale:</strong> SaleID (PK), SaleDate, CustomerID (FK), Tax, Shipping</div>
+                <div class="schema-card"><strong>SaleItem:</strong> SaleID (FK), ProductID (FK), ItemSize, Quantity, SalePrice</div>
+                <div class="schema-card"><strong>Employee:</strong> EmployeeID (PK), FirstName, LastName, Address, ManagerID (FK)</div>
+                <div class="schema-card"><strong>SalaryEmployee:</strong> EmployeeID (PK), Salary</div>
+                <div class="schema-card"><strong>WageEmployee:</strong> EmployeeID (PK), Wage, MaxHours</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
